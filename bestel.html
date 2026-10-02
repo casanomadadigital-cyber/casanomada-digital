@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8RGTHWX6J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N8RGTHWX6J');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudioFlow bestellen | Casanomada Digital</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0B1120;--panel:#121A2B;--panel2:#1A2438;--border:#27324A;--gold:#C6A15B;--gold2:#DCBE85;--text:#E9EDF5;--muted:#94A0B8;--green:#34C98E;--red:#E36054}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Montserrat',sans-serif;font-weight:300;background:radial-gradient(ellipse at top,#16213A 0%,var(--bg) 60%);color:var(--text);min-height:100vh;padding:40px 20px;display:flex;align-items:flex-start;justify-content:center}
+  .card{width:100%;max-width:560px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:38px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:32px;letter-spacing:.3px}
+  h1 i{color:var(--gold2)}
+  .sub{color:var(--muted);font-size:14px;margin:8px 0 26px;line-height:1.55}
+  .pakket{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px;background:var(--panel2)}
+  .pakket .tier{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);font-weight:700}
+  .pakket .prijs{font-family:'Cormorant Garamond',serif;font-size:38px;margin-top:4px}
+  .pakket .per{font-size:12px;color:var(--muted)}
+  label{display:block;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.4px;margin:14px 0 5px}
+  input,select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-family:inherit;font-size:14px}
+  input:focus,select:focus{outline:none;border-color:var(--gold)}
+  .btn{width:100%;background:linear-gradient(135deg,#D4AF6A,#A8843E);color:#171003;border:none;padding:14px;border-radius:10px;font-weight:700;font-size:14px;letter-spacing:.04em;cursor:pointer;margin-top:24px;font-family:inherit}
+  .btn:hover{filter:brightness(1.1)}
+  .btn:disabled{opacity:.5;cursor:wait}
+  .err{color:var(--red);font-size:13px;margin-top:14px;display:none}
+  .ok{display:none}
+  .ok h2{font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px}
+  .num{font-family:monospace;font-size:24px;color:var(--gold2);background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;letter-spacing:.15em;margin:18px 0}
+  .step{display:flex;gap:14px;margin-bottom:14px;font-size:14px;line-height:1.55}
+  .step .n{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold2);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px}
+  .tikkie-btn{display:block;text-align:center;background:#FF6900;color:#fff;border-radius:10px;padding:14px;text-decoration:none;font-weight:700;margin-top:6px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .footer{text-align:center;font-size:11px;color:var(--muted);margin-top:26px;opacity:.7}
+  .footer a{color:var(--gold2);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="card" id="step1">
+  <h1>Studio<i>Flow</i> bestellen</h1>
+  <p class="sub">Maak je bestelling af in twee minuten. Direct na betaling staat je activatiecode in je mailbox.</p>
+  <div class="pakket" id="pakketBox">
+    <span class="tier" id="pkgNaam">Pro</span>
+    <div class="prijs" id="pkgPrijs">€39,95</div>
+    <div class="per" id="pkgPer">per maand</div>
+  </div>
+  <label>Pakket</label>
+  <select id="fTier"><option value="S">Starter</option><option value="P" selected>Pro</option><option value="U">Studio</option></select>
+  <label>Looptijd</label>
+  <select id="fDuur"><option value="1">1 maand</option><option value="3">3 maanden</option><option value="12">1 jaar</option></select>
+  <label>Je naam *</label>
+  <input id="fNaam" placeholder="Voor- en achternaam" autocomplete="name">
+  <div class="row2">
+    <div><label>E-mailadres *</label><input id="fEmail" type="email" placeholder="naam@bedrijf.nl" autocomplete="email"></div>
+    <div><label>Telefoon (06)</label><input id="fTel" placeholder="06…" autocomplete="tel"></div>
+  </div>
+  <button class="btn" onclick="bestel()" id="btnBestel">Doorgaan naar betalen</button>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="card ok" id="step2">
+  <h2>Bestelling geplaatst</h2>
+  <p class="sub">Maak het bedrag over en zodra de betaling binnen is, ontvang je je activatiecode per e-mail (vaak binnen een paar uur).</p>
+  <div class="num" id="orderNo">XXXXXX</div>
+  <div class="step"><div class="n">1</div><div>Open Tikkie via de oranje knop en vul exact <b id="bedragLabel">€39,95</b> in.</div></div>
+  <div class="step"><div class="n">2</div><div>Vermeld bij de betaling het bestelnummer hierboven, zodat we je betaling snel kunnen koppelen.</div></div>
+  <div class="step"><div class="n">3</div><div>Klaar! We mailen je de activatiecode en de link naar het portaal zodra de betaling is bevestigd.</div></div>
+  <a class="tikkie-btn" href="https://tikkie.me/pay/q68rddf17lcasklt57jl" target="_blank" rel="noopener">Betaal via Tikkie</a>
+  <p class="sub" style="margin-top:18px;font-size:12.5px">Liever overmaken? Maak <b id="bedragLabel2">€39,95</b> over naar het IBAN dat in je bevestigingsmail staat, met als omschrijving je bestelnummer.</p>
+</div>
+
+<div class="footer">Een product van <a href="studioflow.html">Casanomada Digital</a></div>
+
+<script>
+const SB=window.supabase.createClient('https://vvddiceuqnwdqnzolrwi.supabase.co','sb_publishable_jMqNr5ELQahwCG1QTl6l1g_R2P1GKRE');
+const TIERS={S:{n:'Starter',p:{1:'19,95',3:'56,95',12:'199'}},P:{n:'Pro',p:{1:'39,95',3:'113,95',12:'399'}},U:{n:'Studio',p:{1:'79,95',3:'227,95',12:'799'}}};
+function upd(){
+  const t=document.getElementById('fTier').value, m=document.getElementById('fDuur').value;
+  document.getElementById('pkgNaam').textContent=TIERS[t].n;
+  document.getElementById('pkgPrijs').textContent='€'+TIERS[t].p[m];
+  document.getElementById('pkgPer').textContent=m==='12'?'per jaar':(m==='3'?'voor 3 maanden':'per maand');
+}
+function urlPrefill(){
+  const qs=new URLSearchParams(location.search);
+  const t=qs.get('tier'), m=qs.get('duur');
+  if(t&&TIERS[t])document.getElementById('fTier').value=t;
+  if(m&&['1','3','12'].includes(m))document.getElementById('fDuur').value=m;
+  upd();
+}
+document.getElementById('fTier').onchange=upd;
+document.getElementById('fDuur').onchange=upd;
+urlPrefill();
+
+async function bestel(){
+  const naam=document.getElementById('fNaam').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const tel=document.getElementById('fTel').value.trim();
+  const tier=document.getElementById('fTier').value;
+  const months=+document.getElementById('fDuur').value;
+  const err=m=>{const e=document.getElementById('err');e.textContent=m;e.style.display='block'};
+  if(naam.length<2)return err('Vul je naam in.');
+  if(!/\S+@\S+\.\S+/.test(email))return err('Vul een geldig e-mailadres in.');
+  const btn=document.getElementById('btnBestel');btn.disabled=true;btn.textContent='Bezig…';
+  const {data,error}=await SB.rpc('create_order',{p_naam:naam,p_email:email,p_tel:tel,p_tier:tier,p_months:months});
+  btn.disabled=false;btn.textContent='Doorgaan naar betalen';
+  if(error||!data||!data.ok)return err(data&&data.error||error&&error.message||'Er ging iets mis. Probeer het opnieuw.');
+  document.getElementById('orderNo').textContent=data.order_no;
+  const bedrag='€'+TIERS[tier].p[months];
+  document.getElementById('bedragLabel').textContent=bedrag;
+  document.getElementById('bedragLabel2').textContent=bedrag;
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

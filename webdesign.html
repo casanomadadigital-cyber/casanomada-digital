@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8RGTHWX6J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N8RGTHWX6J');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webdesign & Website Templates | Klinieken, Beauty & Ondernemers | Casanomada Digital</title>
+<meta name="description" content="Luxe webdesign en website templates voor klinieken, tandartsen, salons, beautyzaken, bouw, vastgoed en ondernemers. Strategisch ontworpen om bezoekers in klanten te veranderen.">
+<link rel="canonical" href="https://casanomadadigital.com/webdesign.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Casanomada Digital">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:title" content="Webdesign & Website Templates | Klinieken, Beauty & Ondernemers | Casanomada Digital">
+<meta property="og:description" content="Luxe webdesign en website templates voor klinieken, tandartsen, salons, beautyzaken, bouw, vastgoed en ondernemers. Strategisch ontworpen om bezoekers in klanten te veranderen.">
+<meta property="og:url" content="https://casanomadadigital.com/webdesign.html">
+<meta property="og:image" content="https://casanomadadigital.com/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Webdesign & Website Templates | Klinieken, Beauty & Ondernemers | Casanomada Digital">
+<meta name="twitter:description" content="Luxe webdesign en website templates voor klinieken, tandartsen, salons, beautyzaken, bouw, vastgoed en ondernemers. Strategisch ontworpen om bezoekers in klanten te veranderen.">
+<meta name="twitter:image" content="https://casanomadadigital.com/img/og-image.png">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fffdf9;
+    --black:#131313;
+    --ink:#000000;
+    --taupe:#9e8a73;
+    --taupe-soft:#bdad9a;
+    --muted:#6b6660;
+    --serif:'Cormorant Garamond', Georgia, serif;
+    --sans:'Montserrat', sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    font-weight:300;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:12px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    font-weight:400;
+  }
+  .display{
+    font-family:var(--serif);
+    font-weight:300;
+    line-height:1.15;
+  }
+  .display i{font-style:italic}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--sans);
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;
+    padding:18px 34px;border:1px solid var(--ink);background:transparent;color:var(--ink);
+    cursor:pointer;transition:.35s ease;
+  }
+  .btn:hover{background:var(--taupe);border-color:var(--taupe);color:var(--cream)}
+  .btn-light{border-color:var(--cream);color:var(--cream)}
+  .btn-light:hover{background:var(--taupe);border-color:var(--taupe);color:var(--cream)}
+
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--cream);
+    border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:90px}
+  .logo{
+    font-family:var(--serif);font-size:26px;letter-spacing:.04em;
+  }
+  .logo span{font-style:italic;color:var(--taupe)}
+  .nav-links{display:flex;gap:34px}
+  .nav-links a{font-size:11px;letter-spacing:.18em;text-transform:uppercase;transition:color .3s}
+  .nav-links a:hover{color:var(--taupe)}
+  .nav-toggle{display:none;background:none;border:none;font-size:22px;cursor:pointer}
+
+  /* HERO */
+  .hero{
+    position:relative;background:var(--black);color:var(--cream);
+    min-height:760px;display:flex;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;
+  }
+  .hero-grid{
+    position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);
+    opacity:.22;
+  }
+  .hero-grid div{background-size:cover;background-position:center}
+  .hero-content{position:relative;z-index:2;padding:60px 40px;max-width:1000px}
+  .hero-tags{display:flex;justify-content:center;gap:40px;margin-bottom:30px;font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--cream)}
+  .hero h1{font-size:108px;text-transform:uppercase;line-height:1.05;font-weight:300}
+  .hero .sub{margin-top:26px;font-size:13px;letter-spacing:.22em;text-transform:uppercase}
+
+  /* INTRO */
+  .intro{padding:120px 0;text-align:center}
+  .intro h2{font-size:62px;max-width:980px;margin:18px auto 30px}
+  .intro p{max-width:620px;margin:0 auto;font-size:16px;color:var(--ink)}
+
+  /* QUICKLINKS */
+  .quick{padding:0 0 120px}
+  .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .quick-card figure{overflow:hidden;aspect-ratio:2/3}
+  .quick-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .quick-card:hover img{transform:scale(1.05)}
+  .quick-card .label{margin-top:18px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;transition:color .3s}
+  .quick-card:hover .label{color:var(--taupe)}
+
+  /* ABOUT */
+  .about{background:var(--black);color:var(--cream);padding:110px 0}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+  .about figure{aspect-ratio:3/4;overflow:hidden}
+  .about figure img{width:100%;height:100%;object-fit:cover}
+  .about .eyebrow{color:var(--taupe-soft);margin-bottom:20px}
+  .about h2{font-size:54px;margin-bottom:24px}
+  .about p{font-size:16px;margin-bottom:30px;opacity:.92}
+  .about p i{font-style:italic}
+
+  /* TYPES (Wat we maken) */
+  .types{padding:110px 0;text-align:center}
+  .types .eyebrow{color:var(--muted);margin-bottom:16px}
+  .types h2{font-size:50px;margin-bottom:14px}
+  .types > .wrap > p{max-width:600px;margin:0 auto 60px;font-size:16px}
+  .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;text-align:left}
+  .type-card figure{aspect-ratio:4/5;overflow:hidden;margin-bottom:18px}
+  .type-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .type-card:hover img{transform:scale(1.04)}
+  .type-card h3{font-family:var(--serif);font-weight:400;font-size:28px;margin-bottom:6px}
+  .type-card p{font-size:14px;color:var(--muted)}
+
+  /* BESTSELLERS */
+  .best{padding:110px 0;background:var(--cream)}
+  .best-head{text-align:center;margin-bottom:60px}
+  .best-head h2{font-size:46px}
+  .best-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .best-card figure{aspect-ratio:65/100;overflow:hidden;box-shadow:10px 10px 30px rgba(0,0,0,.06)}
+  .best-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .best-card:hover img{transform:scale(1.04)}
+  .best-card .name{margin-top:16px;font-size:12px;letter-spacing:.22em;text-transform:uppercase}
+  .best-card .price{font-size:11px;letter-spacing:.18em;color:var(--muted);margin-top:6px;text-transform:uppercase}
+
+  /* TESTIMONIAL */
+  .testi{padding:120px 0;text-align:center}
+  .testi .eyebrow{color:var(--muted);margin-bottom:30px}
+  .testi blockquote{
+    font-family:var(--serif);font-style:italic;font-weight:300;
+    font-size:46px;line-height:1.3;max-width:920px;margin:0 auto 30px;
+  }
+  .testi .author{font-family:var(--serif);font-size:38px;font-style:normal}
+
+  /* BIO */
+  .bio{background:var(--black);color:var(--cream);padding:110px 0}
+  .bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+  .bio figure{aspect-ratio:3/4;overflow:hidden;order:2}
+  .bio figure img{width:100%;height:100%;object-fit:cover}
+  .bio .col{order:1}
+  .bio h2{font-family:var(--serif);font-style:italic;font-weight:300;font-size:54px;margin-bottom:26px}
+  .bio p{font-size:16px;margin-bottom:18px;opacity:.92}
+  .bio p i{font-style:italic}
+
+  /* JOURNAL */
+  .journal{padding:110px 0}
+  .journal h2{text-align:center;font-size:46px;text-transform:uppercase;margin-bottom:60px}
+  .journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 30px}
+  .post figure{aspect-ratio:4/3;overflow:hidden;margin-bottom:18px}
+  .post img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .post:hover img{transform:scale(1.04)}
+  .post .cat{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--taupe);margin-bottom:8px}
+  .post h3{font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.25}
+
+  /* OFFER */
+  .offer{background:var(--black);color:var(--cream);position:relative;overflow:hidden}
+  .offer-grid{display:grid;grid-template-columns:1fr 1fr;min-height:600px}
+  .offer .col{padding:110px 60px;display:flex;flex-direction:column;justify-content:center;max-width:560px;margin-left:auto;width:100%}
+  .offer figure{overflow:hidden}
+  .offer figure img{width:100%;height:100%;object-fit:cover}
+  .offer .eyebrow{color:var(--taupe-soft);margin-bottom:18px}
+  .offer h2{font-size:52px;margin-bottom:24px}
+  .offer p{font-size:16px;margin-bottom:34px;opacity:.92}
+
+  /* RESOURCES */
+  .res{padding:110px 0}
+  .res-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center}
+  .res figure{aspect-ratio:3/4;overflow:hidden}
+  .res figure img{width:100%;height:100%;object-fit:cover}
+  .res .head{text-align:left;margin-bottom:40px}
+  .res .head .eyebrow{color:var(--muted);margin-bottom:16px}
+  .res .head h2{font-size:46px}
+  .res .head h2 i{font-style:italic}
+  .res-item{padding:22px 0;border-top:1px solid rgba(0,0,0,.12)}
+  .res-item:last-child{border-bottom:1px solid rgba(0,0,0,.12)}
+  .res-item .cat{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+  .res-item h3{font-family:var(--serif);font-weight:400;font-size:28px;margin:6px 0}
+  .res-item p{font-size:14px;color:var(--muted)}
+
+  /* NEWSLETTER */
+  .news{
+    background:var(--black);color:var(--cream);text-align:center;padding:120px 0;
+    background-image:linear-gradient(rgba(19,19,19,.82),rgba(19,19,19,.82)),url('https://static.showit.co/1200/D03gaqtG9BDRRhduowHpow/129556/best_luxury_showit_website_templates3.jpg');
+    background-size:cover;background-position:center;
+  }
+  .news .eyebrow{margin-bottom:20px}
+  .news h2{font-size:80px;text-transform:uppercase;margin-bottom:18px}
+  .news h2 i{font-style:italic;color:var(--taupe-soft)}
+  .news p{max-width:560px;margin:0 auto 36px;opacity:.92}
+  .news form{display:flex;max-width:520px;margin:0 auto;gap:12px}
+  .news input{
+    flex:1;padding:16px 20px;border:1px solid rgba(255,253,249,.4);
+    background:transparent;color:var(--cream);font-family:var(--sans);font-size:13px;
+  }
+  .news input::placeholder{color:rgba(255,253,249,.6)}
+
+  /* FOOTER */
+  footer{background:var(--black);color:var(--cream);padding:90px 0 40px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.4fr;gap:50px}
+  .foot-logo{font-family:var(--serif);font-size:30px}
+  .foot-logo span{font-style:italic;color:var(--taupe-soft)}
+  footer h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:20px;color:var(--taupe-soft)}
+  footer ul{list-style:none}
+  footer ul li{margin-bottom:12px}
+  footer ul li a{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;transition:.3s}
+  footer ul li a:hover{color:var(--taupe-soft);opacity:1}
+  .foot-cta h3{font-family:var(--serif);font-style:italic;font-weight:300;font-size:26px;margin-bottom:14px}
+  .foot-cta p{font-size:13px;opacity:.85;margin-bottom:22px}
+  .foot-bottom{
+    margin-top:60px;padding-top:24px;border-top:1px solid rgba(255,253,249,.12);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.7;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:1024px){
+    .hero h1{font-size:72px}
+    .intro h2{font-size:46px}
+    .news h2{font-size:56px}
+  }
+  @media(max-width:768px){
+    .wrap{padding:0 22px}
+    .nav-links{
+      display:none;position:absolute;top:90px;left:0;right:0;background:var(--cream);
+      flex-direction:column;gap:0;padding:10px 22px 24px;border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    .nav-links.open{display:flex}
+    .nav-links a{padding:14px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+    .nav-toggle{display:block}
+    .hero{min-height:560px}
+    .hero h1{font-size:44px}
+    .hero-tags{gap:20px;font-size:9px}
+    .hero-grid{grid-template-columns:repeat(2,1fr)}
+    .intro{padding:80px 0}
+    .intro h2{font-size:34px}
+    .quick-grid,.best-grid,.journal-grid,.types-grid{grid-template-columns:1fr;gap:30px}
+    .about-grid,.bio-grid,.offer-grid,.res-grid{grid-template-columns:1fr;gap:40px}
+    .about,.bio,.best,.journal,.res,.types{padding:70px 0}
+    .about h2,.bio h2,.offer h2,.types h2{font-size:36px}
+    .best-head h2,.journal h2,.res .head h2{font-size:32px}
+    .testi blockquote{font-size:28px}
+    .testi .author{font-size:28px}
+    .bio figure{order:1}.bio .col{order:2}
+    .offer .col{padding:60px 24px;max-width:none}
+    .news{padding:80px 0}
+    .news h2{font-size:40px}
+    .news form{flex-direction:column}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:34px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">Casanomada<span> Digital</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#maken">Wat we maken</a>
+      <a href="#over">Over</a>
+      <a href="diensten.html">Diensten</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div style="background-image:url('https://static.showit.co/800/V1HY68WZs7RyfLZCDJCJPw/129556/hyde_park_showit_website_template.jpg')"></div>
+    <div style="background-image:url('https://static.showit.co/800/fdg3LnD7cdBMFgPfslQZsQ/129556/covent_garden_showit_website_template.jpg')"></div>
+    <div style="background-image:url('https://static.showit.co/800/3g-YgZvxXGAnY1HjMmAMzw/129556/marylebone_showit_website_template.jpg')"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tags"><span>Design Studio</span><span>Template Shop</span></div>
+    <h1 class="display">Websites die jouw<br>verhaal vertellen</h1>
+    <p class="sub">Waar alles op zijn plek valt</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="shop">
+  <div class="wrap">
+    <p class="eyebrow">Where everything clicks</p>
+    <h2 class="display">Premium Showit website templates voor ambitieuze ondernemers die klaar zijn om te <i>verkopen</i>, te <i>groeien</i> en <i>top of mind</i> te blijven</h2>
+    <p>Deze templates zijn ontworpen om je met gemak te laten verschijnen, met vertrouwen te laten communiceren en losse klikken om te zetten in klanten die al overtuigd zijn voordat ze contact opnemen.</p>
+  </div>
+</section>
+
+<!-- QUICKLINKS -->
+<section class="quick">
+  <div class="wrap quick-grid">
+    <a class="quick-card" href="#shop">
+      <figure><img loading="lazy" src="https://static.showit.co/400/ATPNmq80TEXtOIfknN10dQ/129556/social_media_templates_mockup.jpg" alt="Social templates"></figure>
+      <div class="label">Social templates</div>
+    </a>
+    <a class="quick-card" href="#shop">
+      <figure><img loading="lazy" src="https://static.showit.co/400/roNxFM9HVdy9MV548EAbag/129556/victoria_mockup.png" alt="Website templates"></figure>
+      <div class="label">Website templates</div>
+    </a>
+    <a class="quick-card" href="#shop">
+      <figure><img loading="lazy" src="https://static.showit.co/400/Pyfc4-qdInfMJv-8fywhxw/129556/mondays_featured_project_mockup.jpg" alt="Pagina add-ons"></figure>
+      <div class="label">Pagina add-ons</div>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="over">
+  <div class="wrap about-grid">
+    <figure><img loading="lazy" src="https://static.showit.co/800/Ye3PBZkWTv1k01BnELEkdA/129556/best_luxury_showit_website_templates8.jpg" alt="Werkruimte"></figure>
+    <div>
+      <p class="eyebrow">word verliefd op je site</p>
+      <h2 class="display">Je website zou moeten voelen als een boeiend verhaal dat het vertellen waard is</h2>
+      <p>En niet zomaar een verhaal, maar het soort dat mensen onthouden. Eén dat je publiek uitnodigt en hen met intentie door de pagina's beweegt.<br><br>Want een website is geen vinkje op je lijstje. Het is je krachtigste verkooptool. Het moet eruitzien als jouw hoogste visie én zo converteren. Bij Casanomada Digital ontwerpen we strategische templates die zowel je uitstraling <i>als</i> je omzet versterken.</p>
+      <a href="#shop" class="btn btn-light">Bekijk de sites</a>
+    </div>
+  </div>
+</section>
+
+<!-- TYPES: WAT WE MAKEN -->
+<section class="types" id="maken">
+  <div class="wrap">
+    <p class="eyebrow">veelzijdig in elk verhaal</p>
+    <h2 class="display">Wat we maken</h2>
+    <p>We ontwerpen veel verschillende websites, elk afgestemd op het verhaal en doel van het merk. Van klinieken tot bouw, en alles daartussen.</p>
+    <div class="types-grid">
+      <div class="type-card">
+        <figure><img loading="lazy" src="img/kliniek.jpg" alt="Beauty &amp; klinieken websites"></figure>
+        <h3>Beauty &amp; klinieken</h3>
+        <p>Verfijnde sites voor salons, beautyzaken, tandartsen en esthetische &amp; haarklinieken, gebouwd om afspraken en boekingen te stimuleren.</p>
+      </div>
+      <div class="type-card">
+        <figure><img loading="lazy" src="img/post2.jpg" alt="Bouw &amp; vastgoed websites"></figure>
+        <h3>Bouw &amp; vastgoed</h3>
+        <p>Krachtige sites voor bouwbedrijven, renovatie en vastgoed die projecten laten spreken en structureel aanvragen opleveren.</p>
+      </div>
+      <div class="type-card">
+        <figure><img loading="lazy" src="img/vrouw3.jpg" alt="Ondernemerswebsites"></figure>
+        <h3>Ondernemerswebsites</h3>
+        <p>Strategische sites voor coaches, creatieven en service-merken die willen converteren.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="best">
+  <div class="wrap">
+    <div class="best-head"><h2 class="display">De Bestsellers</h2></div>
+    <div class="best-grid">
+      <a class="best-card" href="#shop">
+        <figure><img loading="lazy" src="https://static.showit.co/400/fdg3LnD7cdBMFgPfslQZsQ/129556/covent_garden_showit_website_template.jpg" alt="Template Covent Garden"></figure>
+        <div class="name">Covent Garden</div>
+      </a>
+      <a class="best-card" href="#shop">
+        <figure><img loading="lazy" src="https://static.showit.co/400/3zBHJPiKkStt5IazIIjXQQ/129556/victoria_showit_website_template.jpg" alt="Template Victoria"></figure>
+        <div class="name">Victoria</div>
+      </a>
+      <a class="best-card" href="#shop">
+        <figure><img loading="lazy" src="https://static.showit.co/400/3g-YgZvxXGAnY1HjMmAMzw/129556/marylebone_showit_website_template.jpg" alt="Template Marylebone"></figure>
+        <div class="name">Marylebone</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testi">
+  <div class="wrap">
+    <p class="eyebrow">liefde van onze klanten</p>
+    <blockquote>'Ik weet dat de website die we gebouwd hebben een blijvende aanwinst is voor mijn bedrijf, want hij vat perfect samen wie ik ben, wat ik doe en wat mensen kunnen verwachten.'</blockquote>
+    <p class="author">Dr. Erin Martin</p>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="bio">
+  <div class="wrap bio-grid">
+    <div class="col">
+      <h2 class="display"><i>Maak kennis met het team</i></h2>
+      <p>Je website zou moeten voelen als een verlengstuk van jouw magie: strategisch, prachtig en onmiskenbaar jou.<br><br>Wij zijn Casanomada Digital, een studio voor webdesign en branding.</p>
+      <p>We maken websites en merken die de aandacht vasthouden, vertrouwen opbouwen en verkopen terwijl jij letterlijk iets anders doet.<br><br>Onze aanpak? Een beetje romantiseren, een vleugje editorial inspiratie, en volledig geworteld in strategie.</p>
+      <a href="#over" class="btn btn-light" style="margin-top:14px">Lees ons verhaal</a>
+    </div>
+    <figure><img loading="lazy" src="img/founder.JPG" alt="Team Casanomada Digital"></figure>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal" id="journal">
+  <div class="wrap">
+    <h2 class="display">Op de Journal</h2>
+    <div class="journal-grid">
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/Ye3PBZkWTv1k01BnELEkdA/129556/best_luxury_showit_website_templates8.jpg" alt=""></figure>
+        <div class="cat">Showit</div>
+        <h3>Alles wat je moet weten over Showit</h3>
+      </a>
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/MaNDe1Uwg6X-2YFOCjfMEw/129556/best_luxury_showit_website_templates4.jpg" alt=""></figure>
+        <div class="cat">Business</div>
+        <h3>Effectieve manieren om je merkidentiteit te versterken</h3>
+      </a>
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/joDA4XvU2ST45amEuyvAIg/129556/showit_website_template_for_digital_marketers_or_victoria6.jpg" alt=""></figure>
+        <div class="cat">Website tips</div>
+        <h3>Alles voor een sterke Over-pagina</h3>
+      </a>
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/vjciw0Ip6adLgkqmZllVeg/129556/showit_website_template_for_digital_marketers_or_victoria20.jpg" alt=""></figure>
+        <div class="cat">Website tips</div>
+        <h3>Simpele en krachtige manieren om je SEO te boosten</h3>
+      </a>
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/vUtkuFXiP7KkFhhFQGgw6A/129556/best_luxury_showit_website_templates11.jpg" alt=""></figure>
+        <div class="cat">Branding</div>
+        <h3>De beste stockfotografie-sites voor creatieven</h3>
+      </a>
+      <a class="post" href="#">
+        <figure><img loading="lazy" src="https://static.showit.co/400/eOmaxOLLTr-4wWD2Zmnz0A/129556/showit_website_templates_studio_designs90.jpg" alt=""></figure>
+        <div class="cat">Website tips</div>
+        <h3>Het geheim van het kiezen van de beste template</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="offer" id="maatwerk">
+  <div class="offer-grid">
+    <div class="col">
+      <p class="eyebrow">geen tijd voor diy? geen probleem</p>
+      <h2 class="display">Laat ons je website template voor je op maat maken</h2>
+      <p>Een ervaring van twee weken waarin wij het volledige customisatie-proces én het strategisch denkwerk overnemen, en jouw sales-machine website op een zilveren schaaltje aanleveren, zodat jij je kunt focussen op waar je het beste in bent.</p>
+      <a href="contact.html" class="btn btn-light">Meer informatie</a>
+    </div>
+    <figure><img loading="lazy" src="https://static.showit.co/800/6mezT7GeXylXSxEzpk_QCA/129556/victoria_mockup_2.png" alt="Op maat gemaakte website"></figure>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="res">
+  <div class="wrap res-grid">
+    <figure><img loading="lazy" src="https://static.showit.co/800/CrRyvNdpYDc7OZdLiZ847Q/129556/best_luxury_showit_website_templates16.jpg" alt="Gratis resources"></figure>
+    <div>
+      <div class="head">
+        <p class="eyebrow">niet zeker waar te beginnen?</p>
+        <h2 class="display">Bekijk onze <i>gratis</i> resources om te starten met je nieuwe website</h2>
+      </div>
+      <div class="res-item">
+        <div class="cat">voor je strategie</div>
+        <h3>Website Strategie Kit</h3>
+        <p>Download de exacte structuur, prompts en tools voor je content, zodat elke pagina doel en flow heeft.</p>
+      </div>
+      <div class="res-item">
+        <div class="cat">voor je to-do organisatie</div>
+        <h3>Notion Dashboard</h3>
+        <p>Onze launch-checklist die je helpt georganiseerd te blijven en je website als een pro te lanceren.</p>
+      </div>
+      <div class="res-item">
+        <div class="cat">voor het kiezen van je stijl</div>
+        <h3>De Template Quiz</h3>
+        <p>Ontdek welke van onze templates perfect past bij jouw merk, doelen en stijl.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="news" id="contact">
+  <div class="wrap">
+    <p class="eyebrow">jouw toekomstige site wacht, en deze korting ook</p>
+    <h2 class="display">Schrijf je in <i>&amp;</i> bespaar</h2>
+    <p>Ontvang wekelijks website-tips en marketingstrategieën in je inbox plus een geheime kortingscode van 10% voor de shop om direct te gebruiken.</p>
+    <form onsubmit="event.preventDefault();this.querySelector('input').value='';this.querySelector('button').textContent='Bedankt!';">
+      <input type="email" placeholder="Je e-mailadres" required>
+      <button class="btn btn-light" type="submit">Schrijf je in</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">Casanomada<span> Digital</span></div>
+        <p style="font-size:13px;opacity:.8;margin-top:16px;max-width:240px">Luxe website templates &amp; webdesign, van klinieken tot bouw en ondernemers.</p>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#maken">Wat we maken</a></li>
+          <li><a href="#over">Over</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#journal">Journal</a></li>
+          <li><a href="diensten.html">Diensten</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="https://www.instagram.com/casanomada.digital/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@casanomada.digital" target="_blank" rel="noopener">TikTok</a></li>
+        </ul>
+      </div>
+      <div class="foot-cta">
+        <h3>Kom op de lijst</h3>
+        <p>Sluit je aan bij onze wekelijkse nieuwsbrief en ontvang een speciale korting.</p>
+        <a href="#contact" class="btn btn-light">Schrijf je vandaag in</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Casanomada Digital</span>
+      <span>Privacy &nbsp;|&nbsp; Voorwaarden &nbsp;|&nbsp; In-house gebouwd</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

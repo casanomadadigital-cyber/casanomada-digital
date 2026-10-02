@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudioFlow, Portaal voor de weddingbranche</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  /* Zakelijk palet: diep marineblauw + champagne-goud (vertrouwen + premium) */
+  :root{
+    --bg:#0B1120; --panel:#121A2B; --panel2:#1A2438; --border:#27324A;
+    --gold:#C6A15B; --gold2:#DCBE85; --text:#E9EDF5; --muted:#94A0B8;
+    --green:#34C98E; --red:#E36054; --blue:#5E9BF7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:14px}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+  label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-weight:600;letter-spacing:.3px}
+  .btn{background:linear-gradient(135deg,#D4AF6A,#A8843E);color:#171003;border:none;padding:11px 20px;border-radius:8px;font-weight:700;font-size:14px}
+  .btn:hover{filter:brightness(1.1)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;font-size:14px}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold2)}
+  .btn-sm{padding:6px 12px;font-size:12.5px;border-radius:6px}
+  .btn-danger{background:transparent;border:1px solid #5a3030;color:var(--red)}
+
+  /* ---------- LOGIN ---------- */
+  #loginView{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:radial-gradient(ellipse at top,#16213A 0%,var(--bg) 62%)}
+  .usp{display:flex;flex-direction:column;gap:7px;margin:0 0 20px}
+  .usp div{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
+  .usp svg{color:var(--green);flex-shrink:0}
+  .loginCard{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px}
+  .logo{font-size:26px;font-weight:800;letter-spacing:-.5px}
+  .logo span{color:var(--gold)}
+  .tagline{color:var(--muted);font-size:13.5px;margin:6px 0 22px}
+  .loginTabs{display:flex;gap:8px;margin-bottom:8px}
+  .loginTabs button{flex:1;padding:9px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-weight:600;font-size:13px}
+  .loginTabs button.active{background:var(--panel2);color:var(--gold2);border-color:var(--gold)}
+  .err{color:var(--red);font-size:13px;margin-top:10px;display:none}
+
+  /* ---------- APP SHELL ---------- */
+  #appView{display:none;min-height:100vh}
+  .impbar{display:none;background:linear-gradient(135deg,#3a2c10,#2a1f0c);border-bottom:1px solid var(--gold);color:var(--gold2);padding:10px 18px;font-size:13.5px;font-weight:600;text-align:center}
+  .impbar button{margin-left:12px}
+  .shell{display:flex;min-height:100vh}
+  .sidebar{width:230px;background:var(--panel);border-right:1px solid var(--border);padding:22px 14px;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+  .sidebar .logo{font-size:20px;padding:0 10px 18px}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--muted);font-size:13.5px;font-weight:600;border:none;background:transparent;text-align:left;width:100%}
+  .nav-item:hover{color:var(--text);background:var(--panel2)}
+  .nav-item.active{background:linear-gradient(135deg,rgba(212,164,76,.18),rgba(212,164,76,.06));color:var(--gold2)}
+  .nav-item .ic{width:20px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .nav-head{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#5c6370;font-weight:700;padding:16px 12px 6px}
+  .nav-item.locked{opacity:.55}
+  .pro-badge{margin-left:auto;font-size:9px;letter-spacing:.08em;border:1px solid var(--gold);color:var(--gold2);padding:1px 7px;border-radius:9px;font-weight:700}
+  .main{flex:1;padding:28px 32px;max-width:1100px;width:100%}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+  .topbar h1{font-size:22px}
+  .userchip{font-size:13px;color:var(--muted)}
+  .userchip b{color:var(--text)}
+
+  .grid{display:grid;gap:16px}
+  .grid-4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .stat .num{font-size:26px;font-weight:800;margin-top:4px;letter-spacing:-.5px}
+  .stat .lbl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.8px;text-transform:uppercase}
+  .stat .sub{font-size:12px;color:var(--muted);margin-top:5px}
+  .stat{border-top:2px solid transparent}
+  .stat.acc-gold{border-top-color:var(--gold)}
+  .stat.acc-green{border-top-color:var(--green)}
+  .stat.acc-blue{border-top-color:var(--blue)}
+  .stat.acc-red{border-top-color:var(--red)}
+
+  /* grafieken */
+  .vbars{display:flex;align-items:flex-end;gap:5px;height:130px;margin-top:14px}
+  .vbar-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end}
+  .vbar{width:100%;background:linear-gradient(180deg,var(--gold2),#9c7a35);border-radius:3px 3px 0 0;min-height:2px}
+  .vbar-l{font-size:10px;color:var(--muted)}
+  .hbar-row{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:12.5px}
+  .hbar-row .hl{width:90px;color:var(--muted);flex-shrink:0}
+  .hbar-row .ht{width:34px;text-align:right;font-weight:700;flex-shrink:0}
+  .hbar{flex:1;height:9px;background:var(--panel2);border-radius:5px;overflow:hidden}
+  .hbar i{display:block;height:100%;border-radius:5px}
+  .evdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:1px solid var(--border)}
+  td{padding:12px;border-bottom:1px solid #20242e;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:700}
+  .b-lead{background:rgba(91,156,245,.15);color:var(--blue)}
+  .b-geboekt{background:rgba(212,164,76,.15);color:var(--gold2)}
+  .b-aanbetaald{background:rgba(62,207,142,.15);color:var(--green)}
+  .b-afgerond{background:rgba(154,160,173,.15);color:var(--muted)}
+  .empty{color:var(--muted);text-align:center;padding:34px 10px;font-size:14px}
+
+  /* todo list */
+  .todo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #20242e;font-size:13.5px}
+  .todo:last-child{border-bottom:none}
+  .todo .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:9px;flex-shrink:0}
+
+  /* filter chips */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .chip{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12.5px;font-weight:600}
+  .chip.active{border-color:var(--gold);color:var(--gold2);background:rgba(212,164,76,.1)}
+
+  /* modal */
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 16px}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:28px;width:100%;max-width:640px}
+  .modal h2{font-size:18px;margin-bottom:4px}
+  .modal .sub{color:var(--muted);font-size:13px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+
+  /* contract preview, zakelijk & strak */
+  .preview-wrap{background:#fff;color:#26282c;border-radius:10px;max-width:780px;margin:0 auto;font-family:Georgia,'Times New Roman',serif;line-height:1.7;font-size:13.5px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+  .preview-wrap[dir="rtl"]{font-family:"Segoe UI",Tahoma,Arial,sans-serif}
+  .pw-band{height:7px;background:linear-gradient(90deg,#b08a3e 0%,#e3c887 50%,#b08a3e 100%)}
+  .pw-inner{padding:44px 56px 36px}
+  .preview-wrap h2{font-size:19px;letter-spacing:2.5px;margin-bottom:4px;color:#1d1d1f;font-weight:700}
+  .preview-wrap .c-sub{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#a8842f;font-weight:600;margin-bottom:5px}
+  .preview-wrap .c-head{border-bottom:1px solid #e8dfc9;padding-bottom:18px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .preview-wrap .c-studio{font-size:11.5px;color:#666;text-align:right;line-height:1.55;flex-shrink:0}
+  .preview-wrap[dir="rtl"] .c-studio{text-align:left}
+  .preview-wrap h3{font-size:11.5px;margin:20px 0 7px;color:#a8842f;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;border-bottom:1px solid #f2ecdd;padding-bottom:4px}
+  .preview-wrap p{color:#3a3d42;text-align:justify}
+  .preview-wrap table{font-size:13px;margin:6px 0;width:100%}
+  .preview-wrap td{padding:6px 10px;border-bottom:1px solid #f1f1ee;color:#26282c}
+  .preview-wrap td:first-child{color:#8a8d93;width:38%;font-size:12px;letter-spacing:.3px}
+  .preview-wrap tr:nth-child(even) td{background:#fbfaf7}
+  .sig-row{display:flex;gap:36px;margin-top:38px;page-break-inside:avoid}
+  .sig-box{flex:1}
+  .sig-box .line{border-bottom:1px solid #555;height:72px;display:flex;align-items:flex-end}
+  .sig-box img{max-height:68px}
+  .sig-box .who{font-size:11.5px;color:#555;margin-top:7px;line-height:1.6}
+  .sig-box .who b{color:#26282c}
+  .pw-foot{margin-top:34px;padding-top:12px;border-top:1px solid #eee;font-size:10px;color:#a4a7ad;display:flex;justify-content:space-between;gap:10px;letter-spacing:.4px}
+  .toolbar{display:flex;gap:10px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+
+  /* signature pad */
+  .sigpad{border:1.5px dashed var(--border);border-radius:10px;background:#fff;touch-action:none;width:100%;height:140px}
+
+  .wa-card{border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--panel2);margin-bottom:12px}
+  .wa-card h4{font-size:14px;margin-bottom:6px;color:var(--gold2)}
+  .wa-card p{font-size:13px;color:var(--muted);white-space:pre-wrap;line-height:1.5}
+  .wa-actions{margin-top:10px;display:flex;gap:8px}
+
+  .pill-info{background:rgba(212,164,76,.1);border:1px solid rgba(212,164,76,.35);color:var(--gold2);padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:18px;line-height:1.5}
+
+  /* tabel-hover */
+  .card table tr:hover td{background:rgba(255,255,255,.025)}
+
+  /* agenda */
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .cal-dow{font-size:11px;color:var(--muted);text-align:center;padding:4px;text-transform:uppercase;letter-spacing:.5px}
+  .cal-day{min-height:76px;border:1px solid var(--border);border-radius:8px;padding:6px;font-size:12px;cursor:pointer;background:var(--panel2);transition:border-color .15s}
+  .cal-day:hover{border-color:var(--gold)}
+  .cal-day.past{opacity:.45}
+  .cal-day .dnum{font-weight:700;font-size:12px}
+  .cal-day.today{outline:2px solid var(--gold);outline-offset:-2px}
+  .cal-day.hold{background:rgba(212,164,76,.16);border-color:rgba(212,164,76,.6)}
+  .cal-day.busy{background:rgba(62,207,142,.13);border-color:rgba(62,207,142,.55)}
+  .cal-ev{font-size:10.5px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .legend{display:flex;gap:16px;font-size:12.5px;color:var(--muted);margin:0 0 14px;flex-wrap:wrap}
+  .legend span i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+
+  /* contracttekst bewerken */
+  .art-row{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--panel2)}
+  .art-row input{font-weight:700;margin-bottom:8px}
+
+  /* toasts */
+  .toast-wrap{position:fixed;bottom:22px;right:22px;z-index:99;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+  .toast{background:var(--panel2);border:1px solid var(--gold);border-left:3px solid var(--gold);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.45);animation:toastIn .25s ease;max-width:340px}
+  @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* onboarding */
+  .ob-step{display:flex;align-items:center;gap:11px;padding:9px 0;font-size:13.5px;border-bottom:1px solid #1d2740;cursor:pointer}
+  .ob-step:last-child{border-bottom:none}
+  .ob-step:hover{color:var(--gold2)}
+  .ob-dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ob-step.done{color:var(--muted);text-decoration:line-through;cursor:default}
+  .ob-step.done .ob-dot{background:rgba(52,201,142,.15);border-color:var(--green);color:var(--green)}
+
+  @media(max-width:820px){
+    .cal-day{min-height:54px;padding:4px}
+    .cal-ev{display:none}
+    .shell{flex-direction:column}
+    .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding:10px;gap:2px}
+    .sidebar .logo{width:100%;padding:8px 10px}
+    .nav-item{width:auto;padding:8px 10px;font-size:13px}
+    .main{padding:18px 14px}
+    .preview-wrap{padding:26px 20px}
+  }
+
+  /* ---------- PRINT ---------- */
+  #printArea{display:none}
+  @media print{
+    body *{visibility:hidden}
+    #printArea{display:block;visibility:visible;position:absolute;left:0;top:0;width:100%}
+    #printArea *{visibility:visible}
+    #printArea .preview-wrap{border-radius:0;max-width:100%;box-shadow:none}
+    #printArea .pw-inner{padding:8mm 12mm}
+    #printArea h3{page-break-after:avoid}
+    #printArea p,#printArea table{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="loginView">
+  <div class="loginCard">
+    <div class="logo">Studio<span>Flow</span></div>
+    <div class="tagline">Hét zakelijke portaal voor de weddingbranche, van fotograaf tot zaal, van negaffa tot catering.</div>
+    <div class="usp" id="uspList"></div>
+    <div class="loginTabs">
+      <button id="tabLogin" class="active" onclick="setAuthTab('login')">Inloggen</button>
+      <button id="tabReg" onclick="setAuthTab('reg')">Account aanmaken</button>
+    </div>
+    <div id="regFields" style="display:none">
+      <label>Bedrijfsnaam</label><input id="rStudio" placeholder="bijv. Atlas Visuals / Dar Zafaf">
+      <label>Jouw naam</label><input id="rNaam" placeholder="Voor- en achternaam">
+      <label>Branche</label><select id="rBranche"></select>
+      <label>Activatiecode</label><input id="rCode" placeholder="SF-P3-XXXX-XXX" style="text-transform:uppercase" autocomplete="off">
+      <div style="font-size:11.5px;color:var(--muted);margin-top:6px">Je ontvangt je activatiecode na je aanvraag via casanomadadigital.com.</div>
+    </div>
+    <label>E-mailadres</label><input id="aEmail" type="email" placeholder="naam@studio.nl">
+    <label>Wachtwoord</label><input id="aPass" type="password" placeholder="••••••••">
+    <div style="text-align:right;margin-top:7px"><a href="#" onclick="forgotPass();return false" style="font-size:12px;color:var(--muted)">Wachtwoord vergeten?</a></div>
+    <div class="err" id="authErr"></div>
+    <button class="btn" style="width:100%;margin-top:20px" onclick="doAuth()" id="authBtn">Inloggen</button>
+    <div style="font-size:11px;color:var(--muted);margin-top:18px;text-align:center">Een product van <b style="color:var(--gold2)">Casa Nomada Digital</b></div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="appView">
+<div class="impbar" id="impBar">Beheerdersweergave, je kijkt mee in dit portaal <button class="btn-ghost btn-sm" onclick="backToAdmin()">← Terug naar beheer</button></div>
+<div class="shell">
+  <nav class="sidebar" id="sideNav"></nav>
+  <main class="main" id="mainContent"></main>
+</div>
+</div>
+
+<!-- modal container -->
+<div class="modal-bg" id="modalBg"><div class="modal" id="modalBox"></div></div>
+<!-- toasts -->
+<div class="toast-wrap" id="toastWrap"></div>
+<!-- print -->
+<div id="printArea"></div>
+
+<script>
+"use strict";
+/* ================= CLOUD-CONFIGURATIE (Supabase) =================
+   Vul hieronder de twee sleutels in uit je Supabase-project
+   (Settings → API). Zolang ze leeg zijn draait StudioFlow in
+   lokale modus (data per apparaat). Zie SETUP-INSTRUCTIES.md.  */
+const SF_CONFIG={
+  url:'https://vvddiceuqnwdqnzolrwi.supabase.co',
+  anonKey:'sb_publishable_jMqNr5ELQahwCG1QTl6l1g_R2P1GKRE',
+  adminEmail:'casanomada.digital@gmail.com'  // jouw beheerder-login
+};
+const CLOUD=!!(SF_CONFIG.url&&SF_CONFIG.anonKey);
+const sb=CLOUD?window.supabase.createClient(SF_CONFIG.url,SF_CONFIG.anonKey):null;
+let CLOUDPROFILE=null;
+function vertaalAuth(m){
+  m=String(m||'');
+  if(/invalid login credentials/i.test(m))return 'E-mail of wachtwoord klopt niet.';
+  if(/email not confirmed/i.test(m))return 'Bevestig eerst je e-mailadres, check je inbox (en spam).';
+  if(/already registered/i.test(m))return 'Dit e-mailadres heeft al een account.';
+  if(/at least 6 characters/i.test(m))return 'Kies een wachtwoord van minimaal 6 tekens.';
+  if(/rate limit/i.test(m))return 'Te veel pogingen, probeer het over een minuut opnieuw.';
+  return 'Er ging iets mis: '+m;
+}
+
+/* ================= ADMIN TOEGANG (alleen lokale modus) ================= */
+const ADMIN_EMAIL='admin@studioflow.nl';
+const ADMIN_PASS='studioflow2026';
+
+/* ================= ABONNEMENTEN & ACTIVATIECODES ================= */
+const TIERNAAM={S:'Starter',P:'Pro',U:'Studio'};
+const SF_SALT='CND-2026-STUDIOFLOW-V1';
+function sfHash(s){let h=7;s=s+SF_SALT;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0}return h.toString(36).slice(-3).toUpperCase()}
+function genCode(tier,maanden){const r=Math.random().toString(36).slice(2,6).toUpperCase().replace(/[^A-Z0-9]/g,'X').padEnd(4,'X');const base=`SF-${tier}${maanden}-${r}`;return base+'-'+sfHash(base)}
+function parseCode(code){
+  code=(code||'').trim().toUpperCase();
+  const m=code.match(/^SF-([SPU])(1|3|12)-([A-Z0-9]{4})-([A-Z0-9]{3})$/);
+  if(!m)return null;
+  if(sfHash(`SF-${m[1]}${m[2]}-${m[3]}`)!==m[4])return null;
+  return {tier:m[1],maanden:+m[2],code};
+}
+function addMonths(vanaf,m){const d=new Date((vanaf||today())+'T00:00:00');d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}
+const usedCodes=()=>JSON.parse(localStorage.getItem('sf_used_codes')||'[]');
+function markUsed(code){const u=usedCodes();u.push(code);localStorage.setItem('sf_used_codes',JSON.stringify(u))}
+function checkCode(raw){
+  const pc=parseCode(raw);
+  if(!pc)return {err:'Ongeldige activatiecode. Controleer de code of vraag een nieuwe aan via casanomadadigital.com.'};
+  if(usedCodes().includes(pc.code))return {err:'Deze activatiecode is al gebruikt.'};
+  return pc;
+}
+
+/* ================= STATE ================= */
+const LS_ACCS='sf_accounts', LS_SES='sf_session2';
+let SES=null; /* {aid, admin, imp} */
+let D={settings:{},clients:[],contracts:[],invoices:[],offertes:[],seq:{contract:0,invoice:0,offerte:0}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const eur=n=>new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR'}).format(+n||0);
+const fdate=d=>d?new Date(d+'T00:00:00').toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'}):'-';
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+/* ================= BRANCHES (hele weddingbranche) ================= */
+/* spec = dienstspecifiek artikel (Artikel 8) per taal */
+const BRANCHES={
+ fotografie:{label:'Fotografie',media:true,pakket:'Fotografie, hele dag',dienst:{nl:'de fotografie',fr:'la photographie',ar:'التصوير الفوتوغرافي',en:'the photography'},titel:{nl:'OVEREENKOMST FOTOGRAFIE',fr:'CONTRAT DE PHOTOGRAPHIE',ar:'عقد تصوير فوتوغرافي',en:'PHOTOGRAPHY AGREEMENT'},
+  spec:{nl:'De opdrachtnemer werkt met professionele apparatuur en zorgt voor een back-up van het materiaal. Onbewerkte bestanden (RAW) worden niet geleverd, tenzij schriftelijk anders overeengekomen. De selectie en bewerking van het materiaal behoort tot de creatieve vrijheid van de opdrachtnemer.',fr:'Le prestataire travaille avec du matériel professionnel et assure la sauvegarde des fichiers. Les fichiers bruts (RAW) ne sont pas fournis, sauf accord écrit contraire. La sélection et la retouche relèvent de la liberté créative du prestataire.',ar:'يعمل مقدّم الخدمة بمعدات احترافية ويضمن نسخاً احتياطية للملفات. لا تُسلَّم الملفات الخام (RAW) إلا باتفاق كتابي. يظل اختيار اللقطات وتعديلها ضمن الحرية الإبداعية لمقدّم الخدمة.',en:'The contractor works with professional equipment and keeps a backup of all material. Unedited (RAW) files are not provided unless agreed in writing. The selection and editing of the material remain part of the creative freedom of the contractor.'}},
+ videografie:{label:'Videografie',media:true,pakket:'Videografie, hele dag',dienst:{nl:'de videografie',fr:'la vidéographie',ar:'تصوير الفيديو',en:'the videography'},titel:{nl:'OVEREENKOMST VIDEOGRAFIE',fr:'CONTRAT DE VIDÉOGRAPHIE',ar:'عقد تصوير فيديو',en:'VIDEOGRAPHY AGREEMENT'},
+  spec:{nl:'De opdrachtnemer werkt met professionele apparatuur en zorgt voor een back-up van het materiaal. Ruwe, onbewerkte beelden worden niet geleverd, tenzij schriftelijk anders overeengekomen. De montage en muziekkeuze behoren tot de creatieve vrijheid van de opdrachtnemer; één correctieronde is inbegrepen.',fr:'Le prestataire travaille avec du matériel professionnel et assure la sauvegarde des images. Les rushs non montés ne sont pas fournis, sauf accord écrit contraire. Le montage et le choix musical relèvent de la liberté créative du prestataire ; une série de corrections est incluse.',ar:'يعمل مقدّم الخدمة بمعدات احترافية ويضمن نسخاً احتياطية للمواد. لا تُسلَّم اللقطات الخام غير المعدّلة إلا باتفاق كتابي. يظل المونتاج واختيار الموسيقى ضمن الحرية الإبداعية لمقدّم الخدمة؛ وتشمل الخدمة جولة تعديل واحدة.',en:'The contractor works with professional equipment and keeps a backup of all material. Raw, unedited footage is not provided unless agreed in writing. Editing and music selection remain part of the creative freedom of the contractor; one round of revisions is included.'}},
+ foto:{label:'Fotografie & Videografie (samen)',media:true,pakket:'Foto + Video, hele dag',dienst:{nl:'de fotografie en videografie',fr:'la photographie et la vidéographie',ar:'التصوير الفوتوغرافي والفيديو',en:'the photography and videography'},
+  spec:{nl:'De opdrachtnemer werkt met professionele apparatuur en zorgt voor een back-up van al het materiaal. Onbewerkte bestanden (RAW/ruwe beelden) worden niet geleverd, tenzij schriftelijk anders overeengekomen. De selectie, bewerking en montage behoren tot de creatieve vrijheid van de opdrachtnemer.',fr:'Le prestataire travaille avec du matériel professionnel et assure la sauvegarde de tous les fichiers. Les fichiers bruts ne sont pas fournis, sauf accord écrit contraire. La sélection, la retouche et le montage relèvent de la liberté créative du prestataire.',ar:'يعمل مقدّم الخدمة بمعدات احترافية ويضمن نسخاً احتياطية لجميع المواد. لا تُسلَّم الملفات الخام إلا باتفاق كتابي. يظل الاختيار والتعديل والمونتاج ضمن الحرية الإبداعية لمقدّم الخدمة.',en:'The contractor works with professional equipment and keeps a backup of all material. Unedited files are not provided unless agreed in writing. Selection, editing and post-production remain part of the creative freedom of the contractor.'}},
+ drone:{label:'Dronepiloot',media:true,pakket:'Drone-opnames, ceremonie + locatie',dienst:{nl:'de drone-opnames',fr:'les prises de vue par drone',ar:'التصوير الجوي بالدرون',en:'the drone footage'},titel:{nl:'OVEREENKOMST DRONE-OPNAMES',fr:'CONTRAT DE PRISES DE VUE PAR DRONE',ar:'عقد تصوير جوي بالدرون',en:'DRONE FOOTAGE AGREEMENT'},
+  spec:{nl:'De opdrachtnemer beschikt over de vereiste registraties en vliegbevoegdheden en vliegt uitsluitend waar dit wettelijk is toegestaan. Vluchten zijn afhankelijk van weersomstandigheden en luchtruimbeperkingen; bij annulering om deze redenen wordt in overleg een alternatief moment gezocht zonder extra kosten.',fr:'Le prestataire dispose des enregistrements et qualifications de vol requis et ne vole que là où la loi le permet. Les vols dépendent des conditions météorologiques et des restrictions aériennes ; en cas d\'annulation pour ces raisons, une alternative sera convenue sans frais supplémentaires.',ar:'يمتلك مقدّم الخدمة التسجيلات والتراخيص اللازمة ولا يحلّق إلا حيث يسمح القانون. تعتمد الرحلات على الأحوال الجوية وقيود المجال الجوي؛ وفي حال الإلغاء لهذه الأسباب يُتفق على موعد بديل دون تكلفة إضافية.',en:'The contractor holds the required registrations and flight qualifications and only flies where legally permitted. Flights depend on weather conditions and airspace restrictions; if cancelled for these reasons, an alternative moment will be arranged at no extra cost.'}},
+ negaffa:{label:'Wedding stage / Negaffa',pakket:'Bruidspakket, 4 jurken + wedding stage',dienst:{nl:'de bruidsaankleding, wedding stage en styling (negaffa)',fr:'l\'habillement de la mariée, la scène de mariage et le stylisme (negafa)',ar:'تجهيز العروس (النكافة) ومنصة الزفاف والتنسيق',en:'the bridal dressing, wedding stage and styling (negaffa)'},
+  spec:{nl:'De jurken en accessoires blijven eigendom van de opdrachtnemer. Schade, vlekken of vermissing worden tegen kostprijs in rekening gebracht. Passessies vinden plaats op afspraak; het aantal wisselmomenten op de dag zelf is zoals in het pakket omschreven.',fr:'Les robes et accessoires restent la propriété du prestataire. Tout dommage, tache ou perte sera facturé au prix coûtant. Les essayages ont lieu sur rendez-vous ; le nombre de tenues le jour J est celui décrit dans la formule.',ar:'تبقى الفساتين والإكسسوارات ملكاً لمقدّم الخدمة. تُحتسب الأضرار أو البقع أو الفقدان بسعر التكلفة. تتم القياسات بموعد مسبق؛ وعدد الإطلالات يوم الحفل حسب الباقة.',en:'The dresses and accessories remain the property of the contractor. Damage, stains or loss will be charged at cost price. Fittings take place by appointment; the number of outfit changes on the day is as described in the package.'}},
+ catering:{label:'Catering & Patisserie',pakket:'Catering, 100 personen',dienst:{nl:'de catering en culinaire verzorging',fr:'le service traiteur et culinaire',ar:'خدمات الطعام والضيافة',en:'the catering and culinary services'},
+  spec:{nl:'Het definitieve aantal gasten wordt uiterlijk 14 dagen vóór het event doorgegeven; dit aantal geldt als minimale afname. Allergieën en dieetwensen worden vooraf gemeld. De opdrachtnemer werkt volgens de geldende HACCP-hygiënerichtlijnen.',fr:'Le nombre définitif d\'invités est communiqué au plus tard 14 jours avant l\'événement et constitue la commande minimale. Les allergies et régimes alimentaires sont signalés à l\'avance. Le prestataire respecte les normes d\'hygiène HACCP en vigueur.',ar:'يُحدَّد العدد النهائي للضيوف قبل 14 يوماً على الأقل من الحفل ويُعتبر الحد الأدنى للطلب. تُبلَّغ الحساسيات والأنظمة الغذائية مسبقاً. يلتزم مقدّم الخدمة بمعايير النظافة الصحية المعمول بها (HACCP).',en:'The final number of guests must be confirmed no later than 14 days before the event; this number counts as the minimum order. Allergies and dietary requirements must be reported in advance. The contractor works according to the applicable HACCP hygiene standards.'}},
+ stylist:{label:'Bridal styling / Make-up & Hair',pakket:'Bruidsstyling, complete dag',dienst:{nl:'de bruidsstyling, make-up en hairstyling',fr:'le stylisme de la mariée, le maquillage et la coiffure',ar:'تزيين العروس والمكياج وتصفيف الشعر',en:'the bridal styling, make-up and hair styling'},
+  spec:{nl:'De opdrachtnemer werkt met professionele, gehygiëniseerde producten. Allergieën of huidgevoeligheden worden vooraf gemeld; een proefsessie wordt aangeraden en is mogelijk tegen meerprijs indien niet in het pakket inbegrepen. Uitloop door latere aanvang vanuit de opdrachtgever komt niet voor rekening van de opdrachtnemer.',fr:'Le prestataire utilise des produits professionnels et hygiéniques. Les allergies ou sensibilités cutanées sont signalées à l\'avance ; une séance d\'essai est recommandée et possible en supplément si non incluse. Tout retard imputable au client ne saurait être reproché au prestataire.',ar:'يستخدم مقدّم الخدمة منتجات احترافية ومعقّمة. تُبلَّغ الحساسيات الجلدية مسبقاً؛ ويُنصح بجلسة تجريبية وقد تكون بتكلفة إضافية إن لم تكن ضمن الباقة. لا يتحمّل مقدّم الخدمة مسؤولية التأخير الناتج عن العميل.',en:'The contractor works with professional, sanitised products. Allergies or skin sensitivities must be reported in advance; a trial session is recommended and available at an additional cost if not included in the package. Delays caused by the client are not the responsibility of the contractor.'}},
+ henna:{label:'Henna-artiest',pakket:'Henna-pakket bruid + gasten',dienst:{nl:'de henna-styling en bijbehorende verzorging',fr:'l\'art du henné',ar:'نقش الحناء',en:'the henna styling'},
+  spec:{nl:'Er wordt uitsluitend gewerkt met natuurlijke, huidveilige henna. Bekende allergieën worden vooraf gemeld; op verzoek kan een test op een kleine huidzone worden gedaan. Het eindresultaat (kleurintensiteit) is mede afhankelijk van huidtype en nazorg.',fr:'Seul du henné naturel et sûr pour la peau est utilisé. Les allergies connues sont signalées à l\'avance ; un test cutané est possible sur demande. Le résultat final (intensité de la couleur) dépend aussi du type de peau et des soins après application.',ar:'تُستخدم حناء طبيعية وآمنة على البشرة فقط. تُبلَّغ الحساسيات المعروفة مسبقاً؛ ويمكن إجراء اختبار على جزء صغير من الجلد عند الطلب. تعتمد النتيجة النهائية على نوع البشرة والعناية اللاحقة.',en:'Only natural, skin-safe henna is used. Known allergies must be reported in advance; a patch test is available on request. The final result (colour intensity) also depends on skin type and aftercare.'}},
+ zaal:{label:'Zaal / Locatie',pakket:'Zaalhuur, avond (18:00-01:00)',dienst:{nl:'de verhuur van de feestlocatie en bijbehorende faciliteiten',fr:'la location de la salle et des installations',ar:'كراء قاعة الحفلات والمرافق التابعة لها',en:'the rental of the venue and its facilities'},
+  spec:{nl:'De opdrachtgever houdt zich aan de huisregels van de locatie, waaronder de afgesproken eindtijd en het maximum aantal gasten. Schade aan de locatie of inventaris veroorzaakt door gasten wordt verhaald op de opdrachtgever. Een borgsom kan van toepassing zijn en wordt na afloop verrekend.',fr:'Le client respecte le règlement intérieur du lieu, notamment l\'heure de fin convenue et le nombre maximal d\'invités. Les dommages causés par les invités au lieu ou au mobilier sont à la charge du client. Une caution peut s\'appliquer et sera restituée après l\'événement.',ar:'يلتزم العميل بقواعد المكان، بما في ذلك وقت الانتهاء المتفق عليه والعدد الأقصى للضيوف. يتحمّل العميل الأضرار التي يسببها الضيوف للمكان أو التجهيزات. قد يُطلب مبلغ تأمين يُسوَّى بعد الحفل.',en:'The client must observe the house rules of the venue, including the agreed end time and the maximum number of guests. Damage to the venue or inventory caused by guests will be charged to the client. A security deposit may apply and will be settled afterwards.'}},
+ dj:{label:'DJ & Entertainment',pakket:'DJ + sound & light, hele avond',dienst:{nl:'de muzikale verzorging en het entertainment',fr:'l\'animation musicale et le divertissement',ar:'التنشيط الموسيقي والترفيه',en:'the musical entertainment'},
+  spec:{nl:'De opdrachtgever zorgt voor een veilige stroomvoorziening en voldoende opbouwruimte. De opdrachtnemer houdt zich aan de geluidsnormen van de locatie. Muziekwensen worden uiterlijk 7 dagen vóór het event doorgegeven.',fr:'Le client assure une alimentation électrique sûre et un espace de montage suffisant. Le prestataire respecte les normes sonores du lieu. Les souhaits musicaux sont communiqués au plus tard 7 jours avant l\'événement.',ar:'يوفّر العميل مصدر كهرباء آمناً ومساحة كافية للتجهيز. يلتزم مقدّم الخدمة بحدود الصوت الخاصة بالمكان. تُرسل الطلبات الموسيقية قبل 7 أيام على الأقل من الحفل.',en:'The client provides a safe power supply and sufficient setup space. The contractor observes the sound regulations of the venue. Music requests must be submitted no later than 7 days before the event.'}},
+ decoratie:{label:'Decoratie & Styling',pakket:'Volledige decoratie & styling',dienst:{nl:'de decoratie en styling van het event',fr:'la décoration et la mise en scène de l\'événement',ar:'ديكور وتنسيق المناسبة',en:'the decoration and styling of the event'},
+  spec:{nl:'Op- en afbouwtijden worden in overleg met de locatie vastgelegd. Gehuurde decoratiematerialen blijven eigendom van de opdrachtnemer; schade of vermissing wordt tegen kostprijs in rekening gebracht.',fr:'Les horaires de montage et de démontage sont fixés en accord avec le lieu. Les éléments de décoration loués restent la propriété du prestataire ; tout dommage ou perte sera facturé au prix coûtant.',ar:'تُحدَّد أوقات التركيب والفك بالتنسيق مع المكان. تبقى مواد الديكور المؤجرة ملكاً لمقدّم الخدمة؛ وتُحتسب الأضرار أو الفقدان بسعر التكلفة.',en:'Setup and teardown times are agreed with the venue. Rented decoration materials remain the property of the contractor; damage or loss will be charged at cost price.'}},
+ bruidsmode:{label:'Bruidsmode',pakket:'Bruidsjurk, verhuur incl. passessies',dienst:{nl:'de levering en/of verhuur van bruidsmode en accessoires',fr:'la fourniture et/ou la location de tenues de mariée et accessoires',ar:'توفير و/أو كراء أزياء العروس والإكسسوارات',en:'the supply and/or rental of bridal wear and accessories'},
+  spec:{nl:'Bij verhuur blijven kleding en accessoires eigendom van de opdrachtnemer en worden zij in dezelfde staat geretourneerd; professionele reiniging is bij de prijs inbegrepen tenzij anders vermeld. Maatwijzigingen worden tijdig vóór de laatste passessie doorgegeven.',fr:'En cas de location, les tenues et accessoires restent la propriété du prestataire et sont restitués dans le même état ; le nettoyage professionnel est inclus sauf mention contraire. Les retouches sont signalées à temps avant le dernier essayage.',ar:'في حالة الكراء، تبقى الملابس والإكسسوارات ملكاً لمقدّم الخدمة وتُعاد بنفس الحالة؛ التنظيف الاحترافي مشمول ما لم يُذكر خلاف ذلك. تُبلَّغ تعديلات المقاس قبل آخر قياس بوقت كافٍ.',en:'In case of rental, the garments and accessories remain the property of the contractor and must be returned in the same condition; professional cleaning is included unless stated otherwise. Size alterations must be communicated in time before the final fitting.'}},
+ vervoer:{label:'Trouwvervoer',pakket:'Trouwauto + chauffeur, hele dag',dienst:{nl:'het trouwvervoer',fr:'le transport de mariage',ar:'نقل العرسان (سيارات الزفاف)',en:'the wedding transport'},
+  spec:{nl:'De route en tijden worden uiterlijk 7 dagen vóór het event vastgelegd. Wachttijd buiten het afgesproken schema kan tegen meerprijs in rekening worden gebracht. Bij technische pech zorgt de opdrachtnemer waar mogelijk voor gelijkwaardig vervangend vervoer.',fr:'L\'itinéraire et les horaires sont fixés au plus tard 7 jours avant l\'événement. Le temps d\'attente hors planning peut être facturé en supplément. En cas de panne, le prestataire fournit si possible un véhicule de remplacement équivalent.',ar:'يُحدَّد المسار والأوقات قبل 7 أيام على الأقل من الحفل. قد يُحتسب وقت الانتظار خارج الجدول بتكلفة إضافية. في حال عطل تقني يوفّر مقدّم الخدمة بديلاً مكافئاً إن أمكن.',en:'The route and times are confirmed no later than 7 days before the event. Waiting time outside the agreed schedule may be charged additionally. In case of breakdown, the contractor will provide an equivalent replacement vehicle where possible.'}},
+ planner:{label:'Wedding planner',pakket:'Volledige wedding planning',dienst:{nl:'de planning en coördinatie van het event',fr:'l\'organisation et la coordination de l\'événement',ar:'تخطيط وتنسيق المناسبة',en:'the planning and coordination of the event'},
+  spec:{nl:'De opdrachtnemer adviseert en coördineert; overeenkomsten met derde leveranciers worden, tenzij anders afgesproken, rechtstreeks tussen de opdrachtgever en de betreffende leverancier gesloten. De opdrachtnemer is niet aansprakelijk voor tekortkomingen van derde leveranciers.',fr:'Le prestataire conseille et coordonne ; sauf accord contraire, les contrats avec les fournisseurs tiers sont conclus directement entre le client et le fournisseur concerné. Le prestataire n\'est pas responsable des manquements des fournisseurs tiers.',ar:'يقدّم مقدّم الخدمة الاستشارة والتنسيق؛ وما لم يُتفق على خلاف ذلك، تُبرم العقود مع المورّدين الآخرين مباشرة بين العميل والمورّد المعني. لا يتحمّل مقدّم الخدمة مسؤولية تقصير المورّدين الآخرين.',en:'The contractor advises and coordinates; unless agreed otherwise, contracts with third-party suppliers are concluded directly between the client and the supplier concerned. The contractor is not liable for shortcomings of third-party suppliers.'}},
+ nanny:{label:'Nanny / Kids service',pakket:'Kids service, hele avond (2 begeleiders)',dienst:{nl:'de professionele kinderbegeleiding tijdens het event',fr:'la garde d\'enfants professionnelle pendant l\'événement',ar:'رعاية الأطفال أثناء الحفل',en:'the professional childcare during the event'},
+  spec:{nl:'De opdrachtnemer werkt met gekwalificeerde en gescreende (VOG) begeleiders en hanteert een veilige begeleider-kindratio. Bijzonderheden per kind (allergieën, medicatie, gedrag) worden vooraf schriftelijk gemeld. Kinderen worden uitsluitend opgehaald door de vooraf aangewezen contactpersoon.',fr:'Le prestataire travaille avec des encadrants qualifiés et contrôlés et applique un ratio encadrant-enfant sûr. Les particularités de chaque enfant (allergies, médication, comportement) sont signalées par écrit à l\'avance. Les enfants ne sont remis qu\'à la personne de contact désignée au préalable.',ar:'يعمل مقدّم الخدمة بمرافقين مؤهلين وموثوقين وبنسبة آمنة بين المرافقين والأطفال. تُبلَّغ خصوصيات كل طفل (حساسية، دواء، سلوك) كتابياً مسبقاً. لا يُسلَّم الأطفال إلا لجهة الاتصال المحددة مسبقاً.',en:'The contractor works with qualified and vetted childminders and maintains a safe carer-to-child ratio. Any particulars per child (allergies, medication, behaviour) must be reported in writing in advance. Children are only released to the designated contact person.'}},
+ photobooth:{label:'Photobooth / 360-booth',pakket:'Photobooth, 4 uur incl. props & prints',dienst:{nl:'de photobooth-service inclusief opbouw en bediening',fr:'le service photobooth, installation et animation comprises',ar:'خدمة كشك التصوير مع التركيب والتشغيل',en:'the photobooth service including setup and operation'},
+  spec:{nl:'De opdrachtgever zorgt voor een vlakke, overdekte opstelplek van circa 3×3 meter en een stroomaansluiting binnen 10 meter. De op- en afbouwtijd valt buiten de afgesproken draaitijd. Digitale bestanden worden na afloop via een downloadlink gedeeld.',fr:'Le client prévoit un emplacement plat et couvert d\'environ 3×3 mètres et une prise électrique à moins de 10 mètres. Le montage et le démontage sont hors du temps de fonctionnement convenu. Les fichiers numériques sont partagés ensuite via un lien de téléchargement.',ar:'يوفّر العميل مكاناً مستوياً ومغطى بمساحة 3×3 أمتار تقريباً ومصدر كهرباء ضمن 10 أمتار. وقت التركيب والفك خارج مدة التشغيل المتفق عليها. تُشارك الملفات الرقمية بعد الحفل عبر رابط تحميل.',en:'The client provides a flat, covered setup area of approximately 3x3 metres and a power outlet within 10 metres. Setup and teardown time falls outside the agreed operating hours. Digital files are shared afterwards via a download link.'}},
+ effects:{label:'Special effects (koud vuurwerk, CO₂, rook)',pakket:'Special effects, entree + openingsdans',dienst:{nl:'de special effects tijdens het event',fr:'les effets spéciaux pendant l\'événement',ar:'المؤثرات الخاصة أثناء الحفل',en:'the special effects during the event'},
+  spec:{nl:'Special effects worden uitsluitend ingezet na toestemming van de locatie en conform de geldende veiligheidsvoorschriften en eventuele vergunningen. De opdrachtnemer beoordeelt ter plaatse of veilige inzet mogelijk is; bij onveilige omstandigheden kan een effect worden geannuleerd en worden de kosten van dat onderdeel in overleg verrekend.',fr:'Les effets spéciaux ne sont utilisés qu\'avec l\'accord du lieu et conformément aux règles de sécurité et autorisations applicables. Le prestataire juge sur place si une utilisation sûre est possible ; en cas de conditions dangereuses, un effet peut être annulé et son coût réglé en concertation.',ar:'لا تُستخدم المؤثرات الخاصة إلا بموافقة المكان ووفقاً لقواعد السلامة والتراخيص المعمول بها. يقرّر مقدّم الخدمة في الموقع إمكانية الاستخدام الآمن؛ وفي الظروف غير الآمنة قد يُلغى المؤثر وتُسوَّى تكلفته بالتراضي.',en:'Special effects are only used with the consent of the venue and in accordance with applicable safety regulations and permits. The contractor assesses on site whether safe use is possible; in unsafe conditions an effect may be cancelled and its cost settled by mutual agreement.'}},
+ anders:{label:'Overige bruiloftsdiensten',pakket:'Standaard pakket',dienst:{nl:'de overeengekomen bruiloftsdiensten',fr:'les services de mariage convenus',ar:'خدمات الزفاف المتفق عليها',en:'the agreed wedding services'},
+  spec:{nl:'De omvang van de diensten is zoals omschreven in het pakket en eventuele aanvullende afspraken. Wijzigingen in de omvang worden uiterlijk 14 dagen vóór het event schriftelijk overeengekomen.',fr:'L\'étendue des services est celle décrite dans la formule et les accords complémentaires éventuels. Toute modification est convenue par écrit au plus tard 14 jours avant l\'événement.',ar:'يُحدَّد نطاق الخدمات حسب الباقة والاتفاقات الإضافية إن وُجدت. تُتفق التعديلات كتابياً قبل 14 يوماً على الأقل من الحفل.',en:'The scope of the services is as described in the package and any additional agreements. Changes to the scope must be agreed in writing no later than 14 days before the event.'}}
+};
+const myBranche=()=>BRANCHES[D.settings.branche]||BRANCHES.foto;
+const brancheOpts=sel=>Object.entries(BRANCHES).map(([k,b])=>`<option value="${k}" ${k===sel?'selected':''}>${b.label}</option>`).join('');
+const accounts=()=>JSON.parse(localStorage.getItem(LS_ACCS)||'[]');
+const saveAccounts=a=>localStorage.setItem(LS_ACCS,JSON.stringify(a));
+function baseData(){return {settings:{},clients:[],contracts:[],invoices:[],offertes:[],seq:{contract:0,invoice:0,offerte:0}}}
+function dataOf(aid){
+  const base=baseData();
+  try{const d=Object.assign(base,JSON.parse(localStorage.getItem('sf_data_'+aid))||{});d.offertes=d.offertes||[];d.seq=Object.assign({contract:0,invoice:0,offerte:0},d.seq||{});return d}catch(e){return base}
+}
+let saveTimer=null;
+function save(){
+  if(!SES||!SES.aid)return;
+  if(CLOUD){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>{
+      sb.from('userdata').upsert({id:SES.aid,data:D,updated_at:new Date().toISOString()})
+        .then(({error})=>{if(error)toast('Opslaan in de cloud mislukt, controleer je internetverbinding.')});
+    },700);
+    return;
+  }
+  localStorage.setItem('sf_data_'+SES.aid,JSON.stringify(D));
+}
+function saveSession(){localStorage.setItem(LS_SES,JSON.stringify(SES))}
+
+/* migratie vanaf v1 (één account) */
+(function migrate(){
+  const old=localStorage.getItem('sf_account');
+  if(old&&!localStorage.getItem(LS_ACCS)){
+    const a=JSON.parse(old), id=uid();
+    saveAccounts([{id,email:a.email,pass:a.pass,studio:a.studio,naam:a.naam,created:today()}]);
+    const od=localStorage.getItem('sf_data'); if(od)localStorage.setItem('sf_data_'+id,od);
+    ['sf_account','sf_data','sf_session'].forEach(k=>localStorage.removeItem(k));
+  }
+})();
+
+/* ================= AUTH ================= */
+let authTab='login';
+function setAuthTab(t){authTab=t;
+  $('#tabLogin').classList.toggle('active',t==='login');
+  $('#tabReg').classList.toggle('active',t==='reg');
+  $('#regFields').style.display=t==='reg'?'block':'none';
+  $('#authBtn').textContent=t==='reg'?'Account aanmaken':'Inloggen';
+  $('#authErr').style.display='none';
+}
+function doAuth(){
+  const email=$('#aEmail').value.trim().toLowerCase(), pass=$('#aPass').value;
+  const err=m=>{const e=$('#authErr');e.textContent=m;e.style.display='block';e.style.color='var(--red)'};
+  const ok=m=>{const e=$('#authErr');e.textContent=m;e.style.display='block';e.style.color='var(--green)'};
+  if(!email||!pass)return err('Vul e-mail en wachtwoord in.');
+  if(CLOUD)return cloudAuth(email,pass,err,ok);
+  if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){SES={admin:true};saveSession();return enterAdmin()}
+  const accs=accounts();
+  if(authTab==='reg'){
+    if(accs.find(a=>a.email===email))return err('Dit e-mailadres heeft al een account.');
+    const studio=$('#rStudio').value.trim(), naam=$('#rNaam').value.trim(), branche=$('#rBranche').value||'foto';
+    if(!studio||!naam)return err('Vul bedrijfsnaam en jouw naam in.');
+    const pc=checkCode($('#rCode').value);
+    if(pc.err)return err(pc.err);
+    markUsed(pc.code);
+    const acc={id:uid(),email,pass,studio,naam,branche,created:today(),tier:pc.tier,expiry:addMonths(today(),pc.maanden)};
+    accs.push(acc);saveAccounts(accs);
+    SES={aid:acc.id};saveSession();
+    D=dataOf(acc.id);
+    D.settings=Object.assign({studio,naam,email,branche,telefoon:'',adres:'',kvk:'',btwnr:'',iban:'',leverdagen:21,annuleringPct:25},D.settings,{studio,naam,email,branche});
+    save();enterUser();
+  }else{
+    const acc=accs.find(a=>a.email===email&&a.pass===pass);
+    if(!acc)return err('E-mail of wachtwoord klopt niet.');
+    if(!acc.expiry||acc.expiry<today())return showRenew(acc.id,true);
+    SES={aid:acc.id};saveSession();D=dataOf(acc.id);enterUser();
+  }
+}
+/* ----- CLOUD AUTH ----- */
+async function cloudAuth(email,pass,err,ok){
+  const btn=$('#authBtn'); btn.disabled=true; const oud=btn.textContent; btn.textContent='Bezig…';
+  try{
+    if(authTab==='reg'){
+      const studio=$('#rStudio').value.trim(), naam=$('#rNaam').value.trim(), branche=$('#rBranche').value||'foto';
+      if(!studio||!naam)return err('Vul bedrijfsnaam en jouw naam in.');
+      const isAdminReg=email===SF_CONFIG.adminEmail.toLowerCase();
+      const codeRaw=$('#rCode').value.trim().toUpperCase();
+      if(!isAdminReg){
+        if(!/^SF-[SPU](1|3|12)-[A-Z0-9-]{3,}$/i.test(codeRaw))return err('Vul de activatiecode in die je per e-mail of WhatsApp hebt gekregen (begint met SF-). Nog geen code? Die ontvang je na je betaling.');
+        localStorage.setItem('sf_pending_code',codeRaw);
+      }
+      const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{studio,naam,branche},emailRedirectTo:location.origin+location.pathname}});
+      if(error)return err(vertaalAuth(error.message));
+      if(data.session){await afterCloudLogin()}
+      else ok('Bijna klaar! We hebben een bevestigingsmail gestuurd naar '+email+'. Open de link in die mail en log daarna hier in, je activatiecode wordt dan automatisch verwerkt.');
+    }else{
+      const {error}=await sb.auth.signInWithPassword({email,password:pass});
+      if(error)return err(vertaalAuth(error.message));
+      await afterCloudLogin();
+    }
+  }finally{btn.disabled=false;btn.textContent=oud}
+}
+async function afterCloudLogin(){
+  const {data:{user}}=await sb.auth.getUser();
+  if(!user)return;
+  let {data:p}=await sb.from('profiles').select('*').eq('id',user.id).single();
+  if(!p){alert('Profiel niet gevonden, neem contact op met Casanomada Digital.');return}
+  CLOUDPROFILE=p;
+  if(p.is_admin){SES={cloud:true,admin:true};enterAdmin();return}
+  let geldig=p.tier&&p.expiry&&p.expiry>=today();
+  if(!geldig){
+    const pend=localStorage.getItem('sf_pending_code');
+    if(pend){
+      const r=await claimCloud(pend);
+      localStorage.removeItem('sf_pending_code');
+      if(!r.ok){showRenew('',true);return}
+    }else{showRenew('',true);return}
+  }
+  sb.from('profiles').update({last_login:new Date().toISOString()}).eq('id',user.id).then(()=>{});
+  const {data:ud}=await sb.from('userdata').select('data').eq('id',user.id).maybeSingle();
+  D=Object.assign(baseData(),(ud&&ud.data)||{});
+  D.offertes=D.offertes||[];D.seq=Object.assign({contract:0,invoice:0,offerte:0},D.seq||{});
+  SES={cloud:true,aid:user.id};
+  if(!D.settings.studio){
+    D.settings=Object.assign({studio:p.studio||'',naam:p.naam||'',email:p.email||'',branche:p.branche||'foto',telefoon:'',adres:'',kvk:'',btwnr:'',iban:'',leverdagen:21,annuleringPct:25},D.settings);
+    save();
+  }
+  enterUser();
+}
+async function claimCloud(code){
+  const {data,error}=await sb.rpc('claim_code',{p_code:code});
+  if(error)return {ok:false};
+  if(data&&data.ok){CLOUDPROFILE.tier=data.tier;CLOUDPROFILE.expiry=data.expiry}
+  return data||{ok:false};
+}
+function forgotPass(){
+  if(!CLOUD)return alert('Wachtwoord herstellen kan zodra de online versie actief is.');
+  const email=$('#aEmail').value.trim().toLowerCase();
+  if(!email)return alert('Vul eerst je e-mailadres in het inlogveld in.');
+  sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname})
+    .then(()=>toast('Herstel-mail verstuurd naar '+email+', check je inbox.'));
+}
+function showNewPass(){
+  openModal(`<h2>Nieuw wachtwoord instellen</h2><div class="sub">Kies een nieuw wachtwoord voor je account.</div>
+  <label>Nieuw wachtwoord</label><input id="npPass" type="password" placeholder="Minimaal 6 tekens">
+  <div class="modal-actions"><button class="btn" onclick="saveNewPass()">Opslaan</button></div>`);
+}
+async function saveNewPass(){
+  const p=$('#npPass').value;
+  if(p.length<6)return alert('Kies een wachtwoord van minimaal 6 tekens.');
+  const {error}=await sb.auth.updateUser({password:p});
+  if(error)return alert(vertaalAuth(error.message));
+  closeModal();toast('Wachtwoord gewijzigd.');afterCloudLogin();
+}
+
+function showRenew(aid,verlopen){
+  openModal(`<h2>${verlopen?'Abonnement verlopen':'Abonnement verlengen'}</h2>
+  <div class="sub">${verlopen?'Dit account heeft een nieuwe activatiecode nodig. Vraag een verlenging aan via casanomadadigital.com en vul de code hieronder in.':'Vul je nieuwe activatiecode in, de looptijd wordt bij je huidige abonnement opgeteld.'}</div>
+  <label>Activatiecode</label><input id="renewCode" placeholder="SF-P3-XXXX-XXX" style="text-transform:uppercase" autocomplete="off">
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="doRenew('${aid}')">Activeren</button></div>`);
+}
+async function doRenew(aid){
+  if(CLOUD){
+    const raw=$('#renewCode').value.trim();
+    if(!raw)return alert('Vul een activatiecode in.');
+    const r=await claimCloud(raw);
+    if(!r.ok)return alert('Ongeldige of al gebruikte activatiecode. Vraag een nieuwe aan via casanomadadigital.com.');
+    closeModal();toast('Geactiveerd, abonnement loopt tot '+fdate(CLOUDPROFILE.expiry)+'.');
+    afterCloudLogin();return;
+  }
+  const pc=checkCode($('#renewCode').value);
+  if(pc.err)return alert(pc.err);
+  const accs=accounts(), acc=accs.find(a=>a.id===aid);
+  if(!acc)return;
+  markUsed(pc.code);
+  const basis=(acc.expiry&&acc.expiry>today())?acc.expiry:today();
+  acc.expiry=addMonths(basis,pc.maanden);acc.tier=pc.tier;
+  saveAccounts(accs);closeModal();
+  SES={aid:acc.id};saveSession();D=dataOf(acc.id);enterUser();
+  toast('Geactiveerd, abonnement loopt tot '+fdate(acc.expiry)+'.');
+}
+function logout(){
+  if(CLOUD){sb.auth.signOut().then(()=>location.reload());return}
+  localStorage.removeItem(LS_SES);location.reload();
+}
+function curAcc(){return CLOUD?(CLOUDPROFILE||{}):(accounts().find(a=>SES&&a.id===SES.aid)||{})}
+
+/* ================= PAKKET-RECHTEN ================= */
+const TIER_RANK={S:1,P:2,U:3};
+const PRO_VIEWS=['rapportages','offertes','facturen','financieel'];
+const PRO_NAMEN={rapportages:'Rapportages',offertes:'Offertes',facturen:'Facturen',financieel:'Omzet & betalingen'};
+let IMP_TIER=null;
+function myRank(){
+  if(SES&&SES.imp)return TIER_RANK[IMP_TIER]||1;
+  return TIER_RANK[(curAcc()||{}).tier]||1;
+}
+const hasPro=()=>myRank()>=2;
+function showUpgrade(functie){
+  openModal(`<h2>${esc(functie)} zit in het Pro-pakket</h2>
+  <div class="sub">Jouw huidige pakket is <b>${TIERNAAM[(curAcc()||{}).tier]||'Starter'}</b>. Met Pro krijg je ook offertes, facturen met eigen logo, betaalverzoeken, klantfeedback en rapportages. Upgraden kan per direct: vraag een upgrade-code aan en verleng ermee via Instellingen.</div>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Sluiten</button>
+  <button class="btn" onclick="window.open('https://casanomadadigital.com/studioflow.html','_blank')">Bekijk pakketten</button></div>`);
+}
+function quickGo(v,fn){
+  if(PRO_VIEWS.includes(v)&&!hasPro())return showUpgrade(PRO_NAMEN[v]);
+  go(v);if(fn)setTimeout(fn,50);
+}
+
+/* ================= ICONEN (professioneel, lijnstijl) ================= */
+const IC={
+ dash:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+ agenda:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ rapport:'<path d="M4 20V11M10 20V4M16 20v-6M21 20H3"/>',
+ klanten:'<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.6c2.6.5 4.5 2.7 4.5 5.4"/>',
+ bericht:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-4.2A8.5 8.5 0 1 1 21 11.5z"/>',
+ offerte:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/>',
+ contract:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+ factuur:'<path d="M5 3h14v18l-2.3-1.5L14.5 21l-2.5-1.5L9.5 21l-2.2-1.5L5 21z"/><path d="M9 8h6M9 12h6"/>',
+ financieel:'<circle cx="12" cy="12" r="9"/><path d="M14.5 8.5a3.5 3.5 0 1 0 0 7M8 10.5h5M8 13.5h5"/>',
+ instellingen:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/>',
+ logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>',
+ admin:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+ oog:'<path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/>',
+ check:'<path d="M20 6L9 17l-5-5"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>'
+};
+const ic=n=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${IC[n]||''}</svg>`;
+
+/* ================= TOASTS ================= */
+function toast(msg){
+  const d=document.createElement('div');d.className='toast';d.textContent=msg;
+  $('#toastWrap').appendChild(d);
+  setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .3s';setTimeout(()=>d.remove(),320)},2600);
+}
+
+/* ================= SHELL & ROUTER ================= */
+function navHtml(groups,quick){
+  return `<div class="logo">Studio<span>Flow</span></div>`+
+  (quick?`<button class="btn" style="margin:2px 10px 6px;display:flex;align-items:center;gap:8px;justify-content:center" onclick="openNieuwModal()">${ic('plus')} Nieuw</button>`:'')+
+  groups.map(g=>`${g.head?`<div class="nav-head">${g.head}</div>`:''}${g.items.map(i=>{
+    const locked=i.pro&&!hasPro();
+    return `<button class="nav-item${locked?' locked':''}" data-view="${i.v}" onclick="${locked?`showUpgrade('${i.t}')`:`go('${i.v}')`}"><span class="ic">${ic(i.ic)}</span>${i.t}${locked?'<span class="pro-badge">Pro</span>':''}</button>`;
+  }).join('')}`).join('')+
+  `<div style="flex:1"></div><button class="nav-item" onclick="logout()"><span class="ic">${ic('logout')}</span>Uitloggen</button>
+  <div style="font-size:10.5px;color:var(--muted);padding:8px 12px;opacity:.7">by Casa Nomada Digital</div>`;
+}
+function enterUser(){
+  $('#loginView').style.display='none';$('#appView').style.display='block';
+  $('#impBar').style.display=SES.imp?'block':'none';
+  $('#sideNav').innerHTML=navHtml([
+    {head:'Overzicht',items:[{v:'dashboard',ic:'dash',t:'Dashboard'},{v:'agenda',ic:'agenda',t:'Agenda'},{v:'rapportages',ic:'rapport',t:'Rapportages',pro:true}]},
+    {head:'Relaties',items:[{v:'klanten',ic:'klanten',t:'Klanten'},{v:'whatsapp',ic:'bericht',t:'Berichten'}]},
+    {head:'Documenten',items:[{v:'offertes',ic:'offerte',t:'Offertes',pro:true},{v:'contracten',ic:'contract',t:'Contracten'},{v:'facturen',ic:'factuur',t:'Facturen',pro:true}]},
+    {head:'Financieel',items:[{v:'financieel',ic:'financieel',t:'Omzet & betalingen',pro:true}]},
+    {head:'Beheer',items:[{v:'instellingen',ic:'instellingen',t:'Instellingen'}]}],true);
+  go('dashboard');
+  const acc=curAcc();
+  if(acc&&acc.expiry&&!SES.imp){
+    const dagen=Math.ceil((new Date(acc.expiry)-new Date(today()))/864e5);
+    if(dagen<=7)toast('Let op: je abonnement verloopt over '+dagen+' dag(en). Verleng via Instellingen.');
+  }
+}
+function openNieuwModal(){
+  openModal(`<h2>Wat wil je maken?</h2>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+    <button class="btn-ghost" onclick="closeModal();openClientModal()">Nieuwe klant of boeking</button>
+    <button class="btn-ghost" onclick="closeModal();quickGo('offertes',openOfferteModal)">Offerte${hasPro()?'':' · Pro'}</button>
+    <button class="btn-ghost" onclick="closeModal();quickGo('contracten',openContractModal)">Contract</button>
+    <button class="btn-ghost" onclick="closeModal();quickGo('facturen',openInvoiceModal)">Factuur${hasPro()?'':' · Pro'}</button>
+  </div>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Sluiten</button></div>`);
+}
+function enterAdmin(){
+  $('#loginView').style.display='none';$('#appView').style.display='block';
+  $('#impBar').style.display='none';
+  $('#sideNav').innerHTML=navHtml([{items:[{v:'admin',ic:'admin',t:'Overzicht'}]}]);
+  go('admin');
+}
+function openPortal(aid){const a=accounts().find(x=>x.id===aid)||{};IMP_TIER=a.tier;SES={aid,admin:true,imp:true};saveSession();D=dataOf(aid);enterUser()}
+function backToAdmin(){
+  if(CLOUD){SES={cloud:true,admin:true};enterAdmin();return}
+  SES={admin:true};saveSession();enterAdmin();
+}
+
+let view='dashboard';
+function go(v){
+  if(PRO_VIEWS.includes(v)&&!hasPro())return showUpgrade(PRO_NAMEN[v]);
+  view=v;
+  document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  const r={dashboard:rDashboard,agenda:rAgenda,rapportages:rRapportages,klanten:rKlanten,offertes:rOffertes,contracten:rContracten,facturen:rFacturen,financieel:rFinancieel,whatsapp:rWhatsapp,instellingen:rInstellingen,admin:rAdmin};
+  $('#mainContent').innerHTML='';r[v]();window.scrollTo(0,0);
+}
+function topbar(title,btnHtml=''){return `<div class="topbar"><h1>${title}</h1><div style="display:flex;gap:10px;align-items:center"><span class="userchip"><b>${esc(D.settings.studio||'Beheer')}</b></span>${btnHtml}</div></div>`}
+
+/* ================= ADMIN OVERZICHT ================= */
+async function bevestigBestelling(orderId){
+  if(!confirm('Betaling ontvangen? Bevestig de bestelling — code wordt direct gegenereerd.'))return;
+  const {data,error}=await sb.rpc('confirm_order',{p_order_id:orderId});
+  if(error||!data||!data.ok)return toast(data&&data.error||'Bevestigen mislukt');
+  const msg=welkomstMsg(data.code,data.tier,data.months).replace('Beste klant',`Beste ${data.naam.split(' ')[0]}`);
+  window.__sfMsg=msg;
+  const tel=(data.tel||'').replace(/[^0-9+]/g,'').replace(/^\+/,'').replace(/^0/,'31');
+  openModal(`<h2>Code voor ${esc(data.naam)} aangemaakt</h2>
+  <div class="sub">${TIERNAAM[data.tier]} · ${data.months===12?'1 jaar':data.months+' maand(en)'} · code: <b style="font-family:monospace;color:var(--gold2)">${data.code}</b></div>
+  <textarea readonly rows="9" style="font-size:13px;margin-top:14px" onclick="this.select()">${esc(msg)}</textarea>
+  <div class="modal-actions" style="justify-content:flex-start">
+    <button class="btn" onclick="window.open('https://${tel?'wa.me/'+tel:'api.whatsapp.com/send'}?text='+encodeURIComponent(window.__sfMsg),'_blank')">Stuur via WhatsApp</button>
+    <button class="btn-ghost" onclick="window.open('mailto:${esc(data.email)}?subject='+encodeURIComponent('Welkom bij StudioFlow')+'&body='+encodeURIComponent(window.__sfMsg))">Stuur via e-mail</button>
+    <button class="btn-ghost" onclick="navigator.clipboard.writeText(window.__sfMsg).then(()=>toast('Bericht gekopieerd.'))">Kopieer</button>
+    <button class="btn-ghost" onclick="closeModal();go('admin')">Sluiten</button>
+  </div>`);
+}
+async function annuleerBestelling(orderId){
+  if(!confirm('Bestelling annuleren? Klant krijgt geen code.'))return;
+  const {error}=await sb.from('orders').update({status:'cancelled'}).eq('id',orderId);
+  if(error)return toast(error.message);
+  toast('Bestelling geannuleerd.');go('admin');
+}
+async function rAdminCloud(){
+  $('#mainContent').innerHTML=`<div class="topbar"><h1>Beheerdersoverzicht</h1><span class="userchip">Ingelogd als <b>beheerder</b></span></div><div class="empty">Gegevens laden…</div>`;
+  const [pr,ur,cr,or]=await Promise.all([
+    sb.from('profiles').select('*').order('created_at',{ascending:true}),
+    sb.from('userdata').select('id,data,updated_at'),
+    sb.from('codes').select('code,used_by').is('used_by',null),
+    sb.from('orders').select('*').eq('status','pending').order('created_at',{ascending:true})
+  ]);
+  if(pr.error){$('#mainContent').innerHTML+=`<div class="pill-info">Kon gegevens niet laden: ${esc(pr.error.message)}</div>`;return}
+  const udMap={};(ur.data||[]).forEach(u=>udMap[u.id]=u);
+  const rows=(pr.data||[]).filter(p=>!p.is_admin).map(p=>{
+    const d=Object.assign(baseData(),(udMap[p.id]&&udMap[p.id].data)||{});
+    const omzet=(d.clients||[]).filter(x=>x.status!=='lead').reduce((s,x)=>s+(+x.prijs||0),0);
+    return {p,d,omzet};
+  });
+  const nu=Date.now(), week=7*864e5;
+  const actief=rows.filter(r=>r.p.expiry&&r.p.expiry>=today()).length;
+  const ingelogd7=rows.filter(r=>r.p.last_login&&(nu-new Date(r.p.last_login).getTime())<=week).length;
+  const totOmzet=rows.reduce((s,r)=>s+r.omzet,0);
+  const wachtkamer=or.data||[];
+  $('#mainContent').innerHTML=`<div class="topbar"><h1>Beheerdersoverzicht</h1><span class="userchip">Ingelogd als <b>beheerder</b> · online database</span></div>
+  ${wachtkamer.length?`<div class="card" style="margin-bottom:16px;border-color:rgba(198,161,91,.55)">
+    <h3 style="font-size:15px;margin-bottom:4px">Wachtkamer · ${wachtkamer.length} bestelling(en) wacht(en) op betaling</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Geld op je rekening? Klik op <b>Bevestig</b> en de code wordt direct gegenereerd en klaargezet om te versturen.</p>
+    <div style="overflow-x:auto"><table>
+      <tr><th>Bestelnr</th><th>Klant</th><th>Pakket</th><th>Bedrag</th><th>Datum</th><th></th></tr>
+      ${wachtkamer.map(o=>`<tr>
+        <td><b style="font-family:monospace">${o.order_no}</b></td>
+        <td>${esc(o.naam)}<br><span style="color:var(--muted);font-size:11.5px">${esc(o.email)}${o.tel?' · '+esc(o.tel):''}</span></td>
+        <td>${TIERNAAM[o.tier]} · ${o.months===12?'1 jaar':o.months+' mnd'}</td>
+        <td><b style="color:var(--gold2)">${eur(o.amount_cents/100)}</b></td>
+        <td>${fdate(o.created_at.slice(0,10))}</td>
+        <td style="white-space:nowrap;text-align:right">
+          <button class="btn btn-sm" onclick="bevestigBestelling('${o.id}')">Bevestig</button>
+          <button class="btn-danger btn-ghost btn-sm" onclick="annuleerBestelling('${o.id}')">Annuleer</button>
+        </td></tr>`).join('')}
+    </table></div>
+  </div>`:''}
+  <div class="grid grid-4" style="margin-bottom:16px">
+    <div class="card stat acc-blue"><div class="lbl">Klanten (accounts)</div><div class="num">${rows.length}</div></div>
+    <div class="card stat acc-green"><div class="lbl">Actieve abonnementen</div><div class="num" style="color:var(--green)">${actief}</div></div>
+    <div class="card stat acc-gold"><div class="lbl">Ingelogd, 7 dagen</div><div class="num">${ingelogd7}</div></div>
+    <div class="card stat"><div class="lbl">Omzet via tool</div><div class="num">${eur(totOmzet)}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="font-size:15px;margin-bottom:6px">Activatiecodes genereren</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Klant betaald? Kies pakket en looptijd, klik op de knop, en het complete welkomstbericht met code staat klaar voor WhatsApp of e-mail. Ongebruikte codes: <b>${(cr.data||[]).length}</b>.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <div style="min-width:140px"><label>Pakket</label><select id="aTier"><option value="S">Starter</option><option value="P" selected>Pro</option><option value="U">Studio</option></select></div>
+      <div style="min-width:140px"><label>Looptijd</label><select id="aDuur"><option value="1">1 maand</option><option value="3">3 maanden</option><option value="12">1 jaar</option></select></div>
+      <div style="min-width:170px"><label>06-nummer klant (optioneel)</label><input id="aTel" placeholder="+316…"></div>
+      <button class="btn" onclick="adminGenCodes(1)">Maak welkomstbericht</button>
+      <button class="btn-ghost" onclick="adminGenCodes(5)">5 codes (voorraad)</button>
+    </div>
+    <div id="codeUit" style="margin-top:14px"></div>
+  </div>
+  <div class="card" style="padding:0">${
+    rows.length?`<div style="overflow-x:auto"><table><tr><th>Bedrijf</th><th>Branche</th><th>Abonnement</th><th>Contact</th><th>Klanten</th><th>Contracten</th><th>Omzet</th><th>Laatst ingelogd</th><th></th></tr>${
+      rows.map(r=>`<tr>
+        <td><b>${esc(r.p.studio||'-')}</b><br><span style="color:var(--muted);font-size:12px">sinds ${fdate((r.p.created_at||'').slice(0,10))}</span></td>
+        <td><span class="badge b-lead">${esc((BRANCHES[r.p.branche||'foto']||BRANCHES.anders).label)}</span></td>
+        <td>${r.p.tier?`<span class="badge ${(!r.p.expiry||r.p.expiry<today())?'b-afgerond':'b-aanbetaald'}">${TIERNAAM[r.p.tier]}</span><br><span style="color:var(--muted);font-size:11.5px">${(!r.p.expiry||r.p.expiry<today())?'verlopen':'tot '+fdate(r.p.expiry)}</span>`:'<span class="badge b-afgerond">Nog niet geactiveerd</span>'}</td>
+        <td>${esc(r.p.naam||'')}<br><span style="color:var(--muted);font-size:12px">${esc(r.p.email||'')}</span></td>
+        <td>${(r.d.clients||[]).length}</td><td>${(r.d.contracts||[]).length}</td><td>${eur(r.omzet)}</td>
+        <td>${r.p.last_login?fdate(r.p.last_login.slice(0,10)):'<span style="color:var(--muted)">nooit</span>'}</td>
+        <td style="white-space:nowrap;text-align:right">
+          <button class="btn btn-sm" onclick="openPortalCloud('${r.p.id}','${r.p.tier||''}')">Open</button>
+          <button class="btn-ghost btn-sm" onclick="adminExtendUserModal('${r.p.id}','${esc((r.p.naam||r.p.studio||'').replace(/'/g,'\\'+`'`))}')">Verleng</button>
+          ${(r.p.expiry&&r.p.expiry>=today())?`<button class="btn-ghost btn-sm" style="color:var(--gold2);border-color:#5a4520" onclick="adminPauseUser('${r.p.id}','${esc((r.p.naam||r.p.studio||'').replace(/'/g,'\\'+`'`))}')">Stop</button>`:''}
+          <button class="btn-danger btn-ghost btn-sm" onclick="adminDeleteUser('${r.p.id}','${esc((r.p.naam||r.p.studio||'').replace(/'/g,'\\'+`'`))}')">Verwijder</button>
+        </td>
+      </tr>`).join('')}</table></div>`
+    :`<div class="empty">Nog geen klanten. Zodra iemand een account aanmaakt, verschijnt hij hier, vanaf elk apparaat.</div>`}</div>`;
+}
+async function adminPauseUser(uid,naam){
+  if(!confirm(`Toegang voor ${naam} per direct stopzetten? De klant kan niet meer inloggen totdat hij een nieuwe activatiecode gebruikt.`))return;
+  const {data,error}=await sb.rpc('admin_pause_user',{p_user_id:uid});
+  if(error||!data||!data.ok)return toast(data&&data.error||error&&error.message||'Stopzetten mislukt');
+  toast('Toegang stopgezet.');go('admin');
+}
+function adminExtendUserModal(uid,naam){
+  openModal(`<h2>Verlengen voor ${esc(naam)}</h2>
+  <div class="sub">Gebruik dit als de klant heeft betaald maar je hem niet via een code wilt laten verlengen. De looptijd telt op bij wat hij nu nog heeft staan.</div>
+  <label>Looptijd</label>
+  <select id="extDuur"><option value="1">1 maand</option><option value="3" selected>3 maanden</option><option value="12">1 jaar</option></select>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="adminExtendUser('${uid}')">Verlengen</button></div>`);
+}
+async function adminExtendUser(uid){
+  const m=+$('#extDuur').value;
+  const {data,error}=await sb.rpc('admin_extend_user',{p_user_id:uid,p_months:m});
+  if(error||!data||!data.ok)return alert(data&&data.error||error&&error.message||'Verlengen mislukt');
+  closeModal();toast('Verlengd tot '+fdate(data.expiry)+'.');go('admin');
+}
+async function adminDeleteUser(uid,naam){
+  if(!confirm(`Account van ${naam} permanent verwijderen? Alle gegevens (klanten, contracten, facturen) worden weggegooid. Dit kan niet teruggedraaid worden.`))return;
+  if(!confirm('Echt zeker? Type "JA" in het volgende scherm om te bevestigen.'))return;
+  const bevestig=prompt('Type JA om te bevestigen:');
+  if(bevestig!=='JA')return toast('Geannuleerd.');
+  const {data,error}=await sb.rpc('admin_delete_user',{p_user_id:uid});
+  if(error||!data||!data.ok)return toast(data&&data.error||error&&error.message||'Verwijderen mislukt');
+  toast('Account verwijderd.');go('admin');
+}
+async function openPortalCloud(uid,tier){
+  IMP_TIER=tier;
+  const {data}=await sb.from('userdata').select('data').eq('id',uid).maybeSingle();
+  D=Object.assign(baseData(),(data&&data.data)||{});
+  D.offertes=D.offertes||[];D.seq=Object.assign({contract:0,invoice:0,offerte:0},D.seq||{});
+  SES={cloud:true,admin:true,imp:true,aid:uid};
+  enterUser();
+}
+function rAdmin(){
+  if(CLOUD)return rAdminCloud();
+  const accs=accounts();
+  let tc=0,tf=0,tk=0,to=0;
+  const rows=accs.map(a=>{
+    const d=dataOf(a.id);
+    const omzet=d.clients.filter(x=>x.status!=='lead').reduce((s,x)=>s+(+x.prijs||0),0);
+    tc+=d.contracts.length;tf+=d.invoices.length;tk+=d.clients.length;to+=omzet;
+    const laatste=d.contracts.length?d.contracts[d.contracts.length-1].aangemaakt:a.created;
+    return {a,d,omzet,laatste};
+  });
+  $('#mainContent').innerHTML=`<div class="topbar"><h1>Beheerdersoverzicht</h1><span class="userchip">Ingelogd als <b>beheerder</b></span></div>
+  <div class="pill-info">Dit zie jij alleen. Hier volg je alle aangesloten fotografen/videografen, hun activiteit en de totale omzet die via jouw tool loopt, de basis voor je abonnementsmodel.</div>
+  <div class="grid grid-4" style="margin-bottom:16px">
+    <div class="card stat"><div class="lbl">Gebruikers</div><div class="num">${accs.length}</div></div>
+    <div class="card stat"><div class="lbl">Klanten totaal</div><div class="num">${tk}</div></div>
+    <div class="card stat"><div class="lbl">Contracten totaal</div><div class="num">${tc}</div></div>
+    <div class="card stat"><div class="lbl">Omzet via tool</div><div class="num" style="color:var(--green)">${eur(to)}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="font-size:15px;margin-bottom:6px">Activatiecodes genereren</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Klant betaald? Kies pakket en looptijd, klik op de knop, en het complete welkomstbericht met code staat klaar voor WhatsApp of e-mail.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <div style="min-width:140px"><label>Pakket</label><select id="aTier"><option value="S">Starter</option><option value="P" selected>Pro</option><option value="U">Studio</option></select></div>
+      <div style="min-width:140px"><label>Looptijd</label><select id="aDuur"><option value="1">1 maand</option><option value="3">3 maanden</option><option value="12">1 jaar</option></select></div>
+      <div style="min-width:170px"><label>06-nummer klant (optioneel)</label><input id="aTel" placeholder="+316…"></div>
+      <button class="btn" onclick="adminGenCodes(1)">Maak welkomstbericht</button>
+      <button class="btn-ghost" onclick="adminGenCodes(5)">5 codes (voorraad)</button>
+    </div>
+    <div id="codeUit" style="margin-top:14px"></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="font-size:15px;margin-bottom:6px">Abonnement-potentieel</h3>
+    <p style="font-size:13.5px;color:var(--muted);line-height:1.6">Bij <b style="color:var(--text)">${accs.length} gebruiker(s)</b> × €24,95/maand = <b style="color:var(--green)">${eur(accs.length*24.95)}/maand</b> (${eur(accs.length*24.95*12)}/jaar). Bij 50 gebruikers: ${eur(50*24.95)}/maand · bij 200 gebruikers: ${eur(200*24.95)}/maand.</p>
+  </div>
+  <div class="card" style="padding:0">${
+    accs.length?`<div style="overflow-x:auto"><table><tr><th>Bedrijf</th><th>Branche</th><th>Abonnement</th><th>Contact</th><th>Klanten</th><th>Contracten</th><th>Facturen</th><th>Omzet</th><th>Laatst actief</th><th></th></tr>${
+      rows.map(r=>`<tr>
+        <td><b>${esc(r.a.studio)}</b><br><span style="color:var(--muted);font-size:12px">sinds ${fdate(r.a.created)}</span></td>
+        <td><span class="badge b-lead">${esc((BRANCHES[r.d.settings.branche||r.a.branche||'foto']||BRANCHES.anders).label)}</span></td>
+        <td>${r.a.tier?`<span class="badge ${(!r.a.expiry||r.a.expiry<today())?'b-afgerond':'b-aanbetaald'}">${TIERNAAM[r.a.tier]}</span><br><span style="color:var(--muted);font-size:11.5px">${(!r.a.expiry||r.a.expiry<today())?'verlopen':'tot '+fdate(r.a.expiry)}</span>`:'<span class="badge b-afgerond">Geen</span>'}</td>
+        <td>${esc(r.a.naam)}<br><span style="color:var(--muted);font-size:12px">${esc(r.a.email)}</span></td>
+        <td>${r.d.clients.length}</td><td>${r.d.contracts.length}</td><td>${r.d.invoices.length}</td>
+        <td>${eur(r.omzet)}</td><td>${fdate(r.laatste)}</td>
+        <td style="white-space:nowrap;text-align:right">
+          <button class="btn btn-sm" onclick="openPortal('${r.a.id}')">Open portaal</button>
+          <button class="btn-danger btn-ghost btn-sm" onclick="delAccount('${r.a.id}')">Verwijder</button>
+        </td></tr>`).join('')}</table></div>`
+    :`<div class="empty">Nog geen gebruikers. Zodra een fotograaf een account aanmaakt, verschijnt hij hier.</div>`}</div>`;
+}
+function welkomstMsg(code,t,m){
+  const duur={1:'1 maand',3:'3 maanden',12:'1 jaar'}[m];
+  return `Beste klant,\n\nBedankt voor je betaling, welkom bij StudioFlow! Je hebt het ${TIERNAAM[t]}-pakket voor ${duur}.\n\nZo ga je van start:\n1. Ga naar casanomadadigital.com/portaal/\n2. Klik op "Account aanmaken" en vul je gegevens in met deze activatiecode: ${code}\n3. Klik op de link in de bevestigingsmail (kijk ook even bij ongewenste mail) en log daarna in met je eigen e-mailadres en wachtwoord.\n\nVeel plezier! Vragen? Stuur gerust een bericht.\n\nMet vriendelijke groet,\nJaouad, Casanomada Digital`;
+}
+async function adminGenCodes(aantal){
+  const t=$('#aTier').value,m=+$('#aDuur').value;
+  const codes=[];for(let i=0;i<aantal;i++)codes.push(genCode(t,m));
+  if(CLOUD){
+    const {error}=await sb.from('codes').insert(codes.map(c=>({code:c,tier:t,months:m})));
+    if(error)return toast('Genereren mislukt: '+error.message);
+  }
+  if(aantal===1){
+    const code=codes[0], msg=welkomstMsg(code,t,m);
+    window.__sfMsg=msg;
+    const tel=($('#aTel')?$('#aTel').value:'').replace(/[^0-9+]/g,'').replace(/^\+/,'').replace(/^0/,'31');
+    $('#codeUit').innerHTML=`
+      <div style="background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="font-family:monospace;font-size:16px;color:var(--gold2);margin-bottom:10px">${code}</div>
+        <textarea readonly rows="9" style="font-size:13px" onclick="this.select()">${esc(msg)}</textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="window.open('https://${tel?'wa.me/'+tel:'api.whatsapp.com/send'}?text='+encodeURIComponent(window.__sfMsg),'_blank')">Stuur via WhatsApp</button>
+        <button class="btn-ghost btn-sm" onclick="window.open('mailto:?subject='+encodeURIComponent('Welkom bij StudioFlow')+'&body='+encodeURIComponent(window.__sfMsg))">Stuur via e-mail</button>
+        <button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText(window.__sfMsg).then(()=>toast('Bericht gekopieerd.'))">Kopieer bericht</button>
+      </div>`;
+    return;
+  }
+  $('#codeUit').innerHTML=`<div style="background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:monospace;font-size:14px;line-height:2">${codes.join('<br>')}</div>
+  <button class="btn-ghost btn-sm" style="margin-top:10px" onclick="navigator.clipboard.writeText('${codes.join('\\n')}').then(()=>toast('Codes gekopieerd.'))">Kopieer alle codes</button>
+  <span style="font-size:12px;color:var(--muted);margin-left:10px">${TIERNAAM[t]} · ${m===12?'1 jaar':m+' maand(en)'}</span>`;
+}
+function delAccount(aid){
+  const a=accounts().find(x=>x.id===aid);
+  if(!confirm(`Account "${a.studio}" én alle bijbehorende data verwijderen?`))return;
+  saveAccounts(accounts().filter(x=>x.id!==aid));
+  localStorage.removeItem('sf_data_'+aid);
+  go('admin');
+}
+
+/* ================= AGENDA ================= */
+let agY,agM;
+function calCard(){
+  if(agY===undefined){const n=new Date();agY=n.getFullYear();agM=n.getMonth()}
+  const first=new Date(agY,agM,1), start=(first.getDay()+6)%7, days=new Date(agY,agM+1,0).getDate();
+  const monthName=first.toLocaleDateString('nl-NL',{month:'long',year:'numeric'});
+  const byDate={};D.clients.forEach(c=>{if(c.datum)(byDate[c.datum]=byDate[c.datum]||[]).push(c)});
+  let cells='';
+  for(let i=0;i<start;i++)cells+='<div style="min-height:76px"></div>';
+  for(let d=1;d<=days;d++){
+    const ds=agY+'-'+String(agM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const all=byDate[ds]||[], evs=all.filter(c=>c.status!=='lead');
+    let cls='cal-day';
+    if(evs.some(c=>c.status==='aanbetaald'||c.status==='afgerond'))cls+=' busy';
+    else if(evs.length)cls+=' hold';
+    if(ds===today())cls+=' today';else if(ds<today())cls+=' past';
+    const click=all.length?`openClientModal('${all[0].id}')`:`quickAdd('${ds}')`;
+    cells+=`<div class="${cls}" onclick="${click}" title="${all.length?esc(all.map(c=>c.naam).join(', ')):'Beschikbaar, klik om te boeken'}"><div class="dnum">${d}</div>${all.map(c=>`<div class="cal-ev"><i class="evdot" style="background:${c.status==='aanbetaald'||c.status==='afgerond'?'var(--green)':c.status==='geboekt'?'var(--gold)':'var(--muted)'}"></i>${esc(c.naam)}</div>`).join('')}</div>`;
+  }
+  return `<div class="card" style="margin-bottom:16px">
+    <div class="cal-head"><h3 style="font-size:15px">${monthName.charAt(0).toUpperCase()+monthName.slice(1)}</h3>
+    <div style="display:flex;gap:8px"><button class="btn-ghost btn-sm" onclick="agNav(-1)">←</button><button class="btn-ghost btn-sm" onclick="agToday()">Vandaag</button><button class="btn-ghost btn-sm" onclick="agNav(1)">→</button></div></div>
+    <div class="legend"><span><i style="background:rgba(62,207,142,.55)"></i>Definitief (aanbetaald)</span><span><i style="background:rgba(212,164,76,.55)"></i>On hold, wacht op aanbetaling</span><span><i style="background:var(--panel2);border:1px solid var(--border)"></i>Beschikbaar</span><span><i style="background:transparent;border:1px dashed var(--muted)"></i>Lead (nog niet geboekt)</span></div>
+    <div class="cal-grid">${['Ma','Di','Wo','Do','Vr','Za','Zo'].map(d=>`<div class="cal-dow">${d}</div>`).join('')}${cells}</div>
+  </div>`;
+}
+function agNav(d){agM+=d;if(agM<0){agM=11;agY--}if(agM>11){agM=0;agY++}go(view)}
+function agToday(){const n=new Date();agY=n.getFullYear();agM=n.getMonth();go(view)}
+function quickAdd(ds){openClientModal();setTimeout(()=>{const el=$('#cDatum');if(el)el.value=ds},80)}
+function rAgenda(){
+  $('#mainContent').innerHTML=topbar('Agenda & beschikbaarheid',`<button class="btn btn-sm" onclick="openClientModal()">+ Nieuwe boeking</button>`)+
+  `<div class="pill-info">In één oogopslag: groen = definitief geboekt (aanbetaling binnen) · goud = on hold (contract/aanbetaling loopt) · leeg = beschikbaar. Klik op een vrije dag om direct een boeking aan te maken, of op een geboekte dag om de klant te openen.</div>`+calCard();
+}
+
+/* ================= DASHBOARD + SLIMME TAKEN ================= */
+function buildTodos(){
+  const t=[], nu=today();
+  const in7=new Date(Date.now()+7*864e5).toISOString().slice(0,10);
+  D.contracts.filter(k=>!k.signKlant).forEach(k=>t.push({
+    kleur:'var(--gold2)',txt:`Contract <b>${k.nr}</b> van ${esc(k.data.naam)} is nog niet ondertekend`,
+    btn:'Open',act:`viewContract('${k.id}')`}));
+  D.clients.filter(c=>c.status==='geboekt').forEach(c=>t.push({
+    kleur:'var(--red)',txt:`<b>${esc(c.naam)}</b> moet de aanbetaling (${eur((+c.prijs||0)*(+c.aanbetaling||0)/100)}) nog doen`,
+    btn:c.telefoon?'Herinner':'Bekijk',act:c.telefoon?`waQuick('${c.id}',2)`:`openClientModal('${c.id}')`}));
+  D.clients.filter(c=>c.datum&&c.datum>=nu&&c.datum<=in7&&c.status!=='afgerond').forEach(c=>t.push({
+    kleur:'var(--green)',txt:`Event van <b>${esc(c.naam)}</b> is over ${Math.max(0,Math.round((new Date(c.datum)-new Date(nu))/864e5))} dag(en), neem de planning door`,
+    btn:c.telefoon?'Contact':'Bekijk',act:c.telefoon?`waQuick('${c.id}',3)`:`openClientModal('${c.id}')`}));
+  return t;
+}
+function finData(){
+  let totaal=0,ontvangen=0;
+  D.clients.forEach(x=>{
+    if(x.status==='lead')return;
+    const p=+x.prijs||0,a=p*(+x.aanbetaling||0)/100;
+    totaal+=p;
+    if(x.status==='aanbetaald')ontvangen+=a;
+    else if(x.status==='afgerond')ontvangen+=p;
+  });
+  return {totaal,ontvangen,open:totaal-ontvangen};
+}
+function omzetPerMaand(jaar){
+  const m=Array(12).fill(0);
+  D.clients.forEach(c=>{if(c.status!=='lead'&&c.datum){const d=new Date(c.datum+'T00:00:00');if(d.getFullYear()===jaar)m[d.getMonth()]+=(+c.prijs||0)}});
+  return m;
+}
+function vbarsChart(m){
+  const max=Math.max(...m,1);
+  const lbl=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  return `<div class="vbars">${m.map((v,i)=>`<div class="vbar-w" title="${lbl[i]}: ${eur(v)}"><div class="vbar" style="height:${Math.round(v/max*100)}%"></div><div class="vbar-l">${lbl[i]}</div></div>`).join('')}</div>`;
+}
+/* ----- onboarding & demo-data ----- */
+function obSteps(){
+  const s=D.settings;
+  return [
+    {ok:!!(s.kvk||s.iban||s.adres),t:'Vul je bedrijfsgegevens in (komen op elk document)',act:"go('instellingen')"},
+    {ok:!!s.logo,t:'Upload je logo voor op contracten en facturen',act:"go('instellingen')"},
+    {ok:D.clients.some(c=>!c.demo),t:'Voeg je eerste klant toe',act:'openClientModal()'},
+    {ok:D.contracts.some(k=>!k.demo),t:'Genereer je eerste contract (60 seconden)',act:"go('contracten');setTimeout(openContractModal,50)"}
+  ];
+}
+function onboardingCard(){
+  const steps=obSteps(), done=steps.filter(x=>x.ok).length;
+  if(done===steps.length)return '';
+  const hasDemo=D.clients.some(c=>c.demo);
+  return `<div class="card" style="margin-bottom:16px;border-color:rgba(198,161,91,.45)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h3 style="font-size:14px">Aan de slag <span style="color:var(--muted);font-weight:400;font-size:12px">- ${done} van ${steps.length} stappen klaar</span></h3>
+      ${hasDemo?`<button class="btn-ghost btn-sm" onclick="clearDemo()">Voorbeelddata wissen</button>`:`<button class="btn-ghost btn-sm" onclick="seedDemo()">Bekijk met voorbeelddata</button>`}
+    </div>
+    <div style="margin-top:6px">${steps.map(st=>`<div class="ob-step ${st.ok?'done':''}" ${st.ok?'':`onclick="${st.act}"`}><span class="ob-dot">${st.ok?ic('check'):''}</span>${st.t}</div>`).join('')}</div>
+  </div>`;
+}
+function seedDemo(){
+  const dd=n=>new Date(Date.now()+n*864e5).toISOString().slice(0,10);
+  const pk=myBranche().pakket;
+  const demo=[
+    {naam:'Yasmina',partner:'Bilal',event:'Bruiloft',datum:dd(45),locatie:'Rotterdam',prijs:2750,status:'aanbetaald'},
+    {naam:'Salma',partner:'Karim',event:'Henna-avond',datum:dd(20),locatie:'Den Haag',prijs:950,status:'geboekt'},
+    {naam:'Imane',partner:'',event:'Verloving',datum:dd(70),locatie:'Utrecht',prijs:1400,status:'lead'},
+    {naam:'Fatima',partner:'Mehdi',event:'Bruiloft',datum:dd(-30),locatie:'Amsterdam',prijs:3200,status:'afgerond'}
+  ].map(x=>Object.assign({id:uid(),email:'',telefoon:'',pakket:pk,aanbetaling:30,notities:'',demo:true},x));
+  D.clients.push(...demo);
+  D.seq.contract++;
+  D.contracts.push({id:uid(),nr:'C-'+new Date().getFullYear()+'-'+String(D.seq.contract).padStart(3,'0'),clientId:demo[0].id,taal:'nl',
+    aangemaakt:today(),lever:D.settings.leverdagen||21,annu:D.settings.annuleringPct||25,extra:'',data:{...demo[0]},
+    signFotograaf:null,signKlant:null,versie:1,feedback:[],branche:D.settings.branche||'foto',demo:true});
+  save();toast('Voorbeelddata toegevoegd, klik rond om alles te ontdekken.');go('dashboard');
+}
+function clearDemo(){
+  D.clients=D.clients.filter(c=>!c.demo);
+  D.contracts=D.contracts.filter(k=>!k.demo);
+  save();toast('Voorbeelddata verwijderd.');go('dashboard');
+}
+function rDashboard(){
+  const c=D.clients, fin=finData();
+  const next=[...c].filter(x=>x.datum&&x.datum>=today()&&x.status!=='afgerond').sort((a,b)=>a.datum.localeCompare(b.datum)).slice(0,5);
+  const in30=new Date(Date.now()+30*864e5).toISOString().slice(0,10);
+  const events30=c.filter(x=>x.datum&&x.datum>=today()&&x.datum<=in30&&x.status!=='afgerond'&&x.status!=='lead').length;
+  const todos=buildTodos();
+  const statussen=['lead','geboekt','aanbetaald','afgerond'];
+  const sNamen={lead:'Leads',geboekt:'Geboekt',aanbetaald:'Aanbetaald',afgerond:'Afgerond'};
+  const sKleur={lead:'var(--blue)',geboekt:'var(--gold)',aanbetaald:'var(--green)',afgerond:'#6b7280'};
+  const sMax=Math.max(...statussen.map(s=>c.filter(x=>x.status===s).length),1);
+  $('#mainContent').innerHTML=topbar('Dashboard',`<button class="btn btn-sm" onclick="openClientModal()">+ Nieuwe klant</button>`)+
+  onboardingCard()+`
+  <div class="grid grid-4" style="margin-bottom:16px">
+    <div class="card stat acc-green"><div class="lbl">Geboekte omzet</div><div class="num" style="color:var(--green)">${eur(fin.totaal)}</div><div class="sub">${c.filter(x=>x.status!=='lead').length} boekingen</div></div>
+    <div class="card stat acc-blue"><div class="lbl">Ontvangen</div><div class="num">${eur(fin.ontvangen)}</div><div class="sub">${fin.totaal?Math.round(fin.ontvangen/fin.totaal*100):0}% van geboekt</div></div>
+    <div class="card stat acc-gold"><div class="lbl">Openstaand</div><div class="num" style="color:${fin.open?'var(--gold2)':'inherit'}">${eur(fin.open)}</div><div class="sub">${c.filter(x=>x.status==='geboekt').length} wachten op aanbetaling</div></div>
+    <div class="card stat acc-red"><div class="lbl">Events, 30 dagen</div><div class="num">${events30}</div><div class="sub">${todos.length} openstaande acties</div></div>
+  </div>
+  <div class="grid grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <h3 style="font-size:14px;margin-bottom:8px">Vandaag te doen <span style="color:var(--muted);font-weight:400;font-size:12px">· automatisch bijgehouden</span></h3>
+      ${todos.length?todos.map(t=>`<div class="todo"><span><span class="dot" style="background:${t.kleur}"></span>${t.txt}</span><button class="btn-ghost btn-sm" onclick="${t.act}" style="flex-shrink:0">${t.btn}</button></div>`).join('')
+        :`<div class="empty" style="padding:18px">Alles is bij, geen openstaande acties.</div>`}
+    </div>
+    <div class="card">
+      <h3 style="font-size:14px;margin-bottom:4px">Pipeline</h3>
+      ${statussen.map(s=>{const n=c.filter(x=>x.status===s).length;return `<div class="hbar-row"><span class="hl">${sNamen[s]}</span><div class="hbar"><i style="width:${Math.round(n/sMax*100)}%;background:${sKleur[s]}"></i></div><span class="ht">${n}</span></div>`}).join('')}
+      <h3 style="font-size:14px;margin:18px 0 0">Omzet per maand · ${new Date().getFullYear()}</h3>
+      ${vbarsChart(omzetPerMaand(new Date().getFullYear()))}
+    </div>
+  </div>
+  ${calCard()}
+  <div class="grid grid-2">
+    <div class="card"><h3 style="font-size:14px;margin-bottom:12px">Eerstvolgende events</h3>
+      ${next.length?`<table><tr><th>Klant</th><th>Event</th><th>Datum</th><th>Status</th></tr>${next.map(x=>`<tr><td>${esc(x.naam)}</td><td>${esc(x.event)}</td><td>${fdate(x.datum)}</td><td>${badge(x.status)}</td></tr>`).join('')}</table>`:`<div class="empty">Nog geen geplande events.</div>`}
+    </div>
+    <div class="card"><h3 style="font-size:14px;margin-bottom:12px">Snelle acties</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn-ghost" onclick="quickGo('contracten',openContractModal)">Contract maken in 60 seconden</button>
+        <button class="btn-ghost" onclick="quickGo('offertes',openOfferteModal)">Offerte opstellen${hasPro()?'':' · Pro'}</button>
+        <button class="btn-ghost" onclick="quickGo('facturen',openInvoiceModal)">Factuur / aanbetaling maken${hasPro()?'':' · Pro'}</button>
+        <button class="btn-ghost" onclick="quickGo('whatsapp')">Bericht naar klant sturen</button>
+      </div>
+    </div>
+  </div>`;
+}
+function badge(s){return `<span class="badge b-${s}">${{lead:'Lead',geboekt:'Geboekt',aanbetaald:'Aanbetaald',afgerond:'Afgerond'}[s]||s}</span>`}
+function waQuick(clientId,tplIndex){const c=D.clients.find(x=>x.id===clientId);if(c)openWA(c.telefoon,WA_TPL[tplIndex].m(c))}
+
+/* ================= KLANTEN ================= */
+let kZoek='',kFilter='alle';
+function rKlanten(){
+  $('#mainContent').innerHTML=topbar('Klanten',`<button class="btn btn-sm" onclick="openClientModal()">+ Nieuwe klant</button>`)+`
+  <input placeholder="Zoek op naam, telefoon of locatie…" value="${esc(kZoek)}" oninput="kZoek=this.value;rKlantenLijst()" style="max-width:420px">
+  <div class="chips">${['alle','lead','geboekt','aanbetaald','afgerond'].map(f=>`<button class="chip ${kFilter===f?'active':''}" onclick="kFilter='${f}';rKlanten()">${{alle:'Alle',lead:'Leads',geboekt:'Geboekt',aanbetaald:'Aanbetaald',afgerond:'Afgerond'}[f]}</button>`).join('')}</div>
+  <div class="card" style="padding:0" id="klantenLijst"></div>`;
+  rKlantenLijst();
+}
+function rKlantenLijst(){
+  const q=kZoek.toLowerCase();
+  let list=[...D.clients].sort((a,b)=>(a.datum||'9').localeCompare(b.datum||'9'));
+  if(kFilter!=='alle')list=list.filter(c=>c.status===kFilter);
+  if(q)list=list.filter(c=>(c.naam+' '+(c.partner||'')+' '+(c.telefoon||'')+' '+(c.locatie||'')).toLowerCase().includes(q));
+  $('#klantenLijst').innerHTML=list.length?`<div style="overflow-x:auto"><table><tr><th>Naam</th><th>Event</th><th>Datum</th><th>Prijs</th><th>Status</th><th></th></tr>${
+    list.map(x=>`<tr>
+      <td><b>${esc(x.naam)}</b><br><span style="color:var(--muted);font-size:12px">${esc(x.telefoon||'')}</span></td>
+      <td>${esc(x.event)}</td><td>${fdate(x.datum)}</td><td>${eur(x.prijs)}</td><td>${badge(x.status)}</td>
+      <td style="white-space:nowrap;text-align:right">
+        <button class="btn-ghost btn-sm" onclick="openClientModal('${x.id}')">Bewerk</button>
+        <button class="btn btn-sm" onclick="newContractFor('${x.id}')">Contract</button>
+      </td></tr>`).join('')}</table></div>`
+  :`<div class="empty">${D.clients.length?'Geen klanten gevonden met dit filter.':'Nog geen klanten. Voeg je eerste klant toe, daarna maak je in één klik een contract.'}</div>`;
+}
+function openClientModal(id){
+  const x=D.clients.find(c=>c.id===id)||{naam:'',partner:'',email:'',telefoon:'',event:'Bruiloft',datum:'',locatie:'',pakket:myBranche().pakket,prijs:'',aanbetaling:30,status:'lead',notities:''};
+  openModal(`<h2>${id?'Klant bewerken':'Nieuwe klant'}</h2><div class="sub">Vul één keer in, contracten, facturen en berichten worden hier automatisch mee gevuld.</div>
+  <div class="row2">
+    <div><label>Naam klant *</label><input id="cNaam" value="${esc(x.naam)}"></div>
+    <div><label>Naam partner (bij bruiloft)</label><input id="cPartner" value="${esc(x.partner)}"></div>
+    <div><label>Telefoon (incl. +31)</label><input id="cTel" value="${esc(x.telefoon)}" placeholder="+316…"></div>
+    <div><label>E-mail</label><input id="cEmail" value="${esc(x.email)}"></div>
+    <div><label>Type event</label><select id="cEvent">${['Bruiloft','Verloving','Henna-avond','Walima','Babyshower','Aqiqah','Bedrijfsevent','Familie-event','Anders'].map(e=>`<option ${e===x.event?'selected':''}>${e}</option>`).join('')}</select></div>
+    <div><label>Datum event</label><input id="cDatum" type="date" value="${x.datum}"></div>
+    <div><label>Locatie</label><input id="cLocatie" value="${esc(x.locatie)}" placeholder="Zaal / stad"></div>
+    <div><label>Pakket</label><input id="cPakket" value="${esc(x.pakket)}"></div>
+    <div><label>Totaalprijs (€, incl. btw)</label><input id="cPrijs" type="number" value="${esc(x.prijs)}"></div>
+    <div><label>Aanbetaling (%)</label><input id="cAanb" type="number" value="${esc(x.aanbetaling)}"></div>
+    <div><label>Status</label><select id="cStatus">${['lead','geboekt','aanbetaald','afgerond'].map(s=>`<option value="${s}" ${s===x.status?'selected':''}>${{lead:'Lead',geboekt:'Geboekt',aanbetaald:'Aanbetaald',afgerond:'Afgerond'}[s]}</option>`).join('')}</select></div>
+  </div>
+  <label>Notities</label><textarea id="cNotities" rows="2">${esc(x.notities)}</textarea>
+  <div class="modal-actions">
+    ${id?`<button class="btn-danger btn-ghost" onclick="delClient('${id}')">Verwijderen</button>`:''}
+    <button class="btn-ghost" onclick="closeModal()">Annuleren</button>
+    <button class="btn" onclick="saveClient('${id||''}')">Opslaan</button>
+  </div>`);
+}
+function saveClient(id){
+  const naam=$('#cNaam').value.trim(); if(!naam)return alert('Naam is verplicht.');
+  const obj={naam,partner:$('#cPartner').value.trim(),email:$('#cEmail').value.trim(),telefoon:$('#cTel').value.trim(),
+    event:$('#cEvent').value,datum:$('#cDatum').value,locatie:$('#cLocatie').value.trim(),pakket:$('#cPakket').value.trim(),
+    prijs:$('#cPrijs').value,aanbetaling:$('#cAanb').value||30,status:$('#cStatus').value,notities:$('#cNotities').value};
+  /* slimme dubbele-boeking check */
+  if(obj.datum){
+    const conflict=D.clients.find(c=>c.id!==id&&c.datum===obj.datum&&c.status!=='afgerond'&&c.status!=='lead');
+    if(conflict&&!confirm(`LET OP: ${conflict.naam} heeft óók een boeking op ${fdate(obj.datum)}.\n\nToch opslaan?`))return;
+  }
+  if(id){Object.assign(D.clients.find(c=>c.id===id),obj)}else{obj.id=uid();D.clients.push(obj)}
+  save();closeModal();go(view);
+}
+function delClient(id){if(!confirm('Klant verwijderen?'))return;D.clients=D.clients.filter(c=>c.id!==id);save();closeModal();go(view)}
+
+/* ================= CONTRACTEN ================= */
+const TAALNAMEN={nl:'Nederlands',fr:'Français',ar:'العربية',en:'English'};
+function rContracten(){
+  $('#mainContent').innerHTML=topbar('Contracten',`<button class="btn btn-sm" onclick="openContractModal()">+ Nieuw contract</button>`)+`
+  <div class="pill-info"><b>Van 3 weken naar 60 seconden:</b> kies een klant, kies de taal, en het contract staat klaar, direct te ondertekenen op telefoon of tablet en te downloaden als PDF.</div>
+  <div class="card" style="padding:0">${
+    D.contracts.length?`<div style="overflow-x:auto"><table><tr><th>Nr</th><th>Klant</th><th>Event</th><th>Taal</th><th>Status</th><th></th></tr>${
+      [...D.contracts].reverse().map(k=>`<tr><td><b>${k.nr}</b></td><td>${esc(k.data.naam)}</td><td>${esc(k.data.event)} · ${fdate(k.data.datum)}</td><td>${TAALNAMEN[k.taal]}</td>
+      <td>${k.signKlant?'<span class="badge b-aanbetaald">Ondertekend</span>':'<span class="badge b-geboekt">Wacht op handtekening</span>'}</td>
+      <td style="white-space:nowrap;text-align:right">
+        <button class="btn-ghost btn-sm" onclick="viewContract('${k.id}')">Open</button>
+        <button class="btn-danger btn-ghost btn-sm" onclick="delContract('${k.id}')">Verwijder</button>
+      </td></tr>`).join('')}</table></div>`
+    :`<div class="empty">Nog geen contracten. Maak je eerste contract in 60 seconden.</div>`}</div>`;
+}
+function newContractFor(clientId){go('contracten');setTimeout(()=>openContractModal(clientId),50)}
+function openContractModal(clientId){
+  if(!D.clients.length)return openModal(`<h2>Eerst een klant toevoegen</h2><div class="sub">Een contract wordt gevuld met klantgegevens, voeg eerst een klant toe.</div><div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Sluiten</button><button class="btn" onclick="closeModal();openClientModal()">+ Klant toevoegen</button></div>`);
+  openModal(`<h2>Nieuw contract</h2><div class="sub">Kies klant en taal, alle gegevens worden automatisch ingevuld.</div>
+  <label>Klant</label><select id="kClient">${D.clients.map(c=>`<option value="${c.id}" ${c.id===clientId?'selected':''}>${esc(c.naam)}, ${esc(c.event)} (${fdate(c.datum)})</option>`).join('')}</select>
+  <label>Taal van het contract</label><select id="kTaal"><option value="nl">Nederlands</option><option value="fr">Français</option><option value="ar">العربية (Arabisch)</option><option value="en">English</option></select>
+  <div class="row2">
+    <div><label>Levertijd beelden (dagen)</label><input id="kLever" type="number" value="${D.settings.leverdagen||21}"></div>
+    <div><label>Annuleringskosten (%)</label><input id="kAnnu" type="number" value="${D.settings.annuleringPct||25}"></div>
+  </div>
+  <label>Extra afspraken (optioneel)</label><textarea id="kExtra" rows="2" placeholder="bijv. drone-opnames, tweede shooter, album inbegrepen…"></textarea>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="makeContract()">Contract genereren</button></div>`);
+}
+function makeContract(){
+  const c=D.clients.find(x=>x.id===$('#kClient').value); if(!c)return;
+  D.seq.contract++;
+  const k={id:uid(),nr:'C-'+new Date().getFullYear()+'-'+String(D.seq.contract).padStart(3,'0'),clientId:c.id,taal:$('#kTaal').value,
+    aangemaakt:today(),lever:$('#kLever').value||21,annu:$('#kAnnu').value||25,extra:$('#kExtra').value.trim(),
+    data:{...c},signFotograaf:null,signKlant:null,versie:1,feedback:[],branche:D.settings.branche||'foto'};
+  D.contracts.push(k);
+  if(c.status==='lead'){c.status='geboekt'}
+  save();closeModal();viewContract(k.id);
+}
+function delContract(id){if(!confirm('Contract verwijderen?'))return;D.contracts=D.contracts.filter(k=>k.id!==id);save();go('contracten')}
+
+/* ----- contractteksten in 3 talen ----- */
+const CT={
+ nl:{titel:'OVEREENKOMST FOTOGRAFIE & VIDEOGRAFIE',tussen:'Deze overeenkomst wordt gesloten tussen:',opdrachtnemer:'Opdrachtnemer',opdrachtgever:'Opdrachtgever',
+  gegevens:'Gegevens van de opdracht',event:'Type opdracht',datum:'Datum',locatie:'Locatie',pakket:'Pakket',prijs:'Totaalprijs (incl. btw)',aanb:'Aanbetaling',rest:'Restbedrag (uiterlijk op de dag van het event)',
+  artikelen:[
+   ['Artikel 1: Opdracht','De opdrachtnemer verzorgt {DIENST} zoals hierboven omschreven. De opdrachtnemer spant zich in voor het best mogelijke resultaat passend bij zijn/haar stijl en portfolio.'],
+   ['Artikel 2: Betaling','De aanbetaling dient binnen 7 dagen na ondertekening te worden voldaan. De boeking is pas definitief na ontvangst van de aanbetaling. Het restbedrag wordt uiterlijk op de dag van het event voldaan.'],
+   ['Artikel 3: Annulering','Bij annulering door de opdrachtgever wordt {ANNU}% van de totaalprijs in rekening gebracht, met een minimum van de aanbetaling. Bij annulering binnen 14 dagen vóór het event is de volledige prijs verschuldigd.'],
+   ['Artikel 4: Levering','De bewerkte beelden worden binnen {LEVER} dagen na het event digitaal geleverd via een online galerij of downloadlink.'],
+   ['Artikel 5: Gebruiksrecht','De opdrachtgever ontvangt persoonlijk gebruiksrecht op de beelden. De opdrachtnemer behoudt het auteursrecht en mag beelden gebruiken voor portfolio en social media, tenzij de opdrachtgever hier schriftelijk bezwaar tegen maakt.'],
+   ['Artikel 6: Overmacht','Bij ziekte of overmacht zorgt de opdrachtnemer waar mogelijk voor gelijkwaardige vervanging, of wordt de aanbetaling volledig terugbetaald.'],
+   ['Artikel 7: Aansprakelijkheid','De aansprakelijkheid van de opdrachtnemer is beperkt tot maximaal het factuurbedrag van de opdracht.']],
+  specKop:'Artikel 8: Dienstspecifieke bepalingen',
+  extraKop:'Artikel 9: Aanvullende afspraken',
+  slot:'Aldus overeengekomen en in tweevoud ondertekend op {VANDAAG}.',
+  handFoto:'Opdrachtnemer',handKlant:'Opdrachtgever',contractnr:'Contractnummer',
+  titelGen:'OVEREENKOMST BRUILOFTSDIENSTEN',
+  gen:{a4:'De overeengekomen diensten en/of producten worden geleverd op de afgesproken datum, tijd en locatie zoals hierboven omschreven. Wijzigingen in aantallen of wensen worden uiterlijk 14 dagen vóór het event schriftelijk doorgegeven.',
+       a5:'De opdrachtnemer mag foto\'s of video\'s van het geleverde werk gebruiken voor portfolio en social media, tenzij de opdrachtgever hier schriftelijk bezwaar tegen maakt.'}},
+ fr:{titel:'CONTRAT DE PHOTOGRAPHIE & VIDÉOGRAPHIE',tussen:'Le présent contrat est conclu entre :',opdrachtnemer:'Le prestataire',opdrachtgever:'Le client',
+  gegevens:'Détails de la prestation',event:'Type de prestation',datum:'Date',locatie:'Lieu',pakket:'Formule',prijs:'Prix total (TVA incluse)',aanb:'Acompte',rest:'Solde (au plus tard le jour de l\'événement)',
+  artikelen:[
+   ['Article 1: Mission','Le prestataire assure {DIENST} comme décrit ci-dessus, conformément à son style et à son savoir-faire.'],
+   ['Article 2: Paiement','L\'acompte doit être réglé dans les 7 jours suivant la signature. La réservation n\'est définitive qu\'après réception de l\'acompte. Le solde est payé au plus tard le jour de l\'événement.'],
+   ['Article 3: Annulation','En cas d\'annulation par le client, {ANNU}% du prix total sera facturé, avec un minimum égal à l\'acompte. En cas d\'annulation moins de 14 jours avant l\'événement, le prix total est dû.'],
+   ['Article 4: Livraison','Les images retouchées seront livrées sous forme numérique dans un délai de {LEVER} jours après l\'événement, via une galerie en ligne ou un lien de téléchargement.'],
+   ['Article 5: Droits d\'utilisation','Le client reçoit un droit d\'utilisation personnel des images. Le prestataire conserve les droits d\'auteur et peut utiliser les images pour son portfolio et ses réseaux sociaux, sauf objection écrite du client.'],
+   ['Article 6: Force majeure','En cas de maladie ou de force majeure, le prestataire fournira si possible un remplaçant équivalent, ou remboursera intégralement l\'acompte.'],
+   ['Article 7: Responsabilité','La responsabilité du prestataire est limitée au montant facturé de la prestation.']],
+  specKop:'Article 8: Dispositions spécifiques au service',
+  extraKop:'Article 9: Accords complémentaires',
+  slot:'Fait en deux exemplaires et signé le {VANDAAG}.',
+  handFoto:'Le prestataire',handKlant:'Le client',contractnr:'Numéro de contrat',
+  titelGen:'CONTRAT DE PRESTATION DE MARIAGE',
+  gen:{a4:'Les services et/ou produits convenus seront fournis à la date, à l\'heure et au lieu indiqués ci-dessus. Toute modification doit être communiquée par écrit au plus tard 14 jours avant l\'événement.',
+       a5:'Le prestataire peut utiliser des photos ou vidéos du travail réalisé pour son portfolio et ses réseaux sociaux, sauf objection écrite du client.'}},
+ ar:{titel:'عقد تصوير فوتوغرافي وفيديو',tussen:'تم إبرام هذا العقد بين:',opdrachtnemer:'مقدّم الخدمة',opdrachtgever:'العميل',
+  gegevens:'تفاصيل الخدمة',event:'نوع المناسبة',datum:'التاريخ',locatie:'المكان',pakket:'الباقة',prijs:'السعر الإجمالي (شامل الضريبة)',aanb:'الدفعة المقدمة',rest:'المبلغ المتبقي (يُدفع في يوم المناسبة كحد أقصى)',
+  artikelen:[
+   ['المادة 1: الخدمة','يتولى مقدّم الخدمة {DIENST} كما هو موضح أعلاه، وفقاً لأسلوبه وخبرته.'],
+   ['المادة 2: الدفع','تُدفع الدفعة المقدمة خلال 7 أيام من توقيع العقد. لا يُعتبر الحجز نهائياً إلا بعد استلام الدفعة المقدمة. يُدفع المبلغ المتبقي في يوم المناسبة كحد أقصى.'],
+   ['المادة 3: الإلغاء','في حالة الإلغاء من طرف العميل، يتم احتساب {ANNU}٪ من السعر الإجمالي، بحد أدنى يساوي الدفعة المقدمة. في حالة الإلغاء قبل أقل من 14 يوماً من المناسبة، يُستحق السعر كاملاً.'],
+   ['المادة 4: التسليم','يتم تسليم الصور والمقاطع المعدّلة رقمياً خلال {LEVER} يوماً بعد المناسبة، عبر معرض إلكتروني أو رابط تحميل.'],
+   ['المادة 5: حقوق الاستخدام','يحصل العميل على حق استخدام شخصي للصور. يحتفظ مقدّم الخدمة بحقوق الملكية الفكرية ويجوز له استخدام الصور لأغراض العرض والتسويق، ما لم يعترض العميل كتابياً.'],
+   ['المادة 6: القوة القاهرة','في حالة المرض أو القوة القاهرة، يوفر مقدّم الخدمة بديلاً مكافئاً إن أمكن، أو تُعاد الدفعة المقدمة بالكامل.'],
+   ['المادة 7: المسؤولية','تقتصر مسؤولية مقدّم الخدمة على مبلغ الفاتورة الخاصة بالخدمة كحد أقصى.']],
+  specKop:'المادة 8: أحكام خاصة بالخدمة',
+  extraKop:'المادة 9: اتفاقات إضافية',
+  slot:'حُرّر هذا العقد من نسختين ووُقّع بتاريخ {VANDAAG}.',
+  handFoto:'مقدّم الخدمة',handKlant:'العميل',contractnr:'رقم العقد',
+  titelGen:'عقد خدمات الزفاف',
+  gen:{a4:'تُقدَّم الخدمات و/أو المنتجات المتفق عليها في التاريخ والوقت والمكان المحددين أعلاه. يجب الإبلاغ عن أي تعديلات كتابياً قبل 14 يوماً على الأقل من المناسبة.',
+       a5:'يجوز لمقدّم الخدمة استخدام صور أو مقاطع من العمل المنجز لأغراض العرض والتسويق، ما لم يعترض العميل كتابياً.'}},
+ en:{titel:'PHOTOGRAPHY & VIDEOGRAPHY AGREEMENT',tussen:'This agreement is entered into between:',opdrachtnemer:'The contractor',opdrachtgever:'The client',
+  gegevens:'Details of the assignment',event:'Type of event',datum:'Date',locatie:'Location',pakket:'Package',prijs:'Total price (incl. VAT)',aanb:'Deposit',rest:'Remaining balance (due no later than the day of the event)',
+  artikelen:[
+   ['Article 1: Assignment','The contractor will provide {DIENST} as described above, in line with their style and expertise.'],
+   ['Article 2: Payment','The deposit is due within 7 days of signing. The booking is only final once the deposit has been received. The remaining balance is due no later than the day of the event.'],
+   ['Article 3: Cancellation','If the client cancels, {ANNU}% of the total price will be charged, with a minimum of the deposit. If cancellation occurs within 14 days before the event, the full price is due.'],
+   ['Article 4: Delivery','The edited material will be delivered digitally within {LEVER} days after the event via an online gallery or download link.'],
+   ['Article 5: Usage rights','The client receives personal usage rights to the material. The contractor retains copyright and may use the material for portfolio and social media, unless the client objects in writing.'],
+   ['Article 6: Force majeure','In case of illness or force majeure, the contractor will arrange an equivalent replacement where possible, or the deposit will be fully refunded.'],
+   ['Article 7: Liability','The liability of the contractor is limited to the invoiced amount of the assignment.']],
+  specKop:'Article 8: Service-specific provisions',
+  extraKop:'Article 9: Additional agreements',
+  titelGen:'WEDDING SERVICES AGREEMENT',
+  gen:{a4:'The agreed services and/or products will be delivered on the agreed date, time and location as described above. Any changes must be communicated in writing no later than 14 days before the event.',
+       a5:'The contractor may use photos or videos of the delivered work for portfolio and social media, unless the client objects in writing.'},
+  slot:'Thus agreed and signed in duplicate on {VANDAAG}.',
+  handFoto:'The contractor',handKlant:'The client',contractnr:'Contract number'}
+};
+function buildArtikelen(taal,branche){
+  const t=CT[taal], b=BRANCHES[branche]||BRANCHES.foto;
+  const arts=t.artikelen.map((a,i)=>{
+    let txt=a[1];
+    if(!b.media){if(i===3)txt=t.gen.a4;if(i===4)txt=t.gen.a5}
+    return [a[0],txt.replace('{DIENST}',b.dienst[taal])];
+  });
+  if(b.spec)arts.push([t.specKop,b.spec[taal]]);
+  return arts;
+}
+function resolvedArts(k){
+  return k.art||buildArtikelen(k.taal,k.branche||D.settings.branche).map(a=>[a[0],a[1].replace('{ANNU}',k.annu).replace('{LEVER}',k.lever)]);
+}
+function contractHTML(k){
+  const t=CT[k.taal], s=D.settings, d=k.data, rtl=k.taal==='ar';
+  const b=BRANCHES[k.branche||s.branche]||BRANCHES.foto;
+  const titel=(b.titel&&b.titel[k.taal])||(b.media?t.titel:t.titelGen);
+  const dienst=b.dienst[k.taal];
+  const aanbBedrag=(+d.prijs||0)*(+d.aanbetaling||0)/100, rest=(+d.prijs||0)-aanbBedrag;
+  const naamVol=d.partner?`${d.naam} & ${d.partner}`:d.naam;
+  const locale={ar:'ar-MA',fr:'fr-FR',en:'en-GB'}[k.taal]||'nl-NL';
+  const ld=x=>x?new Date(x+'T00:00:00').toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'}):'-';
+  return `<div class="preview-wrap" ${rtl?'dir="rtl"':''}><div class="pw-band"></div><div class="pw-inner">
+    <div class="c-head"><div><div class="c-sub">${dienst.charAt(0).toUpperCase()+dienst.slice(1)}</div><h2>${titel}</h2><div style="font-size:11.5px;color:#888">${t.contractnr}: <b>${k.nr}</b>${(k.versie||1)>1?` · Versie ${k.versie} (herzien)`:''}</div></div>
+    <div class="c-studio">${s.logo?`<div><img src="${s.logo}" style="max-height:54px;margin-bottom:6px"></div>`:''}<b style="font-size:12.5px;color:#26282c">${esc(s.studio)}</b><br>${esc(s.naam)}${s.adres?'<br>'+esc(s.adres):''}${s.kvk?'<br>KvK '+esc(s.kvk):''}${s.iban?'<br>'+esc(s.iban):''}</div></div>
+    <p>${t.tussen}</p>
+    <table>
+      <tr><td>${t.opdrachtnemer}</td><td><b>${esc(s.studio)}</b>, ${esc(s.naam)}${s.telefoon?' · '+esc(s.telefoon):''}</td></tr>
+      <tr><td>${t.opdrachtgever}</td><td><b>${esc(naamVol)}</b>${d.telefoon?' · '+esc(d.telefoon):''}${d.email?' · '+esc(d.email):''}</td></tr>
+    </table>
+    <h3>${t.gegevens}</h3>
+    <table>
+      <tr><td>${t.event}</td><td>${esc(d.event)}</td></tr>
+      <tr><td>${t.datum}</td><td>${ld(d.datum)}</td></tr>
+      <tr><td>${t.locatie}</td><td>${esc(d.locatie||'-')}</td></tr>
+      <tr><td>${t.pakket}</td><td>${esc(d.pakket||'-')}</td></tr>
+      <tr><td>${t.prijs}</td><td><b>${eur(d.prijs)}</b></td></tr>
+      <tr><td>${t.aanb} (${d.aanbetaling}%)</td><td>${eur(aanbBedrag)}</td></tr>
+      <tr><td>${t.rest}</td><td>${eur(rest)}</td></tr>
+    </table>
+    ${resolvedArts(k).map(a=>`<h3>${esc(a[0])}</h3><p>${esc(a[1])}</p>`).join('')}
+    ${k.extra?`<h3>${t.extraKop}</h3><p>${esc(k.extra).replace(/\n/g,'<br>')}</p>`:''}
+    <p style="margin-top:16px">${t.slot.replace('{VANDAAG}',ld(k.aangemaakt))}</p>
+    <div class="sig-row">
+      <div class="sig-box"><div class="line">${k.signFotograaf?`<img src="${k.signFotograaf}">`:''}</div><div class="who">${t.handFoto}<br><b>${esc(s.naam)}</b> · ${esc(s.studio)}<br>${t.datum}: ${k.signFotograaf?ld(k.aangemaakt):'________________'}</div></div>
+      <div class="sig-box"><div class="line">${k.signKlant?`<img src="${k.signKlant}">`:''}</div><div class="who">${t.handKlant}<br><b>${esc(naamVol)}</b><br>${t.datum}: ${k.signKlant?ld(k.aangemaakt):'________________'}</div></div>
+    </div>
+    <div class="pw-foot"><span>${esc(s.studio)}${s.telefoon?' · '+esc(s.telefoon):''}${s.email?' · '+esc(s.email):''}</span><span>${k.nr} · v${k.versie||1}</span></div>
+  </div></div>`;
+}
+function viewContract(id){
+  const k=D.contracts.find(x=>x.id===id); if(!k)return;
+  const fb=hasPro()?(k.feedback||[]):[];
+  const fbHtml=fb.length?`<div class="card" style="max-width:760px;margin:0 auto 16px">
+    <h3 style="font-size:14.5px;margin-bottom:8px">Feedback van de klant</h3>
+    ${fb.map((f,i)=>`<div class="todo"><span style="flex:1;line-height:1.5"><span class="badge ${f.status==='open'?'b-geboekt':'b-aanbetaald'}">${f.status==='open'?'Open':'Verwerkt'}</span> <span style="color:var(--muted);font-size:11.5px">${fdate(f.datum)}</span><br>${esc(f.tekst)}</span>
+    ${f.status==='open'?`<span style="display:flex;gap:6px;flex-direction:column;flex-shrink:0"><button class="btn btn-sm" onclick="applyFeedback('${k.id}',${i})">Automatisch verwerken</button><button class="btn-ghost btn-sm" onclick="fbEdit('${k.id}',${i})">Zelf aanpassen</button></span>`:''}</div>`).join('')}
+  </div>`:'';
+  $('#mainContent').innerHTML=topbar('Contract '+k.nr,`<button class="btn-ghost btn-sm" onclick="go('contracten')">← Terug</button>`)+`
+  <div class="toolbar">
+    <button class="btn" onclick="printContract('${k.id}')">Download als PDF</button>
+    <button class="btn-ghost" onclick="openEditArtModal('${k.id}')">Tekst aanpassen</button>
+    ${hasPro()?`<button class="btn-ghost" onclick="openFeedbackModal('${k.id}')">Feedback klant</button>`:`<button class="btn-ghost" style="opacity:.55" onclick="showUpgrade('Klantfeedback')">Feedback klant · Pro</button>`}
+    <button class="btn-ghost" onclick="openSignModal('${k.id}','signFotograaf')">Mijn handtekening</button>
+    <button class="btn-ghost" onclick="openSignModal('${k.id}','signKlant')">Handtekening klant</button>
+    ${k.data.telefoon?`<button class="btn-ghost" onclick="waContractKlaar('${k.id}')">Stuur via WhatsApp</button>`:''}
+  </div>
+  ${fbHtml}
+  ${contractHTML(k)}`;
+}
+
+/* ----- contracttekst aanpassen ----- */
+function ensureArt(k){if(!k.art)k.art=resolvedArts(k)}
+function artRowHtml(a){return `<div class="art-row"><input class="artT" value="${esc(a[0])}" placeholder="Titel artikel"><textarea class="artB" rows="3" placeholder="Tekst van het artikel">${esc(a[1])}</textarea><div style="text-align:right;margin-top:6px"><button class="btn-danger btn-ghost btn-sm" onclick="this.closest('.art-row').remove()">Verwijder artikel</button></div></div>`}
+function addArtRow(){document.getElementById('artList').insertAdjacentHTML('beforeend',artRowHtml(['Eigen artikel','']))}
+function openEditArtModal(id){
+  const k=D.contracts.find(x=>x.id===id);ensureArt(k);
+  openModal(`<h2>Contracttekst aanpassen</h2><div class="sub">Pas elke zin aan, verwijder artikelen of voeg eigen artikelen toe. Het contract wordt direct opnieuw gegenereerd als nieuwe versie.</div>
+  <div id="artList" style="margin-top:12px;max-height:50vh;overflow-y:auto">${k.art.map(artRowHtml).join('')}</div>
+  <button class="btn-ghost btn-sm" style="margin-top:10px" onclick="addArtRow()">+ Eigen artikel toevoegen</button>
+  <label>Aanvullende afspraken</label><textarea id="eExtra" rows="3">${esc(k.extra||'')}</textarea>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="saveArts('${id}')">Opslaan & opnieuw genereren</button></div>`);
+}
+function saveArts(id){
+  const k=D.contracts.find(x=>x.id===id);
+  k.art=[...document.querySelectorAll('#artList .art-row')].map(r=>[r.querySelector('.artT').value.trim()||'-',r.querySelector('.artB').value.trim()]).filter(a=>a[1]);
+  k.extra=$('#eExtra').value.trim();
+  k.versie=(k.versie||1)+1;
+  save();closeModal();viewContract(id);
+}
+
+/* ----- feedback klant ----- */
+function openFeedbackModal(id){
+  openModal(`<h2>Feedback van de klant</h2><div class="sub">Plak hier wat de klant terugstuurde (bijv. via WhatsApp). Daarna verwerk je het met één klik automatisch in het contract, er wordt direct een nieuwe versie gegenereerd.</div>
+  <label>Feedback</label><textarea id="fbTekst" rows="4" placeholder="bijv. 'Kunnen we de levertijd op 14 dagen zetten en drone-opnames toevoegen?'"></textarea>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="saveFeedback('${id}')">Feedback opslaan</button></div>`);
+}
+function saveFeedback(id){
+  const t=$('#fbTekst').value.trim();if(!t)return alert('Vul de feedback in.');
+  const k=D.contracts.find(x=>x.id===id);
+  (k.feedback=k.feedback||[]).push({datum:today(),tekst:t,status:'open'});
+  save();closeModal();viewContract(id);
+}
+function applyFeedback(id,i){
+  const k=D.contracts.find(x=>x.id===id),f=k.feedback[i];
+  k.extra=(k.extra?k.extra+'\n':'')+'• '+f.tekst.replace(/\s+/g,' ').trim();
+  f.status='verwerkt';k.versie=(k.versie||1)+1;
+  save();viewContract(id);
+}
+function fbEdit(id,i){const k=D.contracts.find(x=>x.id===id);k.feedback[i].status='verwerkt';save();openEditArtModal(id)}
+function printContract(id){
+  const k=D.contracts.find(x=>x.id===id); if(!k)return;
+  $('#printArea').innerHTML=contractHTML(k);
+  window.print();
+}
+function waContractKlaar(id){
+  const k=D.contracts.find(x=>x.id===id);
+  const msg=`Beste ${k.data.naam}, jullie contract (${k.nr}) staat klaar. Lees het rustig door; ondertekenen kan digitaal en duurt nog geen minuut. De aanbetaling van ${eur((+k.data.prijs||0)*(+k.data.aanbetaling||0)/100)} maakt de boeking definitief. Met vriendelijke groet, ${D.settings.naam}, ${D.settings.studio}`;
+  openWA(k.data.telefoon,msg);
+}
+
+/* ----- handtekening ----- */
+let sigCtx=null,sigDrawn=false,sigTarget=null;
+function openSignModal(contractId,field){
+  sigTarget={contractId,field};
+  openModal(`<h2>${field==='signKlant'?'Handtekening klant':'Jouw handtekening'}</h2><div class="sub">Teken met vinger (telefoon/tablet) of muis. Geef je telefoon aan de klant, klaar in 10 seconden.</div>
+  <canvas class="sigpad" id="sigCanvas" style="margin-top:14px"></canvas>
+  <div class="modal-actions">
+    <button class="btn-ghost" onclick="clearSig()">Wissen</button>
+    <button class="btn-ghost" onclick="closeModal()">Annuleren</button>
+    <button class="btn" onclick="saveSig()">Opslaan</button>
+  </div>`);
+  const cv=$('#sigCanvas');
+  cv.width=cv.offsetWidth*2; cv.height=280;
+  sigCtx=cv.getContext('2d'); sigCtx.lineWidth=3; sigCtx.lineCap='round'; sigCtx.strokeStyle='#1a2b6d'; sigDrawn=false;
+  let drawing=false;
+  const pos=e=>{const r=cv.getBoundingClientRect();const p=e.touches?e.touches[0]:e;return[(p.clientX-r.left)*(cv.width/r.width),(p.clientY-r.top)*(cv.height/r.height)]};
+  const start=e=>{drawing=true;const[x,y]=pos(e);sigCtx.beginPath();sigCtx.moveTo(x,y);e.preventDefault()};
+  const move=e=>{if(!drawing)return;const[x,y]=pos(e);sigCtx.lineTo(x,y);sigCtx.stroke();sigDrawn=true;e.preventDefault()};
+  const end=()=>drawing=false;
+  cv.addEventListener('mousedown',start);cv.addEventListener('mousemove',move);window.addEventListener('mouseup',end);
+  cv.addEventListener('touchstart',start,{passive:false});cv.addEventListener('touchmove',move,{passive:false});cv.addEventListener('touchend',end);
+}
+function clearSig(){const cv=$('#sigCanvas');sigCtx.clearRect(0,0,cv.width,cv.height);sigDrawn=false}
+function saveSig(){
+  if(!sigDrawn)return alert('Zet eerst een handtekening.');
+  const k=D.contracts.find(x=>x.id===sigTarget.contractId);
+  k[sigTarget.field]=$('#sigCanvas').toDataURL('image/png');
+  save();closeModal();viewContract(k.id);
+}
+
+/* ================= OFFERTES ================= */
+function rOffertes(){
+  D.offertes=D.offertes||[];
+  $('#mainContent').innerHTML=topbar('Offertes',`<button class="btn btn-sm" onclick="openOfferteModal()">+ Nieuwe offerte</button>`)+`
+  <div class="pill-info">Stuur eerst een nette offerte; bij akkoord zet je hem met de bestaande klantgegevens in één klik om in een contract.</div>
+  <div class="card" style="padding:0">${
+    D.offertes.length?`<div style="overflow-x:auto"><table><tr><th>Nr</th><th>Klant</th><th>Omschrijving</th><th>Bedrag</th><th>Geldig tot</th><th></th></tr>${
+      [...D.offertes].reverse().map(o=>`<tr><td><b>${o.nr}</b></td><td>${esc(o.klantNaam)}</td><td>${esc(o.omschrijving)}</td><td>${eur(o.bedrag)}</td><td>${fdate(o.geldigTot)}</td>
+      <td style="white-space:nowrap;text-align:right">
+        <button class="btn-ghost btn-sm" onclick="printOfferte('${o.id}')">PDF</button>
+        <button class="btn btn-sm" onclick="newContractFor('${o.clientId}')">Naar contract</button>
+        <button class="btn-danger btn-ghost btn-sm" onclick="delOfferte('${o.id}')">Verwijder</button>
+      </td></tr>`).join('')}</table></div>`
+    :`<div class="empty">Nog geen offertes. Maak een offerte vanuit een klant, bedragen worden automatisch ingevuld.</div>`}</div>`;
+}
+function openOfferteModal(){
+  if(!D.clients.length)return alert('Voeg eerst een klant toe.');
+  openModal(`<h2>Nieuwe offerte</h2><div class="sub">Kies de klant, pakket en prijs worden overgenomen en zijn aan te passen.</div>
+  <label>Klant</label><select id="oClient" onchange="offPrefill()">${D.clients.map(c=>`<option value="${c.id}">${esc(c.naam)}, ${esc(c.event)}</option>`).join('')}</select>
+  <label>Omschrijving</label><input id="oOms">
+  <div class="row2">
+    <div><label>Bedrag (€, incl. btw)</label><input id="oBedrag" type="number"></div>
+    <div><label>Geldig (dagen)</label><input id="oGeldig" type="number" value="14"></div>
+  </div>
+  <label>Toelichting (optioneel, komt op de offerte)</label><textarea id="oNotitie" rows="2" placeholder="bijv. inclusief voorbespreking en reiskosten binnen 50 km"></textarea>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="makeOfferte()">Offerte maken</button></div>`);
+  offPrefill();
+}
+function offPrefill(){
+  const c=D.clients.find(x=>x.id===$('#oClient').value);if(!c)return;
+  $('#oOms').value=`${c.event}${c.datum?' '+fdate(c.datum):''}, ${c.pakket||''}`;
+  $('#oBedrag').value=c.prijs||'';
+}
+function makeOfferte(){
+  const c=D.clients.find(x=>x.id===$('#oClient').value);if(!c)return;
+  D.offertes=D.offertes||[];
+  D.seq.offerte=(D.seq.offerte||0)+1;
+  const o={id:uid(),nr:'O-'+new Date().getFullYear()+'-'+String(D.seq.offerte).padStart(3,'0'),clientId:c.id,klantNaam:c.naam,
+    omschrijving:$('#oOms').value.trim(),bedrag:+$('#oBedrag').value||0,notitie:$('#oNotitie').value.trim(),
+    datum:today(),geldigTot:new Date(Date.now()+((+$('#oGeldig').value||14)*864e5)).toISOString().slice(0,10)};
+  D.offertes.push(o);save();closeModal();printOfferte(o.id);go('offertes');
+}
+function delOfferte(id){if(!confirm('Offerte verwijderen?'))return;D.offertes=D.offertes.filter(o=>o.id!==id);save();go('offertes')}
+function printOfferte(id){
+  const o=(D.offertes||[]).find(x=>x.id===id), s=D.settings, c=D.clients.find(x=>x.id===o.clientId)||{};
+  const ex=o.bedrag/1.21, btw=o.bedrag-ex;
+  $('#printArea').innerHTML=`<div class="preview-wrap"><div class="pw-band"></div><div class="pw-inner">
+    <div class="c-head"><div><div class="c-sub">${esc(myBranche().label)}</div><h2>OFFERTE</h2><div style="font-size:11.5px;color:#888">Offertenummer: <b>${o.nr}</b> · Datum: ${fdate(o.datum)} · Geldig tot: <b>${fdate(o.geldigTot)}</b></div></div>
+    <div class="c-studio">${s.logo?`<div><img src="${s.logo}" style="max-height:54px;margin-bottom:6px"></div>`:''}<b style="font-size:12.5px;color:#26282c">${esc(s.studio)}</b><br>${esc(s.naam)}${s.adres?'<br>'+esc(s.adres):''}${s.kvk?'<br>KvK '+esc(s.kvk):''}${s.btwnr?'<br>Btw-nr '+esc(s.btwnr):''}</div></div>
+    <p><b>Aan:</b> ${esc(o.klantNaam)}${c.email?' · '+esc(c.email):''}${c.telefoon?' · '+esc(c.telefoon):''}</p>
+    <table style="margin-top:18px">
+      <tr><td style="width:70%"><b>Omschrijving</b></td><td><b>Bedrag</b></td></tr>
+      <tr><td>${esc(o.omschrijving)}</td><td>${eur(ex)}</td></tr>
+      <tr><td>Btw 21%</td><td>${eur(btw)}</td></tr>
+      <tr><td><b>Totaal (incl. btw)</b></td><td><b style="font-size:16px">${eur(o.bedrag)}</b></td></tr>
+    </table>
+    ${o.notitie?`<p style="margin-top:16px">${esc(o.notitie)}</p>`:''}
+    <p style="margin-top:20px">Deze offerte is geldig tot <b>${fdate(o.geldigTot)}</b>. Na akkoord ontvangt u het contract ter ondertekening; de boeking is definitief na ontvangst van de aanbetaling.</p>
+    <div class="sig-row">
+      <div class="sig-box"><div class="line"></div><div class="who">Voor akkoord<br><b>${esc(o.klantNaam)}</b><br>Datum: ________________</div></div>
+      <div class="sig-box"></div>
+    </div>
+    <div class="pw-foot"><span>${esc(s.studio)}${s.telefoon?' · '+esc(s.telefoon):''}${s.email?' · '+esc(s.email):''}</span><span>${o.nr}</span></div>
+  </div></div>`;
+  window.print();
+}
+
+/* ================= FINANCIEEL ================= */
+function rFinancieel(){
+  const fin=finData();
+  const rows=D.clients.filter(c=>c.status!=='lead').sort((a,b)=>(a.datum||'9').localeCompare(b.datum||'9'));
+  $('#mainContent').innerHTML=topbar('Omzet & betalingen')+`
+  <div class="grid grid-4" style="margin-bottom:16px">
+    <div class="card stat acc-green"><div class="lbl">Geboekte omzet</div><div class="num" style="color:var(--green)">${eur(fin.totaal)}</div></div>
+    <div class="card stat acc-blue"><div class="lbl">Ontvangen</div><div class="num">${eur(fin.ontvangen)}</div></div>
+    <div class="card stat acc-gold"><div class="lbl">Openstaand</div><div class="num" style="color:var(--gold2)">${eur(fin.open)}</div></div>
+    <div class="card stat"><div class="lbl">Facturen verstuurd</div><div class="num">${D.invoices.length}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px"><h3 style="font-size:14px">Omzet per maand · ${new Date().getFullYear()}</h3>${vbarsChart(omzetPerMaand(new Date().getFullYear()))}</div>
+  <div class="card" style="padding:0">${
+    rows.length?`<div style="overflow-x:auto"><table><tr><th>Klant</th><th>Event</th><th>Totaal</th><th>Aanbetaling</th><th>Ontvangen</th><th>Openstaand</th><th>Status</th><th></th></tr>${
+      rows.map(x=>{const p=+x.prijs||0,a=p*(+x.aanbetaling||0)/100;
+        const ontv=x.status==='afgerond'?p:x.status==='aanbetaald'?a:0;
+        return `<tr><td><b>${esc(x.naam)}</b></td><td>${esc(x.event)} · ${fdate(x.datum)}</td><td>${eur(p)}</td><td>${eur(a)} (${x.aanbetaling}%)</td>
+        <td style="color:var(--green)">${eur(ontv)}</td><td style="color:${p-ontv>0?'var(--gold2)':'var(--muted)'}">${eur(p-ontv)}</td><td>${badge(x.status)}</td>
+        <td style="text-align:right">${p-ontv>0&&x.telefoon?`<button class="btn-ghost btn-sm" onclick="betaalVerzoek('${x.id}')">Betaalverzoek</button>`:''}</td></tr>`}).join('')}</table></div>`
+    :`<div class="empty">Nog geen boekingen. Zodra klanten geboekt zijn, zie je hier per klant wat er ontvangen en openstaand is.</div>`}</div>`;
+}
+
+function betaalVerzoek(id){
+  const c=D.clients.find(x=>x.id===id);if(!c)return;
+  const p=+c.prijs||0,a=p*(+c.aanbetaling||0)/100;
+  const bedrag=c.status==='geboekt'?a:p-(c.status==='aanbetaald'?a:0);
+  const oms=c.status==='geboekt'?'aanbetaling':'restbedrag';
+  const msg=`Beste ${c.naam}, hierbij het betaalverzoek voor de ${oms} van ${eur(bedrag)} voor jullie ${c.event.toLowerCase()}${c.datum?' op '+fdate(c.datum):''}. Graag overmaken naar ${D.settings.iban||'[vul IBAN in bij Instellingen]'} t.n.v. ${D.settings.studio}, onder vermelding van jullie naam. Met vriendelijke groet, ${D.settings.naam}`;
+  openWA(c.telefoon,msg);
+}
+
+/* ================= RAPPORTAGES ================= */
+function rRapportages(){
+  const c=D.clients, fin=finData();
+  const leads=c.filter(x=>x.status==='lead').length, geboektPlus=c.length-leads;
+  const conv=c.length?Math.round(geboektPlus/c.length*100):0;
+  const gem=geboektPlus?fin.totaal/geboektPlus:0;
+  const types={};c.forEach(x=>{if(x.status!=='lead')types[x.event]=(types[x.event]||0)+1});
+  const tEntries=Object.entries(types).sort((a,b)=>b[1]-a[1]);
+  const tMax=Math.max(...tEntries.map(e=>e[1]),1);
+  $('#mainContent').innerHTML=topbar('Rapportages')+`
+  <div class="grid grid-4" style="margin-bottom:16px">
+    <div class="card stat acc-blue"><div class="lbl">Conversie lead → boeking</div><div class="num">${conv}%</div><div class="sub">${geboektPlus} van ${c.length} aanvragen</div></div>
+    <div class="card stat acc-green"><div class="lbl">Gem. orderwaarde</div><div class="num">${eur(gem)}</div></div>
+    <div class="card stat acc-gold"><div class="lbl">Contracten</div><div class="num">${D.contracts.length}</div><div class="sub">${D.contracts.filter(k=>k.signKlant).length} ondertekend</div></div>
+    <div class="card stat"><div class="lbl">Offertes</div><div class="num">${(D.offertes||[]).length}</div></div>
+  </div>
+  <div class="grid grid-2">
+    <div class="card"><h3 style="font-size:14px">Omzet per maand · ${new Date().getFullYear()}</h3>${vbarsChart(omzetPerMaand(new Date().getFullYear()))}</div>
+    <div class="card"><h3 style="font-size:14px;margin-bottom:6px">Boekingen per type event</h3>
+      ${tEntries.length?tEntries.map(([t,n])=>`<div class="hbar-row"><span class="hl" style="width:110px">${esc(t)}</span><div class="hbar"><i style="width:${Math.round(n/tMax*100)}%;background:var(--gold)"></i></div><span class="ht">${n}</span></div>`).join('')
+      :`<div class="empty" style="padding:18px">Nog geen geboekte events.</div>`}
+    </div>
+  </div>`;
+}
+
+/* ================= FACTUREN ================= */
+function rFacturen(){
+  $('#mainContent').innerHTML=topbar('Facturen',`<button class="btn btn-sm" onclick="openInvoiceModal()">+ Nieuwe factuur</button>`)+`
+  <div class="card" style="padding:0">${
+    D.invoices.length?`<div style="overflow-x:auto"><table><tr><th>Nr</th><th>Klant</th><th>Omschrijving</th><th>Bedrag</th><th>Datum</th><th></th></tr>${
+      [...D.invoices].reverse().map(f=>`<tr><td><b>${f.nr}</b></td><td>${esc(f.klantNaam)}</td><td>${esc(f.omschrijving)}</td><td>${eur(f.bedrag)}</td><td>${fdate(f.datum)}</td>
+      <td style="white-space:nowrap;text-align:right"><button class="btn-ghost btn-sm" onclick="printInvoice('${f.id}')">PDF</button>
+      <button class="btn-danger btn-ghost btn-sm" onclick="delInvoice('${f.id}')">Verwijder</button></td></tr>`).join('')}</table></div>`
+    :`<div class="empty">Nog geen facturen. Maak een aanbetalings- of eindfactuur vanuit een klant.</div>`}</div>`;
+}
+function openInvoiceModal(){
+  if(!D.clients.length)return alert('Voeg eerst een klant toe.');
+  openModal(`<h2>Nieuwe factuur</h2><div class="sub">Kies klant en type, bedragen worden automatisch berekend.</div>
+  <label>Klant</label><select id="fClient" onchange="invPreview()">${D.clients.map(c=>`<option value="${c.id}">${esc(c.naam)}, ${esc(c.event)} (${eur(c.prijs)})</option>`).join('')}</select>
+  <label>Type</label><select id="fType" onchange="invPreview()">
+    <option value="aanbetaling">Aanbetalingsfactuur</option>
+    <option value="rest">Restfactuur</option>
+    <option value="volledig">Volledige factuur</option>
+  </select>
+  <div id="fPrev" class="pill-info" style="margin-top:14px"></div>
+  <div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Annuleren</button><button class="btn" onclick="makeInvoice()">Factuur maken</button></div>`);
+  invPreview();
+}
+function invBedrag(c,type){
+  const p=+c.prijs||0, a=p*(+c.aanbetaling||0)/100;
+  return type==='aanbetaling'?a:type==='rest'?p-a:p;
+}
+function invPreview(){
+  const c=D.clients.find(x=>x.id===$('#fClient').value);
+  $('#fPrev').innerHTML=`Bedrag: <b>${eur(invBedrag(c,$('#fType').value))}</b> (incl. 21% btw)`;
+}
+function makeInvoice(){
+  const c=D.clients.find(x=>x.id===$('#fClient').value), type=$('#fType').value;
+  D.seq.invoice++;
+  const oms={aanbetaling:`Aanbetaling ${c.aanbetaling}%, ${c.event} ${fdate(c.datum)}`,rest:`Restbedrag, ${c.event} ${fdate(c.datum)}`,volledig:`${c.event} ${fdate(c.datum)}, ${c.pakket}`}[type];
+  const f={id:uid(),nr:'F-'+new Date().getFullYear()+'-'+String(D.seq.invoice).padStart(3,'0'),clientId:c.id,klantNaam:c.naam,
+    omschrijving:oms,bedrag:invBedrag(c,type),datum:today(),type};
+  D.invoices.push(f);save();closeModal();printInvoice(f.id);go('facturen');
+}
+function delInvoice(id){if(!confirm('Factuur verwijderen?'))return;D.invoices=D.invoices.filter(f=>f.id!==id);save();go('facturen')}
+function printInvoice(id){
+  const f=D.invoices.find(x=>x.id===id), s=D.settings, c=D.clients.find(x=>x.id===f.clientId)||{};
+  const ex=f.bedrag/1.21, btw=f.bedrag-ex;
+  const verval=new Date(Date.now()+14*864e5).toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});
+  $('#printArea').innerHTML=`<div class="preview-wrap"><div class="pw-band"></div><div class="pw-inner">
+    <div class="c-head"><div><div class="c-sub">${esc(myBranche().label)}</div><h2>FACTUUR</h2><div style="font-size:11.5px;color:#888">Factuurnummer: <b>${f.nr}</b> · Datum: ${fdate(f.datum)}</div></div>
+    <div class="c-studio">${s.logo?`<div><img src="${s.logo}" style="max-height:54px;margin-bottom:6px"></div>`:''}<b style="font-size:12.5px;color:#26282c">${esc(s.studio)}</b><br>${esc(s.naam)}${s.adres?'<br>'+esc(s.adres):''}${s.kvk?'<br>KvK '+esc(s.kvk):''}${s.btwnr?'<br>Btw-nr '+esc(s.btwnr):''}</div></div>
+    <p><b>Aan:</b> ${esc(f.klantNaam)}${c.email?' · '+esc(c.email):''}${c.telefoon?' · '+esc(c.telefoon):''}</p>
+    <table style="margin-top:18px">
+      <tr><td style="width:70%"><b>Omschrijving</b></td><td><b>Bedrag</b></td></tr>
+      <tr><td>${esc(f.omschrijving)}</td><td>${eur(ex)}</td></tr>
+      <tr><td>Btw 21%</td><td>${eur(btw)}</td></tr>
+      <tr><td><b>Totaal te betalen</b></td><td><b style="font-size:16px">${eur(f.bedrag)}</b></td></tr>
+    </table>
+    <p style="margin-top:22px">Graag betalen vóór <b>${verval}</b>${s.iban?` op rekening <b>${esc(s.iban)}</b> t.n.v. ${esc(s.studio)}`:''} onder vermelding van <b>${f.nr}</b>.</p>
+    <p style="margin-top:14px;color:#777;font-size:12.5px">Bedankt voor je vertrouwen!, ${esc(s.naam)}, ${esc(s.studio)}</p>
+    <div class="pw-foot"><span>${esc(s.studio)}${s.telefoon?' · '+esc(s.telefoon):''}${s.email?' · '+esc(s.email):''}</span><span>${f.nr}</span></div>
+  </div></div>`;
+  window.print();
+}
+
+/* ================= WHATSAPP ================= */
+const WA_TPL=[
+ {t:'Bevestiging boeking',m:c=>`Beste ${c.naam}, wat fijn dat jullie voor ${D.settings.studio} kiezen voor jullie ${c.event.toLowerCase()} op ${fdate(c.datum)}. Ik stuur jullie zo het contract, na de aanbetaling staat de datum definitief vast. Met vriendelijke groet, ${D.settings.naam}`},
+ {t:'Contract staat klaar',m:c=>`Beste ${c.naam}, jullie contract staat klaar. Lees het rustig door en onderteken digitaal, dat duurt nog geen minuut. Vragen? Stuur gerust een bericht. Met vriendelijke groet, ${D.settings.naam}, ${D.settings.studio}`},
+ {t:'Herinnering aanbetaling',m:c=>`Beste ${c.naam}, een vriendelijke herinnering: de aanbetaling van ${eur((+c.prijs||0)*(+c.aanbetaling||0)/100)} voor jullie ${c.event.toLowerCase()} op ${fdate(c.datum)} staat nog open. Na ontvangst is de datum definitief voor jullie gereserveerd. Met vriendelijke groet, ${D.settings.naam}`},
+ {t:'Week vóór het event',m:c=>`Beste ${c.naam}, nog even en het is zover: ${fdate(c.datum)}. Ik neem deze week contact op om de planning en tijden door te nemen. Zijn er speciale wensen of momenten die zeker aandacht moeten krijgen? Met vriendelijke groet, ${D.settings.naam}`},
+ {t:'Geleverd + review vragen',m:c=>`Beste ${c.naam}, alles is geleverd, ik hoop dat jullie er net zo blij mee zijn als ik. Zouden jullie een korte review willen achterlaten? Dat helpt mij enorm. Bedankt voor het vertrouwen. Met vriendelijke groet, ${D.settings.naam}, ${D.settings.studio}`}
+];
+function rWhatsapp(){
+  $('#mainContent').innerHTML=topbar('Berichten')+`
+  <div class="pill-info">Kies een klant, de berichten worden automatisch persoonlijk gemaakt. Eén klik en WhatsApp opent met het bericht klaar om te versturen.</div>
+  <label>Klant</label><select id="waClient" onchange="rWaCards()" style="max-width:420px">${D.clients.length?D.clients.map(c=>`<option value="${c.id}">${esc(c.naam)}, ${esc(c.event)}</option>`).join(''):'<option>Geen klanten</option>'}</select>
+  <div id="waCards" style="margin-top:18px"></div>`;
+  rWaCards();
+}
+function rWaCards(){
+  const c=D.clients.find(x=>x.id===$('#waClient')?.value);
+  $('#waCards').innerHTML=!c?`<div class="empty">Voeg eerst een klant toe.</div>`:WA_TPL.map((t,i)=>`<div class="wa-card"><h4>${t.t}</h4><p>${esc(t.m(c))}</p>
+    <div class="wa-actions"><button class="btn btn-sm" onclick="waSend(${i})">Open in WhatsApp →</button>
+    <button class="btn-ghost btn-sm" onclick="waCopy(${i})">Kopieer</button></div></div>`).join('');
+}
+function waSend(i){const c=D.clients.find(x=>x.id===$('#waClient').value);openWA(c.telefoon,WA_TPL[i].m(c))}
+function waCopy(i){const c=D.clients.find(x=>x.id===$('#waClient').value);navigator.clipboard.writeText(WA_TPL[i].m(c)).then(()=>toast('Gekopieerd naar klembord.'))}
+function openWA(tel,msg){
+  if(!tel)return alert('Deze klant heeft nog geen telefoonnummer, vul dit eerst in bij de klant.');
+  const t=(tel||'').replace(/[^0-9+]/g,'').replace(/^\+/,'').replace(/^0/,'31');
+  window.open(`https://wa.me/${t}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* ================= INSTELLINGEN ================= */
+function rInstellingen(){
+  const s=D.settings;
+  const acc=curAcc();
+  const dagen=acc.expiry?Math.ceil((new Date(acc.expiry)-new Date(today()))/864e5):0;
+  $('#mainContent').innerHTML=topbar('Instellingen')+`
+  <div class="card" style="max-width:640px;margin-bottom:16px;border-color:rgba(198,161,91,.45)">
+    <h3 style="font-size:15px;margin-bottom:4px">Abonnement</h3>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:6px">Pakket: <b style="color:var(--text)">${TIERNAAM[acc.tier]||'-'}</b> · Geldig tot: <b style="color:${dagen<=7?'var(--red)':'var(--text)'}">${fdate(acc.expiry)}</b>${acc.expiry?` (nog ${Math.max(0,dagen)} dagen)`:''}</p>
+    <div style="margin-top:14px"><button class="btn-ghost" onclick="showRenew('${SES.aid}',false)">Verlengen met activatiecode</button></div>
+  </div>`+`
+  <div class="card" style="max-width:640px;margin-bottom:16px">
+    <h3 style="font-size:15px;margin-bottom:4px">Studiogegevens</h3>
+    <div class="sub" style="color:var(--muted);font-size:13px">Deze gegevens komen automatisch op elk contract en elke factuur.</div>
+    <div class="row2">
+      <div><label>Bedrijfsnaam</label><input id="sStudio" value="${esc(s.studio||'')}"></div>
+      <div><label>Jouw naam</label><input id="sNaam" value="${esc(s.naam||'')}"></div>
+      <div><label>Branche</label><select id="sBranche">${brancheOpts(s.branche||'foto')}</select></div>
+      <div></div>
+      <div><label>Telefoon</label><input id="sTel" value="${esc(s.telefoon||'')}"></div>
+      <div><label>E-mail</label><input id="sEmail" value="${esc(s.email||'')}"></div>
+      <div><label>Adres</label><input id="sAdres" value="${esc(s.adres||'')}"></div>
+      <div><label>KvK-nummer</label><input id="sKvk" value="${esc(s.kvk||'')}"></div>
+      <div><label>Btw-nummer</label><input id="sBtw" value="${esc(s.btwnr||'')}"></div>
+      <div><label>IBAN</label><input id="sIban" value="${esc(s.iban||'')}"></div>
+      <div><label>Standaard levertijd (dagen)</label><input id="sLever" type="number" value="${esc(s.leverdagen||21)}"></div>
+      <div><label>Standaard annuleringskosten (%)</label><input id="sAnnu" type="number" value="${esc(s.annuleringPct||25)}"></div>
+    </div>
+    <div style="margin-top:20px"><button class="btn" onclick="saveSettings()">Opslaan</button></div>
+  </div>
+  ${hasPro()?`<div class="card" style="max-width:640px;margin-bottom:16px">
+    <h3 style="font-size:15px;margin-bottom:4px">Jouw logo</h3>
+    <div class="sub" style="color:var(--muted);font-size:13px;margin-bottom:14px">Upload je logo, het komt automatisch rechtsboven op elk contract en elke factuur.</div>
+    ${s.logo?`<div style="background:#fff;border-radius:10px;padding:14px;display:inline-block;margin-bottom:12px"><img src="${s.logo}" style="max-height:60px;display:block"></div>`:''}
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-ghost" onclick="document.getElementById('logoFile').click()">${s.logo?'Ander logo kiezen':'Logo uploaden'}</button>
+      ${s.logo?`<button class="btn-danger btn-ghost" onclick="removeLogo()">Logo verwijderen</button>`:''}
+      <input type="file" id="logoFile" accept="image/*" style="display:none" onchange="uploadLogo(this)">
+    </div>
+  </div>`:`<div class="card" style="max-width:640px;margin-bottom:16px;opacity:.75">
+    <h3 style="font-size:15px;margin-bottom:4px">Jouw logo <span class="pro-badge" style="margin-left:8px">Pro</span></h3>
+    <div class="sub" style="color:var(--muted);font-size:13px;margin-bottom:14px">Met het Pro-pakket komt je eigen logo automatisch op elk contract en elke factuur.</div>
+    <button class="btn-ghost" onclick="showUpgrade('Eigen logo')">Bekijk Pro</button>
+  </div>`}
+  <div class="card" style="max-width:640px">
+    <h3 style="font-size:15px;margin-bottom:4px">Back-up</h3>
+    <div class="sub" style="color:var(--muted);font-size:13px;margin-bottom:14px">Download al je klanten, contracten en facturen als bestand, of zet een back-up terug op een ander apparaat.</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-ghost" onclick="exportData()">Download back-up</button>
+      <button class="btn-ghost" onclick="document.getElementById('impFile').click()">Back-up terugzetten</button>
+      <input type="file" id="impFile" accept=".json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>`;
+}
+function uploadLogo(inp){
+  const f=inp.files[0];if(!f)return;
+  const img=new Image();
+  img.onload=()=>{
+    const max=400,sc=Math.min(1,max/img.width);
+    const cv=document.createElement('canvas');cv.width=Math.round(img.width*sc);cv.height=Math.round(img.height*sc);
+    cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+    D.settings.logo=cv.toDataURL('image/png');save();rInstellingen();toast('Logo opgeslagen, staat nu op al je documenten.');
+  };
+  img.onerror=()=>alert('Dit bestand kan niet als afbeelding worden gelezen.');
+  img.src=URL.createObjectURL(f);
+}
+function removeLogo(){if(!confirm('Logo verwijderen?'))return;delete D.settings.logo;save();rInstellingen()}
+function saveSettings(){
+  Object.assign(D.settings,{studio:$('#sStudio').value,naam:$('#sNaam').value,branche:$('#sBranche').value,telefoon:$('#sTel').value,email:$('#sEmail').value,
+    adres:$('#sAdres').value,kvk:$('#sKvk').value,btwnr:$('#sBtw').value,iban:$('#sIban').value,
+    leverdagen:$('#sLever').value,annuleringPct:$('#sAnnu').value});
+  save();toast('Instellingen opgeslagen.');go('dashboard');
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`studioflow-backup-${(D.settings.studio||'studio').replace(/\W+/g,'-').toLowerCase()}-${today()}.json`;a.click();
+}
+function importData(inp){
+  const file=inp.files[0]; if(!file)return;
+  const fr=new FileReader();
+  fr.onload=()=>{try{
+    const d=JSON.parse(fr.result);
+    if(!d.settings||!Array.isArray(d.clients))throw 0;
+    if(!confirm('Back-up terugzetten? Huidige data wordt overschreven.'))return;
+    D=Object.assign({settings:{},clients:[],contracts:[],invoices:[],seq:{contract:0,invoice:0}},d);
+    save();toast('Back-up teruggezet.');go('dashboard');
+  }catch(e){alert('Dit is geen geldig StudioFlow back-upbestand.')}};
+  fr.readAsText(file);
+}
+
+/* ================= MODAL ================= */
+function openModal(html){$('#modalBox').innerHTML=html;$('#modalBg').classList.add('open')}
+function closeModal(){$('#modalBg').classList.remove('open')}
+$('#modalBg').addEventListener('click',e=>{if(e.target.id==='modalBg')closeModal()});
+
+/* ================= INIT ================= */
+(async function(){
+  $('#aPass').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth()});
+  $('#rBranche').innerHTML=brancheOpts('foto');
+  $('#uspList').innerHTML=[
+    'Contract klaar in 60 seconden, in het Nederlands, Frans of Arabisch',
+    'Nooit meer dubbele boekingen of vergeten aanbetalingen',
+    'Offertes, facturen en betaalverzoeken vanuit één overzicht'
+  ].map(t=>`<div>${ic('check')}${t}</div>`).join('');
+  if(CLOUD){
+    sb.auth.onAuthStateChange((ev)=>{if(ev==='PASSWORD_RECOVERY')showNewPass()});
+    const {data:{session}}=await sb.auth.getSession();
+    if(session)afterCloudLogin();
+    return;
+  }
+  try{SES=JSON.parse(localStorage.getItem(LS_SES)||'null')}catch(e){SES=null}
+  if(SES){
+    if(SES.admin&&!SES.imp){enterAdmin()}
+    else if(SES.aid&&accounts().find(a=>a.id===SES.aid)){
+      const acc=accounts().find(a=>a.id===SES.aid);
+      if(!SES.admin&&(!acc.expiry||acc.expiry<today())){SES=null;localStorage.removeItem(LS_SES)}
+      else{D=dataOf(SES.aid);enterUser()}
+    }
+    else{SES=null;localStorage.removeItem(LS_SES)}
+  }
+})();
+</script>
+</body>
+</html>

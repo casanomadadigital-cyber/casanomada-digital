@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8RGTHWX6J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N8RGTHWX6J');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f9f8f6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Planner">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<title>Contentplanner, Casanomada Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+body{ min-height:100vh; }
+.pl-wrap{ max-width:1100px; margin:0 auto; padding:110px 28px 80px; }
+.pl-bar{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 32px; background:rgba(249,248,246,.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+.pl-bar .brand{ font-family:var(--serif); font-style:italic; font-size:22px; }
+.pl-bar a.back{ font-size:13px; color:var(--muted); }
+.pl-bar a.back:hover{ color:var(--ink); }
+.pl-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:30px; }
+.pl-head h1{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,52px); }
+.pl-head p{ color:var(--muted); font-weight:300; font-size:15px; margin-top:6px; }
+.pl-nav{ display:flex; align-items:center; gap:16px; }
+.pl-nav button{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--white); cursor:pointer; font-size:16px; color:var(--ink); transition:background .2s,border-color .2s; }
+.pl-nav button:hover{ border-color:var(--ink); background:var(--bg-soft); }
+.pl-nav .pl-month{ font-family:var(--serif); font-size:24px; min-width:190px; text-align:center; }
+.pl-theme{ display:flex; align-items:center; gap:10px; }
+.pl-theme label{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); }
+.pl-theme input{ border:0; border-bottom:1px solid var(--line); background:transparent; padding:6px 2px; font-family:var(--serif); font-style:italic; font-size:18px; color:var(--ink); min-width:160px; }
+.pl-theme input:focus{ outline:none; border-color:var(--taupe); }
+
+.pl-today-btn{ border:1px solid var(--line); background:var(--white); color:var(--ink); font-family:var(--sans); font-size:12px; letter-spacing:.04em; padding:8px 18px; border-radius:100px; cursor:pointer; transition:background .2s,border-color .2s; }
+.pl-today-btn:hover{ border-color:var(--ink); background:var(--bg-soft); }
+.pl-summary{ font-size:13px; color:var(--muted); margin-left:14px; }
+.pl-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:24px; flex-wrap:wrap; }
+.pl-views{ display:flex; gap:6px; }
+.pl-view{ border:1px solid var(--line); background:var(--white); color:var(--muted); font-family:var(--sans); font-size:12px; padding:8px 18px; border-radius:100px; cursor:pointer; transition:background .2s,color .2s,border-color .2s; }
+.pl-view.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+.pl-list{ flex-direction:column; gap:12px; }
+.pl-listday{ border:1px solid var(--line-soft); border-radius:14px; background:var(--white); padding:16px 18px; }
+.pl-listday h4{ font-family:var(--serif); font-weight:500; font-size:19px; margin-bottom:12px; }
+.pl-listday .pl-item:last-child{ margin-bottom:0; }
+.pl-listday .pl-item{ margin-bottom:8px; }
+@media(max-width:640px){ .pl-toolbar{ justify-content:center; } .pl-center{ order:3; width:100%; text-align:center; } }
+.pl-form .row{ flex-wrap:wrap; }
+.pl-form #fTime{ flex:0 0 130px; }
+@media(max-width:640px){ .pl-form #fTime{ flex:1 1 100%; } }
+.pl-week{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; text-align:center; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); margin-bottom:10px; }
+.pl-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+.pl-cell{ min-height:104px; border:1px solid var(--line-soft); border-radius:12px; background:var(--white); padding:8px; cursor:pointer; transition:border-color .2s, box-shadow .2s, transform .2s; display:flex; flex-direction:column; gap:4px; }
+.pl-cell:hover{ border-color:var(--line); box-shadow:0 12px 30px rgba(13,13,13,.06); transform:translateY(-2px); }
+.pl-cell.empty{ background:transparent; border-color:transparent; cursor:default; }
+.pl-cell.empty:hover{ box-shadow:none; transform:none; }
+.pl-cell.today{ border-color:var(--taupe); }
+.pl-cell.drop{ border-color:var(--taupe); background:var(--bg-soft); box-shadow:0 0 0 2px rgba(201,162,122,.25) inset; }
+.pl-cell .dnum{ font-size:13px; color:var(--muted); font-weight:400; }
+.pl-cell.today .dnum{ color:var(--ink); font-weight:600; }
+.pl-chip{ font-size:10.5px; padding:3px 7px; border-radius:6px; background:var(--bg-soft); border-left:3px solid var(--taupe); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:grab; }
+.pl-chip:active{ cursor:grabbing; }
+.pl-chip.live{ border-left-color:#7aa06a; }
+.pl-chip.gepland{ border-left-color:#c8a24a; }
+.pl-chip.concept{ border-left-color:#b0a99c; background:transparent; border:1px dashed var(--line); border-left:3px dashed #b0a99c; }
+.pl-legend{ display:flex; gap:22px; margin-top:22px; font-size:12px; color:var(--muted); flex-wrap:wrap; }
+.pl-legend span{ display:flex; align-items:center; gap:8px; }
+.pl-legend i{ width:12px; height:12px; border-radius:4px; }
+.pl-legend .c-live{ background:#7aa06a; }
+.pl-legend .c-gepland{ background:#c8a24a; }
+.pl-legend .c-concept{ border:1px dashed #b0a99c; }
+.pl-hint{ margin-top:14px; font-size:12px; color:var(--muted-2); }
+
+.pl-filter{ display:flex; gap:8px; flex-wrap:wrap; margin:-4px 0 18px; }
+.pl-fchip{ display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); background:var(--white); color:var(--muted); border-radius:100px; padding:6px 14px; font-family:var(--sans); font-size:12px; cursor:pointer; transition:border-color .2s,color .2s,background .2s; }
+.pl-fchip i{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+.pl-fchip.on{ border-color:var(--ink); color:var(--ink); background:var(--bg-soft); font-weight:500; }
+.pl-cell.wkend{ background:var(--bg-soft); }
+.pl-cell.past .dnum{ opacity:.45; }
+.it-client{ font-size:10px; padding:2px 9px; border-radius:100px; color:#fff; white-space:nowrap; flex:0 0 auto; }
+
+/* modal */
+.pl-modal{ position:fixed; inset:0; z-index:200; background:rgba(13,13,13,.45); display:none; justify-content:center; align-items:flex-start; overflow-y:auto; padding:40px 20px; }
+.pl-modal.open{ display:flex; }
+.pl-card{ background:var(--white); border-radius:18px; width:100%; max-width:440px; padding:30px; margin:auto; box-shadow:0 30px 80px rgba(13,13,13,.3); }
+.pl-card h3{ font-family:var(--serif); font-weight:500; font-size:26px; }
+.pl-card .sub{ color:var(--muted); font-size:13px; margin-top:2px; margin-bottom:20px; }
+.pl-items{ display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+.pl-item{ display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--line-soft); border-radius:10px; }
+.pl-item .it-dot{ width:10px; height:10px; border-radius:50%; flex:0 0 auto; }
+.pl-item b{ font-size:13px; font-weight:500; }
+.pl-item span{ font-size:12px; color:var(--muted); }
+.pl-item .it-txt{ flex:1; min-width:0; }
+.pl-item .it-note{ display:block; font-size:11.5px; color:var(--muted); }
+.it-acts{ display:flex; gap:6px; align-items:center; flex:0 0 auto; }
+.it-act{ font-size:10px; border:1px solid var(--line); background:var(--bg); color:var(--muted); border-radius:6px; padding:5px 8px; cursor:pointer; white-space:nowrap; transition:border-color .2s,color .2s; }
+.it-act:hover{ border-color:var(--ink); color:var(--ink); }
+.it-act.s-live{ border-color:#7aa06a; color:#5d8a4e; }
+.it-act.s-gepland{ border-color:#c8a24a; color:#a07f2e; }
+.it-act.s-concept{ border-style:dashed; }
+.pl-item .del{ background:none; border:0; color:var(--muted-2); cursor:pointer; font-size:18px; line-height:1; padding:4px; }
+.pl-item .del:hover{ color:#c0392b; }
+.pl-empty-note{ color:var(--muted-2); font-size:13px; font-style:italic; margin-bottom:18px; }
+.pl-form{ display:flex; flex-direction:column; gap:12px; border-top:1px solid var(--line); padding-top:18px; }
+.pl-form .row{ display:flex; gap:10px; }
+.pl-form select, .pl-form input{ width:100%; border:1px solid var(--line); border-radius:9px; padding:11px 12px; font-family:var(--sans); font-size:14px; font-weight:300; color:var(--ink); background:var(--bg); }
+.pl-form select:focus, .pl-form input:focus{ outline:none; border-color:var(--taupe); }
+.pl-form .add{ background:var(--ink); color:#fff; border:0; border-radius:9px; padding:13px; font-size:13px; letter-spacing:.04em; cursor:pointer; transition:background .25s; }
+.pl-form .add:hover{ background:var(--ink-2); }
+.pl-close{ position:absolute; }
+.pl-card .close-x{ float:right; background:none; border:0; font-size:24px; line-height:1; color:var(--muted); cursor:pointer; margin-top:-6px; }
+.pl-dots{ display:none; gap:4px; flex-wrap:wrap; margin-top:auto; }
+.pl-dot{ width:7px; height:7px; border-radius:50%; background:#c8a24a; }
+.pl-dot.live{ background:#7aa06a; }
+.pl-dot.gepland{ background:#c8a24a; }
+.pl-dot.concept{ background:transparent; border:1px solid #b0a99c; }
+@media(max-width:640px){
+  .pl-wrap{ padding:96px 16px 60px; }
+  .pl-cell{ min-height:60px; padding:7px 6px; }
+  .pl-grid{ gap:6px; }
+  .pl-week{ font-size:9px; gap:6px; }
+  .pl-bar{ padding:14px 18px; }
+  .pl-chip{ display:none; }
+  .pl-dots{ display:flex; }
+  .pl-cell .dnum{ font-size:12px; }
+  .pl-head{ gap:14px; }
+  .pl-theme input{ min-width:120px; }
+  .pl-card{ padding:24px 20px; }
+}
+*{ -webkit-tap-highlight-color:transparent; }
+@media(max-width:640px){
+  .pl-form select, .pl-form input{ font-size:16px; padding:13px 12px; }
+  .pl-modal{ padding:0; align-items:flex-end; }
+  .pl-card{ max-width:none; border-radius:18px 18px 0 0; padding:22px 18px calc(22px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto; }
+  .pl-view, .pl-today-btn{ padding:10px 16px; }
+  .pl-summary{ display:block; width:100%; text-align:center; margin:8px 0 0; }
+  .pl-nav .pl-month{ font-size:20px; min-width:150px; }
+  .pl-fchip{ padding:9px 15px; }
+  .it-act{ padding:8px 10px; font-size:11px; }
+  .pl-item{ flex-wrap:wrap; }
+  .pl-item .it-txt{ flex:1 1 55%; min-width:140px; }
+  .pl-head h1{ font-size:30px; }
+  .pl-head p{ font-size:13px; }
+}
+</style>
+</head>
+<body>
+
+<div class="pl-bar">
+  <a href="index.html" class="brand">Casanomada<span style="color:var(--taupe)">.</span></a>
+  <a href="index.html" class="back">&larr; Terug naar site</a>
+</div>
+
+<div class="pl-wrap">
+  <div class="pl-head">
+    <div>
+      <h1>Contentplanner</h1>
+      <p>Plan je content per dag. Klik op een dag om iets toe te voegen. Alles wordt automatisch bewaard.</p>
+    </div>
+    <div class="pl-theme">
+      <label for="themeInput">Thema</label>
+      <input id="themeInput" type="text" placeholder="bv. Brand story">
+    </div>
+  </div>
+
+  <div class="pl-nav" style="justify-content:center;margin-bottom:10px">
+    <button id="prevM" aria-label="Vorige maand">&#8249;</button>
+    <div class="pl-month" id="monthLabel">Maand</div>
+    <button id="nextM" aria-label="Volgende maand">&#8250;</button>
+  </div>
+  <div class="pl-toolbar">
+    <div class="pl-views">
+      <button id="viewMonth" class="pl-view on">Maand</button>
+      <button id="viewList" class="pl-view">Lijst</button>
+    </div>
+    <div class="pl-center"><button id="todayBtn" class="pl-today-btn">Vandaag</button><span id="plSummary" class="pl-summary"></span></div>
+    <div style="display:flex;gap:8px"><button id="exportBtn" class="pl-today-btn">Exporteren</button><button id="icsBtn" class="pl-today-btn">Naar agenda (.ics)</button></div>
+  </div>
+
+  <div class="pl-filter" id="clientFilter" style="display:none"></div>
+
+  <div class="pl-week"><span>Ma</span><span>Di</span><span>Wo</span><span>Do</span><span>Vr</span><span>Za</span><span>Zo</span></div>
+  <div class="pl-grid" id="plGrid"></div>
+  <div class="pl-list" id="plList" style="display:none"></div>
+
+  <div class="pl-legend">
+    <span><i class="c-live"></i> Live / geplaatst</span>
+    <span><i class="c-gepland"></i> Gepland</span>
+    <span><i class="c-concept"></i> Concept</span>
+  </div>
+  <p class="pl-hint">Tip: alles wordt per apparaat in je browser opgeslagen. Op je telefoon: open deze pagina en kies 'Zet op beginscherm', dan werkt hij als app. Verplaatsen op je telefoon doe je via Bewerk en het datumveld.</p>
+</div>
+
+<!-- DAG MODAL -->
+<div class="pl-modal" id="dayModal">
+  <div class="pl-card">
+    <button class="close-x" id="closeModal" aria-label="Sluiten">&times;</button>
+    <h3 id="modalDate">Dag</h3>
+    <div class="sub">Voeg content toe of beheer wat er gepland staat.</div>
+    <div class="pl-items" id="dayItems"></div>
+    <form class="pl-form" id="addForm">
+      <div class="row">
+        <select id="fType">
+          <option value="Post">Post</option>
+          <option value="Reel">Reel</option>
+          <option value="Story">Story</option>
+          <option value="Carrousel">Carrousel</option>
+          <option value="TikTok">TikTok</option>
+          <option value="Blog">Blog</option>
+        </select>
+        <select id="fStatus">
+          <option value="gepland">Gepland</option>
+          <option value="live">Live</option>
+          <option value="concept">Concept</option>
+        </select>
+      </div>
+      <div class="row">
+        <input id="fClient" list="clientList" placeholder="Klant of merk (optioneel)">
+        <datalist id="clientList"></datalist>
+      </div>
+      <div class="row">
+        <input id="fDate" type="date" aria-label="Datum">
+        <input id="fTime" type="time" aria-label="Tijd">
+      </div>
+      <div class="row">
+        <input id="fNote" type="text" placeholder="Notitie (optioneel), bv. onderwerp of caption">
+      </div>
+      <div class="row">
+        <select id="fRepeat" aria-label="Herhalen">
+          <option value="1">Eenmalig</option>
+          <option value="4">Wekelijks · 4 weken</option>
+          <option value="8">Wekelijks · 8 weken</option>
+          <option value="12">Wekelijks · 12 weken</option>
+        </select>
+      </div>
+      <button type="submit" class="add" id="submitBtn">Toevoegen</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='cn_planner_v1', TKEY='cn_planner_theme_v1';
+  var store = JSON.parse(localStorage.getItem(KEY) || '{}');
+  var themes = JSON.parse(localStorage.getItem(TKEY) || '{}');
+  var save = function(){ localStorage.setItem(KEY, JSON.stringify(store)); };
+  var saveThemes = function(){ localStorage.setItem(TKEY, JSON.stringify(themes)); };
+
+  var MONTHS = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  var WD=['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];
+  var DOTS = { live:'#7aa06a', gepland:'#c8a24a', concept:'#b0a99c' };
+  var STLBL={live:'Live',gepland:'Gepland',concept:'Concept'};
+  var PALETTE=['#9e8a73','#7aa7e0','#c8506a','#7aa06a','#c8a24a','#8e7cc3','#5fa8a0','#b0779c','#cf8a4e','#6b7fae'];
+  function clientColor(name){ var h=0; for(var i=0;i<name.length;i++){ h=(h*31+name.charCodeAt(i))>>>0; } return PALETTE[h%PALETTE.length]; }
+
+  var now = new Date();
+  var vy = now.getFullYear(), vm = now.getMonth();
+  var view='maand';
+  var filterClient='';
+  var editing=null;
+  var grid = document.getElementById('plGrid');
+  var monthLabel = document.getElementById('monthLabel');
+  var themeInput = document.getElementById('themeInput');
+  var modal = document.getElementById('dayModal');
+  var dayItems = document.getElementById('dayItems');
+  var modalDate = document.getElementById('modalDate');
+  var addForm = document.getElementById('addForm');
+  var summary = document.getElementById('plSummary');
+  var submitBtn = document.getElementById('submitBtn');
+  var activeDate = null;
+
+  function pad(n){ return (n<10?'0':'')+n; }
+  function key(y,m,d){ return y+'-'+pad(m+1)+'-'+pad(d); }
+  function monthKey(){ return vy+'-'+pad(vm+1); }
+  function byTime(a,b){ return (a.time||'99:99').localeCompare(b.time||'99:99'); }
+  function match(it){ return !filterClient || (it.client||'')===filterClient; }
+
+  function allClients(){
+    var s={};
+    Object.keys(store).forEach(function(k){ (store[k]||[]).forEach(function(it){ if(it.client) s[it.client]=1; }); });
+    return Object.keys(s).sort(function(a,b){ return a.toLowerCase().localeCompare(b.toLowerCase()); });
+  }
+  function renderDatalist(){
+    var dl=document.getElementById('clientList'); dl.innerHTML='';
+    allClients().forEach(function(n){ var o=document.createElement('option'); o.value=n; dl.appendChild(o); });
+  }
+  function renderFilter(){
+    var c=document.getElementById('clientFilter');
+    var list=allClients();
+    c.innerHTML='';
+    if(!list.length){ c.style.display='none'; filterClient=''; return; }
+    c.style.display='flex';
+    if(filterClient && list.indexOf(filterClient)<0) filterClient='';
+    function chipBtn(label, val, color){
+      var b=document.createElement('button'); b.type='button';
+      b.className='pl-fchip'+((filterClient===val)?' on':'');
+      if(color){ var i=document.createElement('i'); i.style.background=color; b.appendChild(i); }
+      b.appendChild(document.createTextNode(label));
+      b.addEventListener('click', function(){ filterClient=(filterClient===val)?'':val; rerender(); });
+      return b;
+    }
+    c.appendChild(chipBtn('Alle klanten','',null));
+    list.forEach(function(n){ c.appendChild(chipBtn(n,n,clientColor(n))); });
+  }
+
+  function renderMonth(){
+    monthLabel.textContent = MONTHS[vm]+' '+vy;
+    themeInput.value = themes[monthKey()] || '';
+    grid.innerHTML='';
+    var first = new Date(vy, vm, 1);
+    var startIdx = (first.getDay()+6)%7;
+    var days = new Date(vy, vm+1, 0).getDate();
+    var t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    for(var i=0;i<startIdx;i++){ var e=document.createElement('div'); e.className='pl-cell empty'; grid.appendChild(e); }
+    for(var d=1; d<=days; d++){
+      var c=document.createElement('div'); c.className='pl-cell';
+      var k=key(vy,vm,d);
+      var dt=new Date(vy,vm,d);
+      if(dt.getDay()===0||dt.getDay()===6) c.className+=' wkend';
+      if(dt<t0) c.className+=' past';
+      if(vy===now.getFullYear() && vm===now.getMonth() && d===now.getDate()) c.className+=' today';
+      c.setAttribute('data-date', k);
+      var head=document.createElement('div'); head.className='dnum'; head.textContent=d; c.appendChild(head);
+      var all = store[k]||[];
+      if(all.length>1) all.sort(byTime);
+      var vis=[];
+      all.forEach(function(it, idx){ if(match(it)) vis.push({it:it, idx:idx}); });
+      vis.slice(0,3).forEach(function(v){
+        var it=v.it;
+        var chip=document.createElement('div'); chip.className='pl-chip '+it.status;
+        chip.textContent=(it.time? it.time+' · ':'')+(it.client? it.client+' · ':'')+it.type+(it.note?' · '+it.note:'');
+        chip.draggable=true;
+        chip.addEventListener('dragstart', function(ev){ ev.stopPropagation(); ev.dataTransfer.setData('text/plain', k+'|'+v.idx); ev.dataTransfer.effectAllowed='move'; });
+        c.appendChild(chip);
+      });
+      if(vis.length>3){ var more=document.createElement('div'); more.className='pl-chip'; more.style.background='transparent'; more.style.borderLeftColor='transparent'; more.style.color='var(--muted-2)'; more.textContent='+'+(vis.length-3)+' meer'; c.appendChild(more); }
+      if(vis.length){ var dots=document.createElement('div'); dots.className='pl-dots'; vis.slice(0,6).forEach(function(v){ var dd=document.createElement('i'); dd.className='pl-dot '+v.it.status; dots.appendChild(dd); }); c.appendChild(dots); }
+      c.addEventListener('click', function(){ openDay(this.getAttribute('data-date')); });
+      c.addEventListener('dragover', function(ev){ ev.preventDefault(); c.classList.add('drop'); });
+      c.addEventListener('dragleave', function(){ c.classList.remove('drop'); });
+      c.addEventListener('drop', function(ev){ ev.preventDefault(); c.classList.remove('drop');
+        var data=ev.dataTransfer.getData('text/plain'); if(!data) return;
+        var parts=data.split('|'), sk=parts[0], si=+parts[1], tk=c.getAttribute('data-date');
+        if(!tk || sk===tk) return; var arr=store[sk]; if(!arr || !arr[si]) return;
+        var moved=arr.splice(si,1)[0]; if(!arr.length) delete store[sk];
+        if(!store[tk]) store[tk]=[]; store[tk].push(moved); store[tk].sort(byTime); save(); rerender();
+      });
+      grid.appendChild(c);
+    }
+    // samenvatting met statistieken
+    var mk = monthKey(), tot=0, st={live:0,gepland:0,concept:0};
+    Object.keys(store).forEach(function(kk){
+      if(kk.indexOf(mk+'-')===0){ (store[kk]||[]).forEach(function(it){ if(!match(it)) return; tot++; if(st[it.status]!==undefined) st[it.status]++; }); }
+    });
+    summary.textContent = tot ? (tot+' items · '+st.live+' live · '+st.gepland+' gepland · '+st.concept+' concept') : 'Nog niets gepland deze maand';
+  }
+
+  function openDay(k){
+    activeDate=k;
+    document.getElementById('fDate').value=k;
+    var parts=k.split('-');
+    modalDate.textContent = parseInt(parts[2],10)+' '+MONTHS[parseInt(parts[1],10)-1]+' '+parts[0];
+    cancelEdit();
+    renderItems();
+    modal.classList.add('open');
+  }
+  function closeM(){ modal.classList.remove('open'); cancelEdit(); }
+  function cancelEdit(){
+    editing=null;
+    submitBtn.textContent='Toevoegen';
+    document.getElementById('fRepeat').disabled=false;
+  }
+  function rerender(){ renderFilter(); renderDatalist(); renderMonth(); if(view==='lijst') renderList(); if(modal.classList.contains('open')) renderItems(); }
+
+  function startEdit(dk, it){
+    if(activeDate!==dk || !modal.classList.contains('open')) openDay(dk);
+    editing={dk:dk, it:it};
+    document.getElementById('fType').value=it.type||'Post';
+    document.getElementById('fStatus').value=it.status||'gepland';
+    document.getElementById('fTime').value=it.time||'';
+    document.getElementById('fNote').value=it.note||'';
+    document.getElementById('fClient').value=it.client||'';
+    document.getElementById('fDate').value=dk;
+    var rep=document.getElementById('fRepeat'); rep.value='1'; rep.disabled=true;
+    submitBtn.textContent='Opslaan';
+  }
+
+  function buildRow(dk, it){
+    var row=document.createElement('div'); row.className='pl-item';
+    var dot=document.createElement('span'); dot.className='it-dot'; dot.style.background=DOTS[it.status]||'#b0a99c'; row.appendChild(dot);
+    var txt=document.createElement('div'); txt.className='it-txt';
+    var b=document.createElement('b'); b.textContent=(it.time? it.time+'  ' : '')+it.type; txt.appendChild(b);
+    if(it.note){ var nt=document.createElement('span'); nt.className='it-note'; nt.textContent=it.note; txt.appendChild(nt); }
+    row.appendChild(txt);
+    if(it.client){ var cl=document.createElement('span'); cl.className='it-client'; cl.style.background=clientColor(it.client); cl.textContent=it.client; row.appendChild(cl); }
+    var acts=document.createElement('div'); acts.className='it-acts';
+    var sb=document.createElement('button'); sb.className='it-act s-'+it.status; sb.textContent=STLBL[it.status]||it.status; sb.title='Klik om status te wisselen';
+    sb.addEventListener('click', function(){ var o=['concept','gepland','live']; it.status=o[(o.indexOf(it.status)+1)%3]; if(store[dk])store[dk].sort(byTime); save(); rerender(); });
+    var eb=document.createElement('button'); eb.className='it-act'; eb.textContent='Bewerk'; eb.title='Bewerken';
+    eb.addEventListener('click', function(){ startEdit(dk, it); });
+    var dup=document.createElement('button'); dup.className='it-act'; dup.textContent='+7d'; dup.title='Dupliceer naar volgende week';
+    dup.addEventListener('click', function(){ var p=dk.split('-'); var dt=new Date(+p[0],+p[1]-1,+p[2]); dt.setDate(dt.getDate()+7); var nk=key(dt.getFullYear(),dt.getMonth(),dt.getDate()); if(!store[nk])store[nk]=[]; store[nk].push({type:it.type,status:it.status,time:it.time,note:it.note,client:it.client||''}); store[nk].sort(byTime); save(); rerender(); dup.textContent='✓'; setTimeout(function(){dup.textContent='+7d';},1000); });
+    acts.appendChild(sb); acts.appendChild(eb); acts.appendChild(dup); row.appendChild(acts);
+    var del=document.createElement('button'); del.className='del'; del.innerHTML='&times;'; del.title='Verwijderen';
+    del.addEventListener('click', function(){ var arr=store[dk]||[]; var i=arr.indexOf(it); if(i>-1) arr.splice(i,1); if(!arr.length) delete store[dk]; save(); if(editing && editing.it===it) cancelEdit(); rerender(); });
+    row.appendChild(del);
+    return row;
+  }
+  function renderItems(){
+    var items = store[activeDate]||[];
+    if(items.length>1) items.sort(byTime);
+    dayItems.innerHTML='';
+    if(!items.length){ dayItems.innerHTML='<div class="pl-empty-note">Nog niets gepland voor deze dag.</div>'; return; }
+    items.forEach(function(it){ dayItems.appendChild(buildRow(activeDate, it)); });
+  }
+  function monthKeys(){
+    var mk=monthKey();
+    return Object.keys(store).filter(function(k){
+      return k.indexOf(mk+'-')===0 && store[k] && store[k].some(match);
+    }).sort();
+  }
+  function renderList(){
+    var list=document.getElementById('plList'); list.innerHTML='';
+    var keys=monthKeys();
+    if(!keys.length){ list.innerHTML='<div class="pl-empty-note" style="padding:18px 4px">Nog niets gepland deze maand. Ga naar de maandweergave om content toe te voegen.</div>'; return; }
+    keys.forEach(function(k){
+      var p=k.split('-'); var dt=new Date(+p[0],+p[1]-1,+p[2]);
+      var card=document.createElement('div'); card.className='pl-listday';
+      var h=document.createElement('h4'); h.textContent=WD[dt.getDay()]+' '+(+p[2])+' '+MONTHS[+p[1]-1]; card.appendChild(h);
+      store[k].slice().sort(byTime).filter(match).forEach(function(it){ card.appendChild(buildRow(k, it)); });
+      list.appendChild(card);
+    });
+  }
+  function setView(v){
+    view=v;
+    document.getElementById('viewMonth').classList.toggle('on', v==='maand');
+    document.getElementById('viewList').classList.toggle('on', v==='lijst');
+    document.querySelector('.pl-week').style.display = v==='maand'?'grid':'none';
+    grid.style.display = v==='maand'?'grid':'none';
+    document.getElementById('plList').style.display = v==='lijst'?'flex':'none';
+    if(v==='lijst') renderList();
+  }
+  function exportMonth(){
+    var keys=monthKeys(); var mk=monthKey(); var theme=themes[mk]||'';
+    var rows='';
+    keys.forEach(function(k){
+      var p=k.split('-'); var dt=new Date(+p[0],+p[1]-1,+p[2]);
+      rows+='<tr class="dh"><td colspan="5">'+WD[dt.getDay()]+' '+(+p[2])+' '+MONTHS[+p[1]-1]+'</td></tr>';
+      store[k].slice().sort(byTime).filter(match).forEach(function(it){
+        rows+='<tr><td class="t">'+(it.time||'-')+'</td><td>'+it.type+'</td><td>'+(it.client||'')+'</td><td>'+(STLBL[it.status]||it.status)+'</td><td>'+(it.note||'')+'</td></tr>';
+      });
+    });
+    if(!rows) rows='<tr><td colspan="5" style="padding:20px;color:#888">Nog niets gepland deze maand.</td></tr>';
+    var html='<!doctype html><html lang="nl"><head><meta charset="utf-8"><title>Contentplanning '+MONTHS[vm]+' '+vy+'</title>'+
+      '<style>body{font-family:Georgia,serif;color:#0d0d0d;max-width:780px;margin:40px auto;padding:0 24px}'+
+      'h1{font-size:30px;font-weight:500;margin:0}.sub{color:#9c9789;letter-spacing:.04em;margin:4px 0 24px;font-family:Arial,sans-serif;font-size:13px}'+
+      'table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px}'+
+      'td{padding:9px 8px;border-bottom:1px solid #eee;vertical-align:top}.t{width:60px;color:#666}'+
+      'tr.dh td{background:#f3f1ed;font-weight:600;border-bottom:1px solid #ddd;font-family:Georgia,serif}'+
+      '.brand{font-style:italic}</style></head><body>'+
+      '<h1 class="brand">Casanomada<span style="color:#9c9789">.</span></h1>'+
+      '<div class="sub">CONTENTPLANNING · '+(MONTHS[vm]+' '+vy).toUpperCase()+(theme?' · THEMA: '+theme.toUpperCase():'')+(filterClient?' · KLANT: '+filterClient.toUpperCase():'')+'</div>'+
+      '<table><thead><tr class="dh"><td class="t">Tijd</td><td>Type</td><td>Klant</td><td>Status</td><td>Notitie</td></tr></thead><tbody>'+rows+'</tbody></table>'+
+      '</body></html>';
+    var w=window.open('','_blank'); if(!w){ alert('Sta pop-ups toe om te exporteren.'); return; }
+    w.document.write(html); w.document.close(); w.focus(); setTimeout(function(){ try{w.print();}catch(e){} }, 350);
+  }
+
+  document.getElementById('viewMonth').addEventListener('click', function(){ setView('maand'); });
+  document.getElementById('viewList').addEventListener('click', function(){ setView('lijst'); });
+  function exportICS(){
+    var keys=monthKeys();
+    if(!keys.length){ alert('Nog niets gepland deze maand.'); return; }
+    function esc(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n'); }
+    var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Casanomada Digital//Contentplanner//NL','CALSCALE:GREGORIAN'];
+    var stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+    var uidN=0;
+    keys.forEach(function(k){
+      store[k].slice().sort(byTime).filter(match).forEach(function(it){
+        var d=k.replace(/-/g,'');
+        var title=it.type+(it.client?' \u00b7 '+it.client:'')+(it.note?' \u00b7 '+it.note:'');
+        lines.push('BEGIN:VEVENT');
+        lines.push('UID:cn-'+k+'-'+(uidN++)+'@casanomadadigital.com');
+        lines.push('DTSTAMP:'+stamp);
+        if(it.time){
+          var t=it.time.replace(':','')+'00';
+          var sh=parseInt(it.time.split(':')[0],10), sm=parseInt(it.time.split(':')[1],10);
+          var end=new Date(2000,0,1,sh,sm+30);
+          var te=pad(end.getHours())+pad(end.getMinutes())+'00';
+          lines.push('DTSTART;TZID=Europe/Amsterdam:'+d+'T'+t);
+          lines.push('DTEND;TZID=Europe/Amsterdam:'+d+'T'+te);
+        } else {
+          lines.push('DTSTART;VALUE=DATE:'+d);
+        }
+        lines.push('SUMMARY:'+esc(title));
+        lines.push('DESCRIPTION:'+esc('Status: '+(STLBL[it.status]||it.status)+(it.note?'\nNotitie: '+it.note:'')));
+        lines.push('END:VEVENT');
+      });
+    });
+    lines.push('END:VCALENDAR');
+    var blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='contentplanning-'+monthKey()+(filterClient?'-'+filterClient.toLowerCase().replace(/[^a-z0-9]+/g,'-'):'')+'.ics';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+  }
+  document.getElementById('exportBtn').addEventListener('click', exportMonth);
+  document.getElementById('icsBtn').addEventListener('click', exportICS);
+  addForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var vals={ type:document.getElementById('fType').value, status:document.getElementById('fStatus').value, time:document.getElementById('fTime').value, note:document.getElementById('fNote').value.trim(), client:document.getElementById('fClient').value.trim() };
+    var fd=document.getElementById('fDate').value || activeDate;
+    if(editing){
+      var it=editing.it;
+      it.type=vals.type; it.status=vals.status; it.time=vals.time; it.note=vals.note; it.client=vals.client;
+      if(fd && fd!==editing.dk){
+        var oarr=store[editing.dk]||[]; var oi=oarr.indexOf(it); if(oi>-1) oarr.splice(oi,1); if(!oarr.length) delete store[editing.dk];
+        if(!store[fd]) store[fd]=[]; store[fd].push(it);
+      }
+      if(store[fd]) store[fd].sort(byTime);
+      if(store[editing.dk]) store[editing.dk].sort(byTime);
+      save(); cancelEdit();
+    } else {
+      var weeks=parseInt(document.getElementById('fRepeat').value,10)||1;
+      var p=fd.split('-');
+      for(var w=0; w<weeks; w++){
+        var dt=new Date(+p[0],+p[1]-1,+p[2]); dt.setDate(dt.getDate()+w*7);
+        var nk=key(dt.getFullYear(),dt.getMonth(),dt.getDate());
+        if(!store[nk]) store[nk]=[];
+        store[nk].push({type:vals.type,status:vals.status,time:vals.time,note:vals.note,client:vals.client});
+        store[nk].sort(byTime);
+      }
+      save();
+    }
+    document.getElementById('fNote').value=''; document.getElementById('fTime').value=''; document.getElementById('fRepeat').value='1'; document.getElementById('fClient').value='';
+    document.getElementById('fDate').value=activeDate;
+    rerender();
+  });
+
+  document.getElementById('todayBtn').addEventListener('click', function(){ var n=new Date(); vy=n.getFullYear(); vm=n.getMonth(); rerender(); });
+  document.getElementById('prevM').addEventListener('click', function(){ vm--; if(vm<0){vm=11;vy--;} rerender(); });
+  document.getElementById('nextM').addEventListener('click', function(){ vm++; if(vm>11){vm=0;vy++;} rerender(); });
+  document.getElementById('closeModal').addEventListener('click', closeM);
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeM(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeM(); });
+  themeInput.addEventListener('input', function(){ themes[monthKey()]=themeInput.value; saveThemes(); });
+
+  renderFilter(); renderDatalist(); renderMonth();
+})();
+</script>
+</body>
+</html>

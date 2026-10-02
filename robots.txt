@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /planner.html
+
+Sitemap: https://casanomadadigital.com/sitemap.xml
