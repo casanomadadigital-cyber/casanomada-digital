@@ -1,419 +1,525 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8RGTHWX6J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-N8RGTHWX6J');
-</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Casanomada Digital | Marketingbureau voor Websites & Social Media</title>
+<meta name="description" content="Casanomada Digital is een marketingbureau voor websites én social media. Wij bouwen premium websites en beheren social media voor merken die willen groeien." />
+<link rel="canonical" href="https://casanomadadigital.com/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Casanomada Digital" />
+<meta property="og:title" content="Casanomada Digital | Marketingbureau voor Websites & Social Media" />
+<meta property="og:description" content="Wij bouwen premium websites en beheren social media voor merken die willen groeien." />
+<meta property="og:image" content="https://casanomadadigital.com/img/og-image.png" />
+<meta property="og:url" content="https://casanomadadigital.com/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://casanomadadigital.com/img/og-image.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{--g:#25D366;--acc:#c6a15b;--acc2:#e3c88a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'Barlow',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Instrument Serif',serif;font-style:italic}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 clamp(22px,4vw,48px)}
+a{color:inherit;text-decoration:none}
+.gold{color:var(--acc)}
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casanomada Digital | Website laten maken & Social Media Beheer Nederland</title>
-<meta name="description" content="Website laten maken of je social media volledig uitbesteden? Casanomada Digital bouwt premium websites en beheert social media voor klinieken, beauty, bouw en ondernemers in heel Nederland.">
-<link rel="canonical" href="https://casanomadadigital.com/">
-<meta name="robots" content="index, follow">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Casanomada Digital">
-<meta property="og:locale" content="nl_NL">
-<meta property="og:title" content="Casanomada Digital | Website laten maken & Social Media Beheer Nederland">
-<meta property="og:description" content="Website laten maken of je social media volledig uitbesteden? Casanomada Digital bouwt premium websites en beheert social media voor klinieken, beauty, bouw en ondernemers in heel Nederland.">
-<meta property="og:url" content="https://casanomadadigital.com/">
-<meta property="og:image" content="https://casanomadadigital.com/img/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Casanomada Digital | Website laten maken & Social Media Beheer Nederland">
-<meta name="twitter:description" content="Website laten maken of je social media volledig uitbesteden? Casanomada Digital bouwt premium websites en beheert social media voor klinieken, beauty, bouw en ondernemers in heel Nederland.">
-<meta name="twitter:image" content="https://casanomadadigital.com/img/og-image.png">
-<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
-<meta name="keywords" content="website laten maken, webdesign, website bouwer, website op maat, webdesigner Nederland, social media beheer, content creatie">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Casanomada Digital",
-  "description": "Webdesign studio en social media agency. Websites op maat en volledig social media beheer voor klinieken, beauty, bouw, vastgoed en ondernemers.",
-  "url": "https://casanomadadigital.com/",
-  "logo": "https://casanomadadigital.com/icon-512.png",
-  "image": "https://casanomadadigital.com/icon-512.png",
-  "email": "casanomada.digital@gmail.com",
-  "telephone": "+31644818674",
-  "areaServed": {"@type": "Country", "name": "Nederland"},
-  "priceRange": "$$",
-  "sameAs": [
-    "https://www.instagram.com/casanomada.digital/",
-    "https://www.tiktok.com/@casanomada.digital"
-  ],
-  "knowsAbout": ["Webdesign", "Website laten maken", "Social media beheer", "UGC content", "Influencer marketing", "TikTok marketing"],
-  "makesOffer": [
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Website laten maken", "description": "Premium websites op maat voor klinieken, beauty, bouw, vastgoed en ondernemers"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Social Media Beheer", "description": "Volledig beheer van Instagram en TikTok: strategie, content, planning en rapportage"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "UGC Content", "description": "Authentieke user generated content door creators"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Influencer Marketing", "description": "Van selectie tot campagnebeheer en rapportage"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Google & Meta Campagnes", "description": "Google Ads en Facebook/Instagram advertenties opzetten en beheren voor bekendheid, leads en conversies"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Drukwerk & promotiemateriaal", "description": "Flyers, visitekaartjes, stempelkaarten en promotiemateriaal in je huisstijl"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Communicatie & mediatraining", "description": "Communicatie-ondersteuning en mediatrainingen voor bedrijven"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "E-commerce & webshops", "description": "Ondersteuning bij het opstarten en inrichten van webshops"}}
-  ]
+/* liquid glass */
+.lg{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+.lg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.lgs{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(50px);-webkit-backdrop-filter:blur(50px);box-shadow:4px 4px 4px rgba(0,0,0,.05),inset 0 1px 1px rgba(255,255,255,.15);position:relative;overflow:hidden}
+.lgs::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(226,200,138,.6) 0%,rgba(198,161,91,.25) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(198,161,91,.25) 80%,rgba(226,200,138,.6) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.in{position:relative;z-index:1}
+
+/* nav */
+nav{position:fixed;top:16px;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,64px)}
+nav .logo{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:24px}
+nav .menu{display:flex;align-items:center;gap:2px;border-radius:999px;padding:6px 6px 6px 16px}
+nav .menu a{font-size:13px;color:rgba(255,255,255,.9);padding:8px 11px;border-radius:999px;transition:color .2s}
+nav .menu a:hover{color:var(--acc)}
+nav .cta{background:linear-gradient(120deg,var(--acc2),var(--acc));color:#201a0d!important;padding:9px 18px;border-radius:999px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:transform .25s}
+nav .cta:hover{transform:translateY(-2px)}
+nav .spacer{width:48px;height:48px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:999px;font-size:13px;font-weight:400;cursor:pointer;transition:transform .3s,box-shadow .3s;border:1px solid transparent}
+.btn-w{background:#fff;color:#000;padding:13px 24px;font-weight:500}
+.btn-w:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(255,255,255,.14)}
+.btn-gold{background:linear-gradient(120deg,var(--acc2),var(--acc));color:#201a0d;padding:13px 24px;font-weight:600}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(198,161,91,.3)}
+.btn-glass{padding:12px 22px}
+.btn-wa{background:var(--g);color:#053d1c;padding:12px 22px;font-weight:500}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(37,211,102,.35)}
+.btn-line{border:1px solid rgba(255,255,255,.25);padding:12px 22px;color:#fff}
+.btn-line:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
+svg{display:inline-block;vertical-align:middle}
+
+/* hero */
+.hero{position:relative;min-height:100vh;overflow:hidden;background:#000}
+.hero video{position:absolute;z-index:0}
+.hero .bgvid{left:50%;top:0;transform:translateX(-50%);width:120%;height:120%;object-fit:cover;object-position:top;opacity:0}
+.hero .tint{position:absolute;inset:0;z-index:1;background:radial-gradient(130% 90% at 50% 10%,transparent 40%,rgba(0,0,0,.4) 100%),linear-gradient(180deg,rgba(0,0,0,.2),transparent 30%)}
+.hero .content{position:relative;z-index:10;display:flex;flex-direction:column;min-height:100vh}
+.hero .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 16px 0}
+.badge{border-radius:999px;padding:6px 6px;display:inline-flex;align-items:center;gap:8px}
+.badge .new{background:linear-gradient(120deg,var(--acc2),var(--acc));color:#201a0d;font-size:11px;font-weight:600;border-radius:999px;padding:2px 10px}
+.badge .t{font-size:13px;color:rgba(255,255,255,.9);padding-right:12px}
+h1.hl{font-size:clamp(46px,8.4vw,112px);line-height:.82;letter-spacing:-4px;margin-top:26px;max-width:14ch}
+.sub{margin-top:24px;font-size:clamp(14px,1.6vw,17px);max-width:60ch;color:#fff;font-weight:300;line-height:1.35}
+.herocta{margin-top:26px;display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center}
+.herocta .plain{display:inline-flex;align-items:center;gap:8px;font-size:13px}
+.herocta .plain:hover{color:var(--acc)}
+.stats{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.stat{width:230px;border-radius:20px;padding:22px;text-align:left}
+.stat .ic{color:var(--acc)}
+.stat .n{font-size:40px;line-height:1;margin-top:14px;letter-spacing:-1px}
+.stat .l{font-size:13px;color:rgba(255,255,255,.8);margin-top:6px}
+.trust{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0 0 34px}
+.trust .pill{border-radius:999px;padding:9px 20px}
+.trust .pill .in{font-size:13px;color:rgba(255,255,255,.8)}
+.logos{display:flex;flex-wrap:wrap;justify-content:center;gap:40px}
+.logos span{font-size:clamp(20px,2.6vw,28px);color:rgba(255,255,255,.9)}
+.scrolldown{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:10;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--acc);animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.6}50%{transform:translate(-50%,7px);opacity:1}}
+
+/* sections */
+section.block{position:relative;background:#000;padding:clamp(80px,12vh,140px) 0}
+.ey{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:20px;font-weight:500}
+h2{font-size:clamp(34px,5.5vw,64px);line-height:.95;letter-spacing:-2px}
+.lead{margin-top:20px;color:rgba(255,255,255,.7);font-weight:300;max-width:60ch}
+.center-h{text-align:center}.center-h .lead{margin-left:auto;margin-right:auto}
+
+/* capabilities (video) */
+.cap{position:relative;min-height:100vh;overflow:hidden;background:#000}
+.cap .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:0}
+.cap .tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.35))}
+.cap .content{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(22px,6vw,80px)}
+.cap h2{font-size:clamp(40px,7vw,96px);line-height:.9;letter-spacing:-3px;white-space:pre-line}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.capcard{border-radius:20px;padding:26px;min-height:320px;display:flex;flex-direction:column}
+.capcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.capcard .ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--acc)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.tag{border-radius:999px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.9);white-space:nowrap}
+.capcard h3{font-size:clamp(26px,3.4vw,34px);letter-spacing:-1px;line-height:1}
+.capcard p{margin-top:12px;font-size:14px;color:rgba(255,255,255,.9);font-weight:300;line-height:1.4;max-width:34ch}
+.spacer{flex:1}
+
+/* diensten / webdesign cards */
+.grid-serv{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
+.scard{border-radius:18px;padding:22px;display:flex;flex-direction:column}
+.scard .k{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.scard h4{font-size:22px;letter-spacing:-.5px;margin-bottom:10px}
+.scard p{font-size:13px;color:rgba(255,255,255,.72);font-weight:300;line-height:1.45}
+.scard ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.scard li{font-size:12.5px;color:rgba(255,255,255,.75);display:flex;gap:9px;font-weight:300}
+.scard li::before{content:"";width:4px;height:4px;border-radius:999px;background:var(--acc);margin-top:7px;flex:0 0 auto}
+.grid3w{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
+
+/* method */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:56px}
+.step{border-radius:16px;padding:24px 20px}
+.step .n{font-size:28px;color:var(--acc)}
+.step h4{font-size:17px;margin:14px 0 8px;letter-spacing:-.3px}
+.step p{font-size:12.5px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.4}
+
+/* studioflow */
+.sf{background:radial-gradient(120% 90% at 80% 0%,rgba(198,161,91,.1),transparent 55%),#000}
+.sfhead{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end}
+.sffeat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.sff{border-radius:16px;padding:22px}
+.sff h4{font-size:18px;letter-spacing:-.3px;margin-bottom:8px}
+.sff p{font-size:13px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.4}
+.sfnums{display:flex;gap:30px;flex-wrap:wrap;margin-top:20px}
+.sfnums .n{font-size:30px}.sfnums .l{font-size:12px;color:rgba(255,255,255,.6)}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.pcard{border-radius:20px;padding:30px;min-height:360px;display:flex;flex-direction:column}
+.pcard .best{align-self:flex-start;background:linear-gradient(120deg,var(--acc2),var(--acc));color:#201a0d;font-size:10px;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;padding:4px 12px;margin-bottom:14px;font-weight:600}
+.pcard .ph3{font-size:26px;letter-spacing:-.5px}
+.pcard .pr{font-size:34px;margin-top:8px}.pcard .pr small{font-size:13px;color:rgba(255,255,255,.55);font-family:'Barlow';font-style:normal}
+.pcard ul{list-style:none;margin:18px 0;flex:1;display:flex;flex-direction:column;gap:10px}
+.pcard li{display:flex;gap:11px;font-size:13.5px;color:rgba(255,255,255,.8);font-weight:300}
+.pcard li::before{content:"";width:5px;height:5px;border-radius:999px;background:var(--acc);margin-top:8px;flex:0 0 auto}
+
+/* werk */
+.grid3b{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.fcard{border-radius:20px;padding:12px;display:block;transition:transform .4s,box-shadow .4s}
+.fcard:hover{transform:translateY(-8px);box-shadow:0 36px 80px rgba(198,161,91,.1)}
+.mock{border-radius:12px;overflow:hidden;aspect-ratio:16/10;display:flex;flex-direction:column;background:#f9f8f6}
+.mock .bar{display:flex;gap:6px;padding:9px 13px;background:#fff;border-bottom:1px solid rgba(13,13,13,.06)}
+.mock .bar i{width:9px;height:9px;border-radius:999px;background:#d8d4cc}
+.mock .h{flex:1;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:0 18px;position:relative}
+.mock.dark .h{background:linear-gradient(150deg,#241d12,#0d0d0d)}
+.mock.light .h{background:linear-gradient(150deg,#efece6,#dcd7cc)}
+.mock .h .h1{width:60%;height:12px;border-radius:4px}.mock .h .h2{width:42%;height:7px;border-radius:4px}.mock .h .bt{width:72px;height:16px;border-radius:999px;margin-top:4px}
+.mock.dark .h1{background:#f1e6cf}.mock.dark .h2{background:rgba(226,200,138,.45)}.mock.dark .bt{background:var(--acc)}
+.mock.light .h1{background:#0d0d0d}.mock.light .h2{background:#807b6e}.mock.light .bt{background:#0d0d0d}
+.mock .rows{display:flex;gap:7px;padding:10px 13px;background:#fff}
+.mock .rows span{flex:1;height:22px;border-radius:6px;background:#f3f1ed;border:1px solid rgba(13,13,13,.06)}
+.fmeta{display:flex;justify-content:space-between;align-items:center;padding:14px 8px 6px}
+.fmeta b{font-size:15px;font-weight:500}.fmeta .c{font-size:12px;color:rgba(255,255,255,.55)}.fmeta .no{font-size:12px;color:var(--acc)}
+.case{margin-top:90px;border-radius:24px;padding:clamp(28px,5vw,52px)}
+.case .cg{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.case h3{font-size:clamp(32px,4.4vw,52px);letter-spacing:-2px;line-height:.95}
+.csrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px;max-width:460px}
+.cs{border-radius:12px;padding:18px 10px;text-align:center}
+.cs .n{font-size:26px;color:var(--acc)}.cs .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:5px}
+
+/* over ons */
+.grid-val{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.val{border-radius:18px;padding:28px}
+.val h4{font-size:22px;margin-bottom:10px;letter-spacing:-.5px}
+.val p{font-size:13.5px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.45}
+
+/* reviews */
+.rating{display:inline-flex;align-items:center;gap:12px;margin-top:22px;border-radius:999px;padding:11px 22px}
+.rating .score{font-size:30px}.rating .stars{color:var(--acc);letter-spacing:2px}.rating small{font-size:12px;color:rgba(255,255,255,.6)}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;text-align:left}
+.rc{border-radius:20px;padding:30px;display:flex;flex-direction:column}
+.rc .stars{color:var(--acc);letter-spacing:2px;font-size:15px}
+.rc p{margin:16px 0 20px;font-size:18px;line-height:1.3;color:rgba(255,255,255,.95);flex:1}
+.rc .who{display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+.rc .av{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--acc)}
+.rc .who b{font-size:14px;font-weight:500;display:block}.rc .who span{font-size:12px;color:rgba(255,255,255,.55)}
+
+/* clients */
+.clients{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:48px}
+.cl{border-radius:16px;padding:22px 14px;text-align:center;display:block;transition:transform .35s}
+.cl:hover{transform:translateY(-5px)}
+.cl .mono{width:48px;height:48px;border-radius:999px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--acc)}
+.cl b{font-size:13px;font-weight:500;display:block}.cl span{font-size:11px;color:rgba(255,255,255,.5)}
+
+/* contact */
+.cgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:start;max-width:1000px;margin:0 auto}
+.cinfo a{display:block;margin-bottom:6px}.cinfo a:hover{color:var(--acc)}
+form.cf{border-radius:20px;padding:30px}
+form.cf label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px}
+form.cf input,form.cf textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:13px 15px;color:#fff;font-family:inherit;font-size:15px;font-weight:300;margin-bottom:16px;transition:border-color .25s}
+form.cf input:focus,form.cf textarea:focus{outline:none;border-color:var(--acc)}
+form.cf textarea{min-height:104px;resize:vertical}
+form.cf .note{font-size:12px;color:rgba(255,255,255,.45);text-align:center;margin-top:14px}
+.hp{position:absolute;left:-9999px}
+.ok{border-radius:20px;padding:40px;text-align:center}
+.ok h3{font-size:34px}.ok p{margin-top:10px;color:rgba(255,255,255,.75);font-weight:300}
+
+/* footer */
+footer{background:#000;border-top:1px solid rgba(255,255,255,.1);padding:64px 0 40px}
+.frow{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px}
+.frow .ft{max-width:30ch;color:rgba(255,255,255,.55);font-weight:300;margin-top:12px;font-size:14px}
+.fcols{display:flex;gap:54px;flex-wrap:wrap}
+.fcol h5{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+.fcol a{display:block;color:rgba(255,255,255,.6);font-size:14px;margin-bottom:9px}
+.fcol a:hover{color:#fff}
+.fbot{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:rgba(255,255,255,.4)}
+
+/* wa fab */
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border-radius:999px;background:var(--g);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.4)}
+.wa svg{width:28px;height:28px;fill:#fff}
+
+/* animations */
+.rv{opacity:0;transform:translateY(28px);filter:blur(10px);transition:opacity .9s cubic-bezier(.19,1,.22,1),transform .9s cubic-bezier(.19,1,.22,1),filter .9s cubic-bezier(.19,1,.22,1)}
+.rv.show{opacity:1;transform:none;filter:none}
+.bw{display:inline-block;margin-right:.28em;opacity:0;filter:blur(10px);transform:translateY(50px);transition:opacity .7s ease,filter .7s ease,transform .7s ease}
+.bw.show{opacity:1;filter:none;transform:none}
+h1.hl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:.06em}
+
+@media(max-width:900px){
+  nav .menu{display:none}
+  .stats{flex-direction:column;align-items:center}
+  .grid3,.grid3b,.rgrid,.grid3w,.sffeat,.pricing,.sfhead{grid-template-columns:1fr}
+  .grid-serv{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.grid-val{grid-template-columns:1fr}.clients{grid-template-columns:1fr 1fr}
+  .case .cg,.cgrid{grid-template-columns:1fr;gap:34px}
 }
-</script>
+@media(prefers-reduced-motion:reduce){.rv,.bw{opacity:1;filter:none;transform:none;transition:none}}
+</style>
 </head>
 <body>
-<div class="glow"></div>
 
-<nav class="nav" id="nav">
-  <a href="index.html" class="brand">Casanomada<span class="dot">.</span></a>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html" class="active">Home</a>
-    <a href="diensten.html">Diensten</a>
-    <a href="webdesign.html">Webdesign</a>
-    <a href="studioflow.html">StudioFlow</a>
-    <a href="uitnodigingen.html">Uitnodigingen</a>
-    <a href="over-ons.html">Over ons</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html" class="nav-cta">Plan een gesprek</a>
+<nav>
+  <div class="logo lg"><span class="in serif">C</span></div>
+  <div class="menu lg">
+    <a href="#diensten">Diensten</a><a href="#webdesign">Webdesign</a><a href="#werk">Werk</a><a href="#studioflow">StudioFlow</a><a href="#over">Over ons</a>
+    <a href="#contact" class="cta">Plan een gesprek <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></a>
   </div>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
-  </button>
+  <div class="spacer"></div>
 </nav>
 
-<div class="side-nav" id="sideNav">
-  <a href="#hero" data-sec="hero" class="active"><span class="num">00</span> Introductie <span class="pip"></span></a>
-  <a href="#probleem" data-sec="probleem"><span class="num">01</span> Probleem <span class="pip"></span></a>
-  <a href="#aanpak" data-sec="aanpak"><span class="num">02</span> Aanpak <span class="pip"></span></a>
-  <a href="#resultaat" data-sec="resultaat"><span class="num">03</span> Resultaat <span class="pip"></span></a>
-</div>
-
 <!-- HERO -->
-<header class="hero" id="hero">
-  <span class="eyebrow">Webdesign &amp; Websites op maat</span>
-  <h1>Wij bouwen websites<br>die jouw merk <span class="accent">laten groeien.</span></h1>
-  <p>Casanomada Digital ontwerpt en bouwt premium websites op maat, snel, mobielvriendelijk en gemaakt om bezoekers in klanten te veranderen. Social media beheren we er net zo graag bij.</p>
-  <div class="hero-actions">
-    <a href="contact.html" class="btn btn-primary">Plan een gratis gesprek <span class="arr">→</span></a>
-    <a href="diensten.html" class="btn btn-ghost">Bekijk onze diensten</a>
-  </div>
-  <div class="scroll-hint">Scroll<span class="line"></span></div>
-</header>
-
-<!-- PROBLEEM -->
-<section class="section" id="probleem">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">Het probleem</span>
-      <h2>Social media los regelen <span class="accent">werkt niet meer.</span></h2>
-      <p>Een freelancer hier, een tool daar, een stagiair erbij. Geen ritme. Geen strategie. Geen eigenaarschap. En ondertussen blijft de groei uit.</p>
+<section class="hero">
+  <video class="bgvid" data-fade autoplay muted playsinline preload="auto" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4"></video>
+  <div class="tint"></div>
+  <div class="content">
+    <div class="center">
+      <div class="badge lg rv"><span class="new in">Nieuw</span><span class="t in">Nieuwe projecten Q1 2027 — beperkte capaciteit</span></div>
+      <h1 class="hl serif" data-blur>Websites en social media die jouw merk laten groeien</h1>
+      <p class="sub rv">Casanomada Digital is een marketingbureau voor websites én social media. We bouwen premium websites op maat — snel, mobielvriendelijk en gemaakt om bezoekers in klanten te veranderen — en beheren je social media van strategie tot content.</p>
+      <div class="herocta rv">
+        <a href="#contact" class="btn btn-gold"><span>Plan een gratis gesprek <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span></a>
+        <a href="#diensten" class="plain"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg> Bekijk onze diensten</a>
+      </div>
+      <div class="stats rv">
+        <div class="stat lg"><div class="in"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.9 6.1 21l1.3-6.6L2.5 9.9l6.6-.8L12 2.5z"/></svg></span><div class="n serif">4,9★</div><div class="l">Gemiddeld · 40+ samenwerkingen</div></div></div>
+        <div class="stat lg"><div class="in"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div class="n serif">24u</div><div class="l">Reactie op je aanvraag</div></div></div>
+      </div>
     </div>
-    <div class="grid-4">
-      <div class="card reveal"><span class="idx">01</span><h3>Je bent onzichtbaar</h3><p>Elke dag zonder zichtbaarheid is een dag dat je concurrent de klant krijgt die jij verdient. Social media wacht op niemand.</p></div>
-      <div class="card reveal"><span class="idx">02</span><h3>Geen strategie, geen groei</h3><p>Posten zonder richting is tijdverspilling. Je weet niet wat werkt, voor wie je post, of hoe groei ooit meetbaar wordt.</p></div>
-      <div class="card reveal"><span class="idx">03</span><h3>Content kost tijd</h3><p>Jij bent ondernemer, geen content creator. Trends veranderen razendsnel, en bijblijven kost energie die je elders nodig hebt.</p></div>
-      <div class="card reveal"><span class="idx">04</span><h3>Je merk verdient meer</h3><p>Een sterk merk vraagt om sterke positionering. Generieke content ondermijnt alles wat je hebt opgebouwd.</p></div>
+    <div class="trust rv">
+      <div class="pill lg"><span class="in">Vertrouwd door ondernemers in bouw, zorg, beauty en retail</span></div>
+      <div class="logos">
+        <span class="serif">D&amp;J Bouw</span><span class="serif">Da Vinci Clinic</span><span class="serif">By Aicha</span><span class="serif">Aroussa</span><span class="serif">SA Elektra</span><span class="serif">Oude Gein</span>
+      </div>
+    </div>
+  </div>
+  <div class="scrolldown">Scroll ↓</div>
+</section>
+
+<!-- CAPABILITIES (video) -->
+<section class="cap">
+  <video class="bgvid" data-fade autoplay muted playsinline preload="auto" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_093722_ccfc7ebf-182f-419f-8a62-2dc02db7dd9d.mp4"></video>
+  <div class="tint"></div>
+  <div class="content">
+    <div class="rv">
+      <div class="ey">Alles onder één dak</div>
+      <h2 class="serif">Eén vast team,
+voor jouw merk alleen</h2>
+    </div>
+    <div class="grid3">
+      <div class="capcard lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%">
+        <div class="top"><div class="ico lg"><span class="in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12.5" rx="2"/><path d="M8.5 20h7M12 16.5V20M3 8h18"/></svg></span></div><div class="tags"><span class="tag lg"><span class="in">Op maat</span></span><span class="tag lg"><span class="in">Mobiel-first</span></span><span class="tag lg"><span class="in">Snel</span></span><span class="tag lg"><span class="in">SEO</span></span></div></div>
+        <div class="spacer"></div>
+        <div><h3 class="serif">Websites</h3><p>Premium websites op maat die jouw merk serieus laten overkomen en bezoekers in klanten veranderen.</p></div>
+      </div></div>
+      <div class="capcard lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%">
+        <div class="top"><div class="ico lg"><span class="in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 20l1.8-4.9A7.5 7.5 0 1 1 20 11.5z"/></svg></span></div><div class="tags"><span class="tag lg"><span class="in">Strategie</span></span><span class="tag lg"><span class="in">Content</span></span><span class="tag lg"><span class="in">UGC</span></span><span class="tag lg"><span class="in">Community</span></span></div></div>
+        <div class="spacer"></div>
+        <div><h3 class="serif">Social media</h3><p>Volledig social media beheer: strategie, content, planning, community en maandelijkse rapportage.</p></div>
+      </div></div>
+      <div class="capcard lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%">
+        <div class="top"><div class="ico lg"><span class="in"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></span></div><div class="tags"><span class="tag lg"><span class="in">Google &amp; Meta</span></span><span class="tag lg"><span class="in">TikTok</span></span><span class="tag lg"><span class="in">Influencers</span></span><span class="tag lg"><span class="in">E-commerce</span></span></div></div>
+        <div class="spacer"></div>
+        <div><h3 class="serif">Groei</h3><p>Campagnes en kanalen die van een mooie website een groeiende aanvragenmachine maken.</p></div>
+      </div></div>
     </div>
   </div>
 </section>
 
-<!-- AANPAK -->
-<section class="section" id="aanpak" style="background:var(--bg-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
-  <div class="wrap">
-    <div class="showcase">
-      <div class="copy reveal">
-        <span class="eyebrow">Onze aanpak</span>
-        <h2 style="font-size:clamp(34px,5vw,58px);margin:18px 0 18px">Een vast team. <span class="accent">Voor jouw merk alleen.</span></h2>
-        <p style="color:var(--muted);font-weight:300;max-width:420px">Een strateeg, een editor en een creative die jullie merk kennen. Strategie, content, planning, community en rapportage onder één dak. Geen wisselende gezichten, geen losse opdrachten.</p>
-        <div class="chips" style="margin-top:24px">
-          <span class="chip">Strategie</span><span class="chip">Content</span><span class="chip">Planning</span><span class="chip">Rapportage</span>
-        </div>
-      </div>
-      <div class="cal reveal">
-        <div class="cal-top"><b>Contentkalender</b><span class="cal-ey">Maandweergave</span></div>
-        <div class="cal-sub">
-          <div><span class="k">Maand</span><span class="v" id="calMaand">Juni 2025</span></div>
-          <div style="text-align:right"><span class="k">Thema</span><span class="v"><em id="calThema">Brand story</em></span></div>
-        </div>
-        <div class="cal-week"><span>M</span><span>D</span><span>W</span><span>D</span><span>V</span><span>Z</span><span>Z</span></div>
-        <div class="cal-grid" id="calGrid">
-          <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day" data-day="1">1</div>
-          <div class="cal-day" data-day="2">2</div><div class="cal-day" data-day="3">3</div><div class="cal-day" data-day="4">4</div><div class="cal-day" data-day="5">5</div><div class="cal-day" data-day="6">6</div><div class="cal-day" data-day="7">7</div><div class="cal-day" data-day="8">8</div>
-          <div class="cal-day" data-day="9">9</div><div class="cal-day" data-day="10">10</div><div class="cal-day" data-day="11">11</div><div class="cal-day" data-day="12">12</div><div class="cal-day" data-day="13">13</div><div class="cal-day" data-day="14">14</div><div class="cal-day" data-day="15">15</div>
-          <div class="cal-day" data-day="16">16</div><div class="cal-day" data-day="17">17</div><div class="cal-day" data-day="18">18</div><div class="cal-day" data-day="19">19</div><div class="cal-day" data-day="20">20</div><div class="cal-day" data-day="21">21</div><div class="cal-day" data-day="22">22</div>
-          <div class="cal-day" data-day="23">23</div><div class="cal-day" data-day="24">24</div><div class="cal-day" data-day="25">25</div><div class="cal-day" data-day="26">26</div><div class="cal-day" data-day="27">27</div><div class="cal-day" data-day="28">28</div><div class="cal-day" data-day="29">29</div>
-          <div class="cal-day" data-day="30">30</div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
-        </div>
-        <div class="cal-legend"><span><i class="l-live"></i>Live</span><span><i class="l-plan"></i>Gepland</span><span><i class="l-con"></i>Concept</span></div>
-        <div class="cal-months" id="calMonths"><span data-m="APR">APR</span><span data-m="MEI">MEI</span><span data-m="JUNI" class="on">JUNI</span><span data-m="JUL">JUL</span><span data-m="AUG">AUG</span><span data-m="SEP">SEP</span></div>
-        <div class="cal-foot"><span>Maatwerk &middot; Vast team</span><span>Doorlopend</span></div>
-      </div>
-    </div>
+<!-- DIENSTEN (8) -->
+<section class="block" id="diensten"><div class="wrap">
+  <div class="rv"><div class="ey">Wat wij doen</div><h2 class="serif">Jouw merk. Online gezet.</h2><p class="lead">Van websites en social media tot advertenties, drukwerk en webshops — alles wat je merk online sterk maakt, onder één dak.</p></div>
+  <div class="grid-serv">
+    <div class="scard lg rv"><div class="in"><div class="k">Volledig ontzorgd</div><h4 class="serif">Social Media Beheer</h4><ul><li>Content strategie</li><li>Consistente posts</li><li>Community management</li><li>Maandelijkse rapportage</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Authentiek &amp; bewezen</div><h4 class="serif">UGC Content</h4><ul><li>Creator matching</li><li>Video &amp; foto content</li><li>Rechtenvrij materiaal</li><li>Snelle doorlooptijd</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Bereik je doelgroep</div><h4 class="serif">Influencer Marketing</h4><ul><li>Influencer selectie</li><li>Campagnebeheer</li><li>Contracten &amp; briefing</li><li>Resultatenrapport</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Trending</div><h4 class="serif">TikTok Marketing</h4><ul><li>TikTok strategie</li><li>Trend-gedreven content</li><li>Community management</li><li>Account groei</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Adverteren met resultaat</div><h4 class="serif">Google &amp; Meta Campagnes</h4><ul><li>Google Ads (Search &amp; Display)</li><li>Facebook &amp; Instagram ads</li><li>Bekendheid, leads of conversies</li><li>Beheer, optimalisatie &amp; rapportage</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Van scherm naar print</div><h4 class="serif">Drukwerk &amp; promotie</h4><ul><li>Flyers &amp; folders</li><li>Visitekaartjes &amp; stempelkaarten</li><li>Promotiemateriaal</li><li>Consistent met je huisstijl</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Sterker naar buiten</div><h4 class="serif">Communicatie &amp; mediatraining</h4><ul><li>Communicatieadvies</li><li>Mediatraining</li><li>Boodschap &amp; positionering</li><li>Voorbereiding op interviews</li></ul></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Online verkopen</div><h4 class="serif">E-commerce &amp; webshops</h4><ul><li>Webshop opzetten</li><li>Producten &amp; betalingen inrichten</li><li>Gebruiksvriendelijk &amp; conversiegericht</li><li>Begeleiding van A tot Z</li></ul></div></div>
   </div>
-</section>
+</div></section>
 
-<!-- SOCIAL MEDIA -->
-<section class="section">
-  <div class="wrap">
-    <div class="sb-grid">
-      <div class="sb-copy reveal">
-        <span class="eyebrow">Social media die werkt</span>
-        <h2>Content die jouw merk <span class="accent">laat stralen.</span></h2>
-        <p>Naast websites verzorgen we ook je volledige social media: strategie, foto, video en planning. Premium content die past bij wie je bent, en die je doelgroep echt raakt.</p>
-        <div class="chips">
-          <span class="chip">Instagram</span><span class="chip">TikTok</span><span class="chip">Content</span><span class="chip">Community</span>
-        </div>
-      </div>
-      <div class="collage reveal">
-        <div class="ptile">
-          <img loading="lazy" src="img/vrouw1.jpg" alt="Content creatie aan de laptop">
-          <span class="heart"><svg viewBox="0 0 24 24" fill="#C8506A"><path d="M12 21s-7.5-4.6-10-9.2C.2 8.3 2 4.5 5.7 4.5c2 0 3.4 1.1 4.3 2.4.9-1.3 2.3-2.4 4.3-2.4 3.7 0 5.5 3.8 3.7 7.3C19.5 16.4 12 21 12 21z"/></svg></span>
-          <span class="cap">Strategie &amp; merk</span>
-        </div>
-        <div class="ptile video">
-          <video src="img/reel.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          <span class="play-badge"><svg viewBox="0 0 24 24" fill="#0d0d0d"><polygon points="7 5 19 12 7 19 7 5"/></svg></span>
-          <span class="cap">Content in beeld</span>
-        </div>
-        <div class="ptile">
-          <img loading="lazy" src="img/vrouw2.jpg" alt="Content shoot met camera">
-          <span class="cap">Content &amp; shoots</span>
-        </div>
-        <div class="ptile">
-          <img loading="lazy" src="img/vrouw3.jpg" alt="Planning en moodboard">
-          <span class="heart"><svg viewBox="0 0 24 24" fill="#C8506A"><path d="M12 21s-7.5-4.6-10-9.2C.2 8.3 2 4.5 5.7 4.5c2 0 3.4 1.1 4.3 2.4.9-1.3 2.3-2.4 4.3-2.4 3.7 0 5.5 3.8 3.7 7.3C19.5 16.4 12 21 12 21z"/></svg></span>
-          <span class="cap">Planning &amp; creatie</span>
-        </div>
-      </div>
-    </div>
+<!-- WEBDESIGN -->
+<section class="block" id="webdesign"><div class="wrap">
+  <div class="rv"><div class="ey">Webdesign op maat</div><h2 class="serif">Websites die jouw verhaal vertellen.</h2><p class="lead">Je website is je krachtigste verkooptool. Wij ontwerpen strategische websites op maat die er verfijnd uitzien én converteren — bezoekers die al overtuigd zijn voordat ze contact opnemen.</p></div>
+  <div class="grid3w">
+    <div class="scard lg rv"><div class="in"><div class="k">Beauty &amp; klinieken</div><h4 class="serif">Salons &amp; klinieken</h4><p>Verfijnde sites voor salons, beautyzaken, tandartsen en esthetische &amp; haarklinieken, gebouwd om afspraken en boekingen te stimuleren.</p></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Bouw &amp; vastgoed</div><h4 class="serif">Bouw &amp; renovatie</h4><p>Krachtige sites voor bouwbedrijven, renovatie en vastgoed die projecten laten spreken en structureel aanvragen opleveren.</p></div></div>
+    <div class="scard lg rv"><div class="in"><div class="k">Ondernemers</div><h4 class="serif">Ondernemerswebsites</h4><p>Strategische sites voor coaches, creatieven en dienstverlenende merken die willen converteren en top of mind blijven.</p></div></div>
   </div>
-</section>
+</div></section>
 
-<!-- METHODE -->
-<section class="section">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">De methode</span>
-      <h2>Hoe wij <span class="accent">werken.</span></h2>
-    </div>
-    <div class="method">
-      <div class="step reveal"><div class="s-n">01</div><h4>Onboarding</h4><p>We leren jouw merk door en door kennen: doelen, doelgroep, tone of voice en platforms.</p></div>
-      <div class="step reveal"><div class="s-n">02</div><h4>Strategie & plan</h4><p>Een helder contentplan met richting, thema's en een ritme dat past bij jouw merk.</p></div>
-      <div class="step reveal"><div class="s-n">03</div><h4>Productie</h4><p>Premium content, op locatie of in studio. Foto, video en design die kloppen met wie je bent.</p></div>
-      <div class="step reveal"><div class="s-n">04</div><h4>Editing & feedback</h4><p>Een korte feedbackronde, daarna polijsten we tot het perfect is. Jij houdt de regie.</p></div>
-      <div class="step reveal"><div class="s-n">05</div><h4>Plaatsing & rapportage</h4><p>Wij plaatsen, beheren de community en rapporteren maandelijks op de cijfers die tellen.</p></div>
-    </div>
+<!-- WERKWIJZE -->
+<section class="block"><div class="wrap">
+  <div class="rv"><div class="ey">Hoe wij werken</div><h2 class="serif">Van onboarding tot groei.</h2></div>
+  <div class="steps">
+    <div class="step lg rv"><div class="in"><div class="n serif">01</div><h4 class="serif">Onboarding</h4><p>We leren jouw merk door en door kennen: doelen, doelgroep, tone of voice en platforms.</p></div></div>
+    <div class="step lg rv"><div class="in"><div class="n serif">02</div><h4 class="serif">Strategie &amp; plan</h4><p>Een helder contentplan met richting, thema's en een ritme dat past bij jouw merk.</p></div></div>
+    <div class="step lg rv"><div class="in"><div class="n serif">03</div><h4 class="serif">Productie</h4><p>Premium content, op locatie of in studio. Foto, video en design die kloppen met wie je bent.</p></div></div>
+    <div class="step lg rv"><div class="in"><div class="n serif">04</div><h4 class="serif">Editing &amp; feedback</h4><p>Een korte feedbackronde, daarna polijsten we tot het perfect is. Jij houdt de regie.</p></div></div>
+    <div class="step lg rv"><div class="in"><div class="n serif">05</div><h4 class="serif">Plaatsing &amp; rapportage</h4><p>Wij plaatsen, beheren de community en rapporteren maandelijks op de cijfers die tellen.</p></div></div>
   </div>
-</section>
+</div></section>
 
-<!-- DIENSTEN PREVIEW -->
-<section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
-  <div class="wrap">
-    <div class="head left reveal">
-      <span class="eyebrow">Wat wij doen</span>
-      <h2>Jouw merk. <span class="accent">Online gezet.</span></h2>
-    </div>
-    <div class="svc reveal"><div><span class="tag">Volledig ontzorgd</span><h3>Social Media Beheer</h3></div><p class="desc">Wij nemen je social media volledig over en zorgen dat het klopt met wie je bent. Van contentstrategie tot community management.</p><ul><li>Content strategie</li><li>Consistente posts</li><li>Community management</li><li>Maandelijkse rapportage</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Authentiek & bewezen</span><h3>UGC Content</h3></div><p class="desc">Echte mensen, echte verhalen. User Generated Content gemaakt door creators die jouw doelgroep begrijpen, rauw, authentiek en effectief.</p><ul><li>Creator matching</li><li>Video & foto content</li><li>Rechtenvrij materiaal</li><li>Snelle doorlooptijd</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Bereik je doelgroep</span><h3>Influencer Marketing</h3></div><p class="desc">Wij koppelen jouw merk aan de juiste influencers, van nano tot macro. Geen giswerk, maar de juiste match op basis van doelgroep en gevoel.</p><ul><li>Influencer selectie</li><li>Campagnebeheer</li><li>Contracten & briefing</li><li>Resultatenrapport</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Trending</span><h3>TikTok Marketing</h3></div><p class="desc">Wij kennen het platform van binnenuit. Geen bureau dat bijleert, maar een team dat content maakt die écht landt.</p><ul><li>TikTok strategie</li><li>Trend-gedreven content</li><li>Community management</li><li>Account groei</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Adverteren met resultaat</span><h3>Google &amp; Meta Campagnes</h3></div><p class="desc">Wij zetten Google- en Meta-campagnes (Facebook en Instagram) op en beheren ze van A tot Z. Voor uiteenlopende klanten en met verschillende doelen, van naamsbekendheid tot leads en conversies.</p><ul><li>Google Ads (Search &amp; Display)</li><li>Facebook &amp; Instagram advertenties</li><li>Doel op maat: bekendheid, leads of conversies</li><li>Campagnebeheer, optimalisatie &amp; rapportage</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Van scherm naar print</span><h3>Drukwerk &amp; promotiemateriaal</h3></div><p class="desc">Naast alles online verzorgen we ook je drukwerk. Van flyers en fysieke kaartjes tot stempelkaarten en promotiemateriaal, in een uitstraling die naadloos aansluit op je merk.</p><ul><li>Flyers &amp; folders</li><li>Visitekaartjes &amp; stempelkaarten</li><li>Promotiemateriaal</li><li>Consistent met je huisstijl</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Sterker naar buiten</span><h3>Communicatie &amp; mediatraining</h3></div><p class="desc">We ondersteunen bedrijven bij hun communicatie en geven mediatrainingen, zodat jij en je team met vertrouwen en de juiste boodschap naar buiten treden.</p><ul><li>Communicatieadvies</li><li>Mediatraining</li><li>Boodschap &amp; positionering</li><li>Voorbereiding op interviews</li></ul></div>
-    <div class="svc reveal"><div><span class="tag">Online verkopen</span><h3>E-commerce &amp; webshops</h3></div><p class="desc">We helpen ondernemers bij het opstarten van e-commerce. Van het opzetten tot het goed inrichten van je webshop, we ondersteunen bij alles wat daarbij komt kijken.</p><ul><li>Webshop opzetten</li><li>Producten &amp; betalingen inrichten</li><li>Gebruiksvriendelijk &amp; conversiegericht</li><li>Begeleiding van A tot Z</li></ul></div>
-    <div style="margin-top:50px" class="reveal"><a href="diensten.html" class="btn btn-ghost">Alle diensten bekijken <span class="arr">→</span></a></div>
+<!-- WERK -->
+<section class="block" id="werk"><div class="wrap">
+  <div class="rv"><div class="ey">Geselecteerd werk</div><h2 class="serif">Deze site is ons portfolio</h2><p class="lead">Een greep uit de websites die we voor klanten bouwden. Klik door naar de echte sites.</p></div>
+  <div class="grid3b">
+    <a class="fcard lg rv" href="https://djbouwrenovatie.com/" target="_blank" rel="noopener"><div class="in"><div class="mock dark"><div class="bar"><i></i><i></i><i></i></div><div class="h"><div class="h1"></div><div class="h2"></div><div class="bt"></div></div><div class="rows"><span></span><span></span><span></span></div></div><div class="fmeta"><div><b>D&amp;J Bouw &amp; Renovatie</b><div class="c">Bouw &amp; renovatie</div></div><span class="no">01</span></div></div></a>
+    <a class="fcard lg rv" href="https://www.davinciclinic.be/" target="_blank" rel="noopener"><div class="in"><div class="mock light"><div class="bar"><i></i><i></i><i></i></div><div class="h"><div class="h1"></div><div class="h2"></div><div class="bt"></div></div><div class="rows"><span></span><span></span><span></span></div></div><div class="fmeta"><div><b>Da Vinci Clinic</b><div class="c">Esthetische kliniek · België</div></div><span class="no">02</span></div></div></a>
+    <a class="fcard lg rv" href="https://oudegeinexclusive.nl/" target="_blank" rel="noopener"><div class="in"><div class="mock dark"><div class="bar"><i></i><i></i><i></i></div><div class="h"><div class="h1"></div><div class="h2"></div><div class="bt"></div></div><div class="rows"><span></span><span></span><span></span></div></div><div class="fmeta"><div><b>Oude Gein Exclusive</b><div class="c">Exclusieve auto's · Nieuwegein</div></div><span class="no">03</span></div></div></a>
   </div>
-</section>
 
-<!-- RESULTAAT (3D showcase) -->
-<section class="section dark" id="resultaat">
-  <div class="wrap">
-    <div class="showcase">
-      <div class="copy reveal">
-        <span class="eyebrow">Klant uitgelicht &middot; Case</span>
-        <h2>Hoe wij <span class="accent">D&amp;J Bouw &amp; Renovatie</span> lieten groeien.</h2>
-        <p>D&amp;J Bouw &amp; Renovatie is een van onze klanten, een bouwbedrijf gespecialiseerd in complete renovaties, interieurdesign en 3D-renders. Wij namen hun social media volledig over en bouwden een herkenbaar, premium merk: van losse posts naar een sterke online uitstraling die structureel nieuwe aanvragen oplevert.</p>
-        <div class="stats" style="grid-template-columns:repeat(3,1fr);gap:14px">
-          <div class="stat"><div class="n">15,7K</div><div class="l">Volgers opgebouwd</div></div>
-          <div class="stat"><div class="n">+420%</div><div class="l">Bereik</div></div>
-          <div class="stat"><div class="n">A-Z</div><div class="l">Volledig beheer</div></div>
-        </div>
-        <a href="https://instagram.com/d.jbouwrenovatie" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:28px">Bekijk @d.jbouwrenovatie op Instagram <span class="arr">&rarr;</span></a>
+  <div class="case lg rv"><div class="in"><div class="cg">
+    <div>
+      <div class="ey">Klant uitgelicht · Case</div>
+      <h3 class="serif">Hoe wij D&amp;J Bouw &amp; Renovatie lieten groeien</h3>
+      <p class="lead">Een bouwbedrijf gespecialiseerd in complete renovaties, interieurdesign en 3D-renders. Wij namen hun social media volledig over en bouwden een herkenbaar, premium merk — van losse posts naar een sterke online uitstraling die structureel nieuwe aanvragen oplevert.</p>
+      <div class="csrow">
+        <div class="cs lg"><div class="in"><div class="n serif">15,7K</div><div class="l">Volgers</div></div></div>
+        <div class="cs lg"><div class="in"><div class="n serif">+420%</div><div class="l">Bereik</div></div></div>
+        <div class="cs lg"><div class="in"><div class="n serif">A–Z</div><div class="l">Beheer</div></div></div>
       </div>
-      <div class="phone-stage reveal">
-        <div class="phone3d-wrap" id="phoneWrap">
-          <div class="phone3d" id="phone3d">
-            <div class="face f-front">
-              <div class="notch"></div>
-              <div class="phone-screen ig-dark">
-                <div class="ig-status"><span>9:41</span><span class="ig-status-r"><i class="bars"></i><i class="wifi"></i><i class="batt"></i></span></div>
-                <div class="ig-bar"><b>d.jbouwrenovatie</b><svg class="verif" viewBox="0 0 24 24" fill="#3897f0"><path d="M12 1l2.4 2.1 3.1-.5 1.2 2.9 2.9 1.2-.5 3.1L23 12l-2.1 2.4.5 3.1-2.9 1.2-1.2 2.9-3.1-.5L12 23l-2.4-2.1-3.1.5-1.2-2.9L2.4 17l.5-3.1L1 12l2.1-2.4-.5-3.1 2.9-1.2L6.7 2.4l3.1.5z"/><path d="M10.6 14.6l-2.3-2.3 1.1-1.1 1.2 1.2 3.4-3.4 1.1 1.1z" fill="#fff"/></svg><span class="ig-bar-r"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span></div>
-                <a class="ig-head" href="https://instagram.com/d.jbouwrenovatie" target="_blank" rel="noopener">
-                  <div class="avatar">D&amp;J</div>
-                  <div class="ig-nums">
-                    <div><b>54</b><span>berichten</span></div>
-                    <div><b>15,7K</b><span>volgers</span></div>
-                    <div><b>306</b><span>volgend</span></div>
-                  </div>
-                </a>
-                <div class="ig-name">D&amp;J Renovatie &amp; Bouw</div>
-                <div class="ig-cat">Bouwbedrijf</div>
-                <div class="ig-bio2">Complete Bouw | Renovatie | Interieurdesign | 3D Renders |<br>Van ontwerp tot realisatie<br>Nederland/ Spanje &amp; meer</div>
-                <div class="ig-link"><svg viewBox="0 0 24 24" fill="none" stroke="#7aa7e0" stroke-width="2"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg> djbouwrenovatie.com <span>en nog 1</span></div>
-                <div class="ig-btns"><span class="ig-follow">Volgen</span><span class="ig-msg">Bericht</span><span class="ig-add"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span></div>
-                <div class="ig-highlights">
-                  <div class="hl"><span class="ring"></span><small>Reviews</small></div>
-                  <div class="hl"><span class="ring"></span><small>Projects</small></div>
-                  <div class="hl"><span class="ring"></span><small>Internat.</small></div>
-                  <div class="hl"><span class="ring"></span><small>Interiors</small></div>
-                  <div class="hl"><span class="ring"></span><small>Approach</small></div>
-                </div>
-                <div class="ig-tabs">
-                  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="1.6"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="1.6"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-                </div>
-                <div class="ig-grid">
-                  <img loading="lazy" src="img/post1.jpg" alt="Renovatie badkamer">
-                  <img loading="lazy" src="img/post2.jpg" alt="Interieur eetkamer">
-                  <img loading="lazy" src="img/post4.jpg" alt="Interieurdesign eetkamer">
-                  <img loading="lazy" src="img/post3.jpg" alt="Renovatie badkamer">
-                  <img loading="lazy" src="img/post7.jpg" alt="Badkamer met LED-spiegel">
-                  <img loading="lazy" src="img/post5.jpg" alt="Woonkamer renovatie">
-                  <img loading="lazy" src="img/post6.jpg" alt="Trappenhuis">
-                  <img loading="lazy" src="img/post8.jpg" alt="Project Rotterdam">
-                  <img loading="lazy" src="img/post1.jpg" alt="Renovatieproject">
-                </div>
-              </div>
-            </div>
-            <div class="face f-back"><span class="logo">D&amp;J</span></div>
-            <div class="face f-right"></div>
-            <div class="face f-left"></div>
-            <div class="face f-top"></div>
-            <div class="face f-bottom"></div>
-          </div>
-          <div class="badge b1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#cbc7bd" stroke-width="1.6"><path d="M20 21v-2a4 4 0 00-3-3.87M9 21v-2a4 4 0 014-4h0a4 4 0 014 4M7 8a4 4 0 108 0 4 4 0 00-8 0"/></svg></span><div class="bx"><div class="lbl">Volgers</div><div class="big">15,7K</div></div></div>
-          <div class="badge b2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#cbc7bd" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></span><div class="bx"><div class="lbl">Berichten</div><div class="big">54</div></div></div>
-          <div class="badge b3"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#cbc7bd" stroke-width="1.6"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></span><div class="bx"><div class="lbl">Bereik</div><div class="big">+420%</div></div></div>
-          <div class="drag-hint" id="dragHint">↺ Scroll of sleep om te draaien</div>
-        </div>
+      <a href="https://instagram.com/d.jbouwrenovatie" target="_blank" rel="noopener" class="btn btn-gold" style="margin-top:26px">Bekijk @d.jbouwrenovatie <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></a>
+    </div>
+    <div class="lg" style="border-radius:20px;padding:16px"><div class="in"><div class="mock dark"><div class="bar"><i></i><i></i><i></i></div><div class="h"><div class="h1"></div><div class="h2"></div><div class="bt"></div></div><div class="rows"><span></span><span></span><span></span></div></div><div style="text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:12px">@d.jbouwrenovatie · 54 berichten · 15,7K volgers</div></div></div>
+  </div></div></div>
+</div></section>
+
+<!-- STUDIOFLOW -->
+<section class="block sf" id="studioflow"><div class="wrap">
+  <div class="sfhead rv">
+    <div>
+      <div class="ey">Eigen software · door Casanomada</div>
+      <h2 class="serif">Studio<span class="gold">Flow</span></h2>
+      <p class="lead">Het zakelijke portaal voor de weddingbranche. Contracten in 60 seconden — in het Nederlands, Frans of Arabisch — plus agenda, offertes, facturen en betaalverzoeken. Eén overzicht, nul chaos.</p>
+      <div class="herocta" style="margin-top:24px">
+        <a href="/studioflow" class="btn btn-gold">Bekijk StudioFlow</a>
+        <a href="/portaal/" class="plain">Al klant? Inloggen →</a>
       </div>
     </div>
+    <div class="sfnums">
+      <div><div class="n serif gold">60 sec</div><div class="l">Contract klaar<br>i.p.v. 2–3 weken</div></div>
+      <div><div class="n serif gold">NL·FR·AR</div><div class="l">Talen per contract</div></div>
+      <div><div class="n serif gold">18</div><div class="l">Branches bediend</div></div>
+    </div>
   </div>
-</section>
+  <div class="sffeat">
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Contracten in 3 talen</h4><p>Gegevens invullen, taal kiezen, klaar. Juridische artikelen die per dienst verschillen. Digitaal ondertekenen op telefoon of tablet.</p></div></div>
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Agenda &amp; beschikbaarheid</h4><p>In één oogopslag: geboekt, on hold of beschikbaar. Waarschuwing bij dubbele boekingen.</p></div></div>
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Offertes &amp; facturen</h4><p>Nette documenten met eigen logo, automatische btw en aanbetalingen. Van offerte naar factuur in een paar klikken.</p></div></div>
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Betaalverzoeken</h4><p>StudioFlow berekent het openstaande bedrag en zet een professioneel betaalverzoek klaar via WhatsApp.</p></div></div>
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Klantfeedback &amp; versies</h4><p>Feedback in het portaal plakken en met één klik verwerken in een nieuwe contractversie, netjes bijgehouden.</p></div></div>
+    <div class="sff lg rv"><div class="in"><h4 class="serif">Dashboard &amp; rapportages</h4><p>Geboekte omzet, ontvangen en openstaand geld, conversie en een automatische takenlijst. Alles op één scherm.</p></div></div>
+  </div>
+  <div class="pricing">
+    <div class="pcard lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="ph3 serif">Starter</div><div class="pr serif">€19,95 <small>/ mnd · of €199/jr</small></div><ul><li>Contracten in NL, FR &amp; Arabisch</li><li>Digitaal ondertekenen</li><li>Agenda &amp; beschikbaarheid</li><li>Klantbeheer · 1 gebruiker</li></ul><a href="/bestel?tier=S&amp;duur=1" class="btn btn-line" style="justify-content:center">Start met Starter</a></div></div>
+    <div class="pcard lgs rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><span class="best">Meest gekozen</span><div class="ph3 serif">Pro</div><div class="pr serif">€39,95 <small>/ mnd · of €399/jr</small></div><ul><li>Alles uit Starter</li><li>Offertes &amp; facturen met eigen logo</li><li>Betaalverzoeken via WhatsApp</li><li>Omzet, betalingen &amp; rapportages</li></ul><a href="/bestel?tier=P&amp;duur=1" class="btn btn-gold" style="justify-content:center">Start met Pro</a></div></div>
+    <div class="pcard lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="ph3 serif">Studio</div><div class="pr serif">€79,95 <small>/ mnd · of €799/jr</small></div><ul><li>Alles uit Pro</li><li>Meerdere teamleden</li><li>Eigen naam &amp; kleuren (white-label)</li><li>Persoonlijke onboarding &amp; prioriteit-support</li></ul><a href="/bestel?tier=U&amp;duur=1" class="btn btn-line" style="justify-content:center">Start met Studio</a></div></div>
+  </div>
+</div></section>
+
+<!-- OVER ONS -->
+<section class="block" id="over"><div class="wrap">
+  <div class="rv"><div class="ey">Over ons · Marketingbureau, Nederland</div><h2 class="serif">Van idee tot impact.</h2><p class="lead">Casanomada Digital is ontstaan uit een gedeelde passie voor social media en sterke merken. Wat begon als een klein team groeide uit tot een bureau dat merken van A tot Z online zet. We werken doelgericht, persoonlijk en met oog voor detail — omdat we begrijpen dat jouw merk jouw leven is.</p></div>
+  <div class="grid-val">
+    <div class="val lg rv"><div class="in"><h4 class="serif">Hands-on</h4><p>Geen afstand tussen jou en ons team. We werken op locatie en zijn altijd bereikbaar voor wat je nodig hebt.</p></div></div>
+    <div class="val lg rv"><div class="in"><h4 class="serif">Data-driven</h4><p>Elk besluit is gebaseerd op data. We meten, analyseren en optimaliseren continu voor betere resultaten.</p></div></div>
+    <div class="val lg rv"><div class="in"><h4 class="serif">Creatief</h4><p>Strategie en creativiteit gaan hand in hand. We maken content die niet alleen aandacht vraagt, maar echt impact heeft.</p></div></div>
+  </div>
+</div></section>
 
 <!-- REVIEWS -->
-<section class="section" id="reviews" style="background:var(--bg-soft);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
-  <div class="wrap">
-    <div class="reviews-top reveal">
-      <span class="eyebrow">Wat klanten zeggen</span>
-      <h2>Echte verhalen van <span class="accent">echte merken.</span></h2>
-      <div class="reviews-rating">
-        <span class="score">4,9</span>
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <small>Gemiddeld &middot; op basis van 40+ samenwerkingen</small>
-      </div>
-    </div>
-    <div class="review-grid">
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Sinds Casanomada onze social media beheert komen er structureel meer aanvragen binnen. Strak, professioneel en altijd snel bereikbaar. Een echte aanrader.&rdquo;</p>
-        <div class="review-author"><span class="av">D&amp;J</span><span class="who"><b>D&amp;J Bouw &amp; Renovatie</b><span>Bouwbedrijf</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Google</span></div>
-      </div>
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Mijn merk voelt eindelijk zoals ik het in mijn hoofd had. De content en uitstraling kloppen helemaal en mijn bereik is enorm gegroeid.&rdquo;</p>
-        <div class="review-author"><span class="av">A</span><span class="who"><b>Aroussa</b><span>Wedding planning</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Instagram</span></div>
-      </div>
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Onze Instagram is compleet getransformeerd. Meer bereik, meer verkoop en content waar we elke dag trots op zijn. Top samenwerking.&rdquo;</p>
-        <div class="review-author"><span class="av">BA</span><span class="who"><b>By Aicha</b><span>Modest fashion</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Google</span></div>
-      </div>
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Professioneel, betrouwbaar en met oog voor detail. Precies wat een kliniek nodig heeft om online het juiste gevoel uit te stralen.&rdquo;</p>
-        <div class="review-author"><span class="av">DV</span><span class="who"><b>Da Vinci Clinic</b><span>Esthetische kliniek</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Google</span></div>
-      </div>
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Van vrijwel geen online aanwezigheid naar een herkenbaar merk. Klanten vinden ons nu makkelijk terug. Heel tevreden.&rdquo;</p>
-        <div class="review-author"><span class="av">SA</span><span class="who"><b>SA Elektra</b><span>Erkend elektricien</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Google</span></div>
-      </div>
-      <div class="review-card reveal">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p>&ldquo;Snelle communicatie en resultaat dat telt. Onze panden krijgen veel meer zichtbaarheid en de leads komen binnen.&rdquo;</p>
-        <div class="review-author"><span class="av">D&amp;J</span><span class="who"><b>D&amp;J Estates</b><span>Vastgoed &middot; Costa del Sol</span></span><span class="review-src"><svg viewBox="0 0 24 24" fill="#C8A24A"><path d="M12 2l2.95 6.06L21.6 9l-4.8 4.68L17.9 21 12 17.27 6.1 21l1.1-7.32L2.4 9l6.65-.94z"/></svg>via Instagram</span></div>
-      </div>
-    </div>
+<section class="block center-h" id="reviews"><div class="wrap">
+  <div class="rv"><div class="ey">Wat klanten zeggen</div><h2 class="serif">Echte verhalen van echte merken</h2>
+    <div class="rating lg"><span class="in score serif">4,9</span><span class="in stars">★★★★★</span><small class="in">Gemiddeld · op basis van 40+ samenwerkingen</small></div>
   </div>
-</section>
+  <div class="rgrid">
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Sinds Casanomada onze social media beheert komen er structureel meer aanvragen binnen. Strak, professioneel en altijd snel bereikbaar. Een echte aanrader.”</p><div class="who"><span class="av lg"><span class="in serif">D&amp;J</span></span><div><b>D&amp;J Bouw &amp; Renovatie</b><span>Bouwbedrijf · via Google</span></div></div></div></div>
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Mijn merk voelt eindelijk zoals ik het in mijn hoofd had. De content en uitstraling kloppen helemaal en mijn bereik is enorm gegroeid.”</p><div class="who"><span class="av lg"><span class="in serif">A</span></span><div><b>Aroussa</b><span>Wedding planning · via Instagram</span></div></div></div></div>
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Onze Instagram is compleet getransformeerd. Meer bereik, meer verkoop en content waar we elke dag trots op zijn. Top samenwerking.”</p><div class="who"><span class="av lg"><span class="in serif">BA</span></span><div><b>By Aicha</b><span>Modest fashion · via Google</span></div></div></div></div>
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Professioneel, betrouwbaar en met oog voor detail. Precies wat een kliniek nodig heeft om online het juiste gevoel uit te stralen.”</p><div class="who"><span class="av lg"><span class="in serif">DV</span></span><div><b>Da Vinci Clinic</b><span>Esthetische kliniek · via Google</span></div></div></div></div>
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Van vrijwel geen online aanwezigheid naar een herkenbaar merk. Klanten vinden ons nu makkelijk terug. Heel tevreden.”</p><div class="who"><span class="av lg"><span class="in serif">SA</span></span><div><b>SA Elektra</b><span>Erkend elektricien · via Google</span></div></div></div></div>
+    <div class="rc lg rv"><div class="in" style="display:flex;flex-direction:column;height:100%"><div class="stars">★★★★★</div><p class="serif">“Snelle communicatie en resultaat dat telt. Onze panden krijgen veel meer zichtbaarheid en de leads komen binnen.”</p><div class="who"><span class="av lg"><span class="in serif">D&amp;J</span></span><div><b>D&amp;J Estates</b><span>Vastgoed · Costa del Sol · via Instagram</span></div></div></div></div>
+  </div>
+</div></section>
 
 <!-- KLANTEN -->
-<section class="section" id="klanten">
-  <div class="wrap">
-    <div class="head center reveal">
-      <span class="eyebrow">Onze klanten</span>
-      <h2>Merken die wij <span class="accent">laten groeien.</span></h2>
-    </div>
-    <div class="clients-grid">
-      <a class="client-card reveal" href="https://djbouwrenovatie.com/" target="_blank" rel="noopener"><div class="c-logo">D&amp;J</div><b>D&amp;J Bouw &amp; Renovatie</b><span>Bouwbedrijf</span></a>
-      <a class="client-card reveal" href="https://djestatesproperty.com/" target="_blank" rel="noopener"><div class="c-logo">D&amp;J</div><b>D&amp;J Estates</b><span>Vastgoed &middot; Costa del Sol</span></a>
-      <a class="client-card reveal" href="https://djconstruccion.es/" target="_blank" rel="noopener"><div class="c-logo">D&amp;J</div><b>D&amp;J Construcci&oacute;n</b><span>Bouw &amp; renovatie &middot; Spanje</span></a>
-      <a class="client-card reveal" href="https://aroussaplanner.com/" target="_blank" rel="noopener"><div class="c-logo">A</div><b>Aroussa</b><span>Wedding planning</span></a>
-      <a class="client-card reveal" href="https://saelektra.com/" target="_blank" rel="noopener"><div class="c-logo">SA</div><b>SA Elektra</b><span>Erkend elektricien</span></a>
-      <a class="client-card reveal" href="https://nienummerdirectpro.com/" target="_blank" rel="noopener"><div class="c-logo">NIE</div><b>NIE Nummer Direct Pro</b><span>NIE-aanvragen Spanje</span></a>
-      <a class="client-card reveal" href="https://byaicha.com/nl-nl" target="_blank" rel="noopener"><div class="c-logo">BA</div><b>By Aicha</b><span>Modest fashion</span></a>
-      <a class="client-card reveal" href="https://www.davinciclinic.be/" target="_blank" rel="noopener"><div class="c-logo">DV</div><b>Da Vinci Clinic</b><span>Esthetische kliniek &middot; Belgi&euml;</span></a>
-      <a class="client-card reveal" href="https://dgbrows.com/" target="_blank" rel="noopener"><div class="c-logo">DG</div><b>DG Brows</b><span>Permanente make-up &middot; Den Haag</span></a>
-      <a class="client-card reveal" href="https://taoufikdakka.nl/" target="_blank" rel="noopener"><div class="c-logo">TD</div><b>Taoufik Dakka</b><span>Marokkaanse bruiloftsmuziek</span></a>
-    </div>
-    <p class="clients-note">Een greep uit de merken die wij mogen laten groeien.</p>
+<section class="block center-h"><div class="wrap">
+  <div class="rv"><div class="ey">Onze klanten</div><h2 class="serif">Merken die wij laten groeien</h2></div>
+  <div class="clients" style="text-align:center">
+    <a class="cl lg rv" href="https://djbouwrenovatie.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">D&amp;J</span></div><b>D&amp;J Bouw &amp; Renovatie</b><span>Bouwbedrijf</span></div></a>
+    <a class="cl lg rv" href="https://djestatesproperty.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">D&amp;J</span></div><b>D&amp;J Estates</b><span>Vastgoed · Costa del Sol</span></div></a>
+    <a class="cl lg rv" href="https://aroussaplanner.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">A</span></div><b>Aroussa</b><span>Wedding planning</span></div></a>
+    <a class="cl lg rv" href="https://saelektra.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">SA</span></div><b>SA Elektra</b><span>Erkend elektricien</span></div></a>
+    <a class="cl lg rv" href="https://nienummerdirectpro.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">NIE</span></div><b>NIE Nummer Direct Pro</b><span>NIE-aanvragen Spanje</span></div></a>
+    <a class="cl lg rv" href="https://byaicha.com/nl-nl" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">BA</span></div><b>By Aicha</b><span>Modest fashion</span></div></a>
+    <a class="cl lg rv" href="https://www.davinciclinic.be/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">DV</span></div><b>Da Vinci Clinic</b><span>Esthetische kliniek · België</span></div></a>
+    <a class="cl lg rv" href="https://dgbrows.com/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">DG</span></div><b>DG Brows</b><span>Permanente make-up · Den Haag</span></div></a>
+    <a class="cl lg rv" href="https://taoufikdakka.nl/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">TD</span></div><b>Taoufik Dakka</b><span>Marokkaanse bruiloftsmuziek</span></div></a>
+    <a class="cl lg rv" href="https://oudegeinexclusive.nl/" target="_blank" rel="noopener"><div class="in"><div class="mono lg"><span class="in serif">OG</span></div><b>Oude Gein Exclusive</b><span>Exclusieve auto's · Nieuwegein</span></div></a>
   </div>
-</section>
+</div></section>
 
-<!-- CTA -->
-<section class="section">
-  <div class="wrap">
-    <div class="cta reveal">
-      <span class="eyebrow">Klaar om te groeien?</span>
-      <h2 style="margin-top:18px">Jouw merk verdient<br>een <span class="accent">podium.</span></h2>
-      <p>Plan een vrijblijvend gesprek. We kijken samen naar jouw merk en laten je zien wat er mogelijk is.</p>
-      <a href="contact.html" class="btn btn-primary">Plan een gratis gesprek <span class="arr">→</span></a>
-      <small>Vrijblijvend · Geen verplichtingen · Reactie binnen 24 uur</small>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-top">
-      <div>
-        <div class="brand">Casanomada<span class="dot">.</span></div>
-        <p class="tag">Premium social media management voor merken die marktleider willen worden.</p>
+<!-- CONTACT -->
+<section class="block" id="contact"><div class="wrap">
+  <div class="cgrid">
+    <div class="cinfo rv">
+      <div class="ey">Klaar om te groeien?</div>
+      <h2 class="serif">Plan een gratis gesprek</h2>
+      <p class="lead" style="max-width:38ch">Vertel kort wat je zoekt. We kijken samen naar je merk en laten je zien wat er mogelijk is. Vrijblijvend, met reactie binnen 24 uur.</p>
+      <div style="margin-top:26px">
+        <a href="mailto:casanomada.digital@gmail.com">casanomada.digital@gmail.com</a>
+        <a href="tel:+31644818674">06 44818674</a>
+        <a style="color:rgba(255,255,255,.55)">Nederland</a>
       </div>
-      <div class="footer-cols">
-        <div class="footer-col"><h5>Menu</h5><a href="index.html">Home</a><a href="diensten.html">Diensten</a><a href="webdesign.html">Webdesign</a><a href="studioflow.html">StudioFlow</a><a href="uitnodigingen.html">Uitnodigingen</a><a href="over-ons.html">Over ons</a><a href="contact.html">Contact</a></div>
-        <div class="footer-col"><h5>Diensten</h5><a href="diensten.html">Social Media Beheer</a><a href="diensten.html">UGC Content</a><a href="diensten.html">Influencer Marketing</a><a href="diensten.html">TikTok Marketing</a><a href="diensten.html">Google &amp; Meta Campagnes</a><a href="diensten.html">Drukwerk</a><a href="diensten.html">Communicatie &amp; mediatraining</a><a href="diensten.html">E-commerce &amp; webshops</a></div>
-        <div class="footer-col"><h5>Contact</h5><a href="mailto:casanomada.digital@gmail.com">casanomada.digital@gmail.com</a><a href="tel:+31644818674">06 44818674</a><a href="contact.html">Plan een gesprek</a></div>
-        <div class="footer-col"><h5>Volg ons</h5><a href="https://www.instagram.com/casanomada.digital/" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@casanomada.digital" target="_blank" rel="noopener">TikTok</a></div>
-      </div>
+      <a href="https://wa.me/31644818674" target="_blank" rel="noopener" class="btn btn-wa" style="margin-top:22px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2m5.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28"/></svg> WhatsApp ons</a>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Casanomada Digital. Alle rechten voorbehouden.</span>
-      <span>Nederland</span>
+    <div class="rv">
+      <form class="cf lg" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="cform">
+        <div class="in">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hp"><label>Laat leeg: <input name="bot-field" /></label></p>
+          <label>Naam</label><input type="text" name="naam" placeholder="Je naam" />
+          <label>E-mail</label><input type="email" name="email" placeholder="je@email.nl" />
+          <label>Telefoon</label><input type="tel" name="telefoon" placeholder="06 ..." />
+          <label>Bedrijf</label><input type="text" name="bedrijf" placeholder="Je bedrijf" />
+          <label>Wat wil je?</label><textarea name="bericht" placeholder="Bijv. een nieuwe website, of hulp met social media"></textarea>
+          <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Verstuur aanvraag <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></button>
+          <p class="note">Vrijblijvend · Geen verplichtingen · Reactie binnen 24 uur</p>
+        </div>
+      </form>
+      <div class="ok lg" id="cok" style="display:none"><div class="in"><h3 class="serif">Bedankt!</h3><p>Je aanvraag is verzonden. We nemen binnen 24 uur contact met je op.</p></div></div>
     </div>
   </div>
-</footer>
+</div></section>
 
-<script src="script.js"></script>
+<footer><div class="wrap">
+  <div class="frow">
+    <div><div class="serif" style="font-size:32px">Casanomada.</div><p class="ft">Marketingbureau voor websites en social media, voor merken die marktleider willen worden.</p></div>
+    <div class="fcols">
+      <div class="fcol"><h5>Menu</h5><a href="#diensten">Diensten</a><a href="#webdesign">Webdesign</a><a href="#werk">Werk</a><a href="#over">Over ons</a><a href="#contact">Contact</a></div>
+      <div class="fcol"><h5>StudioFlow</h5><a href="#studioflow">Wat is het</a><a href="/studioflow">Bekijk pagina</a><a href="/bestel?tier=P&amp;duur=1">Bestel direct</a><a href="/portaal/">Inloggen</a></div>
+      <div class="fcol"><h5>Contact</h5><a href="mailto:casanomada.digital@gmail.com">casanomada.digital@gmail.com</a><a href="tel:+31644818674">06 44818674</a></div>
+      <div class="fcol"><h5>Volg ons</h5><a href="https://www.instagram.com/casanomada.digital/" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@casanomada.digital" target="_blank" rel="noopener">TikTok</a></div>
+    </div>
+  </div>
+  <div class="fbot"><span>© 2026 Casanomada Digital. Alle rechten voorbehouden.</span><span>Nederland</span></div>
+</div></footer>
+
+<a class="wa" href="https://wa.me/31644818674" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2m5.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28"/></svg></a>
+
+<script>
+document.querySelectorAll('video[data-fade]').forEach(function(v){
+  var raf;
+  function fade(from,to,dur){cancelAnimationFrame(raf);var t0=performance.now();
+    (function step(t){var k=Math.min(1,(t-t0)/dur);v.style.opacity=from+(to-from)*k;if(k<1)raf=requestAnimationFrame(step);})(performance.now());}
+  v.addEventListener('loadeddata',function(){fade(0,1,600);});
+  v.addEventListener('timeupdate',function(){if(v.duration&&v.duration-v.currentTime<=0.55)fade(1,0,550);});
+  v.addEventListener('ended',function(){v.currentTime=0;v.play().catch(function(){});fade(0,1,500);});
+  v.play().catch(function(){});
+});
+document.querySelectorAll('[data-blur]').forEach(function(el){
+  var words=el.textContent.trim().split(/\s+/);el.textContent='';
+  words.forEach(function(w){var s=document.createElement('span');s.className='bw';s.textContent=w;el.appendChild(s);});
+  var ws=el.querySelectorAll('.bw');
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ws.forEach(function(s,i){setTimeout(function(){s.classList.add('show');},i*80);});io.disconnect();}});},{threshold:0.1});
+  io.observe(el);
+});
+var rio=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('show');rio.unobserve(x.target);}});},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(function(el){rio.observe(el);});
+var cf=document.getElementById('cform');
+if(cf){cf.addEventListener('submit',function(e){e.preventDefault();
+  var data=new FormData(cf);var body=new URLSearchParams();body.append('form-name','contact');
+  data.forEach(function(v,k){body.append(k,v);});
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()})
+    .then(function(){cf.style.display='none';document.getElementById('cok').style.display='block';})
+    .catch(function(){window.location.href='mailto:casanomada.digital@gmail.com';});
+});}
+</script>
 </body>
 </html>
