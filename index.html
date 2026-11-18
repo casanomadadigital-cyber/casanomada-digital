@@ -59,6 +59,21 @@ nav .spacer{width:48px;height:48px}
 .btn-line{border:1px solid rgba(255,255,255,.25);padding:12px 22px;color:#fff}
 .btn-line:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
 svg{display:inline-block;vertical-align:middle}
+img{max-width:100%;display:block}
+
+/* media */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.cell{border-radius:16px;overflow:hidden;aspect-ratio:3/4;position:relative}
+.cell img,.cell video{width:100%;height:100%;object-fit:cover}
+.cell .cap2{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);font-size:12.5px;color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-radius:16px;overflow:hidden}
+.pgrid img{width:100%;aspect-ratio:1;object-fit:cover}
+.wimg{border-radius:14px;overflow:hidden;aspect-ratio:16/11;margin-bottom:18px}
+.wimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.scard:hover .wimg img{transform:scale(1.04)}
+.foundergrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:center}
+.founder{border-radius:20px;overflow:hidden;aspect-ratio:4/5}
+.founder img{width:100%;height:100%;object-fit:cover}
 
 /* hero */
 .hero{position:relative;min-height:100vh;overflow:hidden;background:#000}
@@ -98,7 +113,8 @@ h2{font-size:clamp(34px,5.5vw,64px);line-height:.95;letter-spacing:-2px}
 /* capabilities (video) */
 .cap{position:relative;min-height:100vh;overflow:hidden;background:#000}
 .cap .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:0}
-.cap .tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.35))}
+.cap .bgphoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6;z-index:0}
+.cap .tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.62),rgba(0,0,0,.5))}
 .cap .content{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(22px,6vw,80px)}
 .cap h2{font-size:clamp(40px,7vw,96px);line-height:.9;letter-spacing:-3px;white-space:pre-line}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
@@ -162,6 +178,8 @@ h2{font-size:clamp(34px,5.5vw,64px);line-height:.95;letter-spacing:-2px}
 .mock.light .h1{background:#0d0d0d}.mock.light .h2{background:#807b6e}.mock.light .bt{background:#0d0d0d}
 .mock .rows{display:flex;gap:7px;padding:10px 13px;background:#fff}
 .mock .rows span{flex:1;height:22px;border-radius:6px;background:#f3f1ed;border:1px solid rgba(13,13,13,.06)}
+.fshot{border-radius:12px;overflow:hidden;aspect-ratio:16/10;background:#0d0d0d}.fshot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .6s}
+.fcard:hover .fshot img{transform:scale(1.04)}
 .fmeta{display:flex;justify-content:space-between;align-items:center;padding:14px 8px 6px}
 .fmeta b{font-size:15px;font-weight:500}.fmeta .c{font-size:12px;color:rgba(255,255,255,.55)}.fmeta .no{font-size:12px;color:var(--acc)}
 .case{margin-top:90px;border-radius:24px;padding:clamp(28px,5vw,52px)}
@@ -232,7 +250,7 @@ h1.hl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:.06em}
 @media(max-width:900px){
   nav .menu{display:none}
   .stats{flex-direction:column;align-items:center}
-  .grid3,.grid3b,.rgrid,.grid3w,.sffeat,.pricing,.sfhead{grid-template-columns:1fr}
+  .grid3,.grid3b,.rgrid,.grid3w,.sffeat,.pricing,.sfhead,.foundergrid{grid-template-columns:1fr}
   .grid-serv{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.grid-val{grid-template-columns:1fr}.clients{grid-template-columns:1fr 1fr}
   .case .cg,.cgrid{grid-template-columns:1fr;gap:34px}
 }
@@ -252,7 +270,7 @@ h1.hl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:.06em}
 
 <!-- HERO -->
 <section class="hero">
-  <video class="bgvid" data-fade autoplay muted playsinline preload="auto" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4"></video>
+  <video class="bgvid" data-fade autoplay muted loop playsinline preload="auto" poster="/img/fotograaf.jpg" src="/img/reel.mp4"></video>
   <div class="tint"></div>
   <div class="content">
     <div class="center">
@@ -280,7 +298,7 @@ h1.hl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:.06em}
 
 <!-- CAPABILITIES (video) -->
 <section class="cap">
-  <video class="bgvid" data-fade autoplay muted playsinline preload="auto" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_093722_ccfc7ebf-182f-419f-8a62-2dc02db7dd9d.mp4"></video>
+  <img class="bgphoto" src="/img/vrouw2.jpg" alt="Casanomada content shoot" loading="lazy" />
   <div class="tint"></div>
   <div class="content">
     <div class="rv">
@@ -308,6 +326,17 @@ voor jouw merk alleen</h2>
   </div>
 </section>
 
+<!-- CONTENT IN BEELD -->
+<section class="block"><div class="wrap">
+  <div class="rv"><div class="ey">Social media die werkt</div><h2 class="serif">Content die jouw merk laat stralen.</h2><p class="lead">Naast websites verzorgen we je volledige social media: strategie, foto, video en planning. Premium content die past bij wie je bent.</p></div>
+  <div class="gal">
+    <div class="cell lg rv"><div class="in" style="position:absolute;inset:0"><img src="/img/vrouw1.jpg" alt="Strategie en merk" loading="lazy" /><div class="cap2">Strategie &amp; merk</div></div></div>
+    <div class="cell lg rv"><div class="in" style="position:absolute;inset:0"><video src="/img/reel.mp4" autoplay muted loop playsinline preload="metadata"></video><div class="cap2">Content in beeld</div></div></div>
+    <div class="cell lg rv"><div class="in" style="position:absolute;inset:0"><img src="/img/vrouw2.jpg" alt="Content en shoots" loading="lazy" /><div class="cap2">Content &amp; shoots</div></div></div>
+    <div class="cell lg rv"><div class="in" style="position:absolute;inset:0"><img src="/img/vrouw3.jpg" alt="Planning en creatie" loading="lazy" /><div class="cap2">Planning &amp; creatie</div></div></div>
+  </div>
+</div></section>
+
 <!-- DIENSTEN (8) -->
 <section class="block" id="diensten"><div class="wrap">
   <div class="rv"><div class="ey">Wat wij doen</div><h2 class="serif">Jouw merk. Online gezet.</h2><p class="lead">Van websites en social media tot advertenties, drukwerk en webshops — alles wat je merk online sterk maakt, onder één dak.</p></div>
@@ -327,9 +356,9 @@ voor jouw merk alleen</h2>
 <section class="block" id="webdesign"><div class="wrap">
   <div class="rv"><div class="ey">Webdesign op maat</div><h2 class="serif">Websites die jouw verhaal vertellen.</h2><p class="lead">Je website is je krachtigste verkooptool. Wij ontwerpen strategische websites op maat die er verfijnd uitzien én converteren — bezoekers die al overtuigd zijn voordat ze contact opnemen.</p></div>
   <div class="grid3w">
-    <div class="scard lg rv"><div class="in"><div class="k">Beauty &amp; klinieken</div><h4 class="serif">Salons &amp; klinieken</h4><p>Verfijnde sites voor salons, beautyzaken, tandartsen en esthetische &amp; haarklinieken, gebouwd om afspraken en boekingen te stimuleren.</p></div></div>
-    <div class="scard lg rv"><div class="in"><div class="k">Bouw &amp; vastgoed</div><h4 class="serif">Bouw &amp; renovatie</h4><p>Krachtige sites voor bouwbedrijven, renovatie en vastgoed die projecten laten spreken en structureel aanvragen opleveren.</p></div></div>
-    <div class="scard lg rv"><div class="in"><div class="k">Ondernemers</div><h4 class="serif">Ondernemerswebsites</h4><p>Strategische sites voor coaches, creatieven en dienstverlenende merken die willen converteren en top of mind blijven.</p></div></div>
+    <div class="scard lg rv"><div class="in"><div class="wimg"><img src="/img/kliniek.jpg" alt="Websites voor beauty en klinieken" loading="lazy" /></div><div class="k">Beauty &amp; klinieken</div><h4 class="serif">Salons &amp; klinieken</h4><p>Verfijnde sites voor salons, beautyzaken, tandartsen en esthetische &amp; haarklinieken, gebouwd om afspraken en boekingen te stimuleren.</p></div></div>
+    <div class="scard lg rv"><div class="in"><div class="wimg"><img src="/img/post2.jpg" alt="Websites voor bouw en vastgoed" loading="lazy" /></div><div class="k">Bouw &amp; vastgoed</div><h4 class="serif">Bouw &amp; renovatie</h4><p>Krachtige sites voor bouwbedrijven, renovatie en vastgoed die projecten laten spreken en structureel aanvragen opleveren.</p></div></div>
+    <div class="scard lg rv"><div class="in"><div class="wimg"><img src="/img/vrouw3.jpg" alt="Ondernemerswebsites" loading="lazy" /></div><div class="k">Ondernemers</div><h4 class="serif">Ondernemerswebsites</h4><p>Strategische sites voor coaches, creatieven en dienstverlenende merken die willen converteren en top of mind blijven.</p></div></div>
   </div>
 </div></section>
 
@@ -366,7 +395,14 @@ voor jouw merk alleen</h2>
       </div>
       <a href="https://instagram.com/d.jbouwrenovatie" target="_blank" rel="noopener" class="btn btn-gold" style="margin-top:26px">Bekijk @d.jbouwrenovatie <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></a>
     </div>
-    <div class="lg" style="border-radius:20px;padding:16px"><div class="in"><div class="mock dark"><div class="bar"><i></i><i></i><i></i></div><div class="h"><div class="h1"></div><div class="h2"></div><div class="bt"></div></div><div class="rows"><span></span><span></span><span></span></div></div><div style="text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:12px">@d.jbouwrenovatie · 54 berichten · 15,7K volgers</div></div></div>
+    <div class="lg" style="border-radius:20px;padding:12px"><div class="in">
+      <div class="pgrid">
+        <img src="/img/post1.jpg" alt="D&amp;J renovatieproject" loading="lazy" /><img src="/img/post2.jpg" alt="D&amp;J interieur" loading="lazy" /><img src="/img/post4.jpg" alt="D&amp;J interieurdesign" loading="lazy" />
+        <img src="/img/post3.jpg" alt="D&amp;J badkamer" loading="lazy" /><img src="/img/post7.jpg" alt="D&amp;J badkamer met LED-spiegel" loading="lazy" /><img src="/img/post5.jpg" alt="D&amp;J woonkamer" loading="lazy" />
+        <img src="/img/post6.jpg" alt="D&amp;J trappenhuis" loading="lazy" /><img src="/img/post8.jpg" alt="D&amp;J project Rotterdam" loading="lazy" /><img src="/img/post1.jpg" alt="D&amp;J renovatieproject" loading="lazy" />
+      </div>
+      <div style="text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:12px">@d.jbouwrenovatie · 54 berichten · 15,7K volgers</div>
+    </div></div>
   </div></div></div>
 </div></section>
 
@@ -405,7 +441,10 @@ voor jouw merk alleen</h2>
 
 <!-- OVER ONS -->
 <section class="block" id="over"><div class="wrap">
-  <div class="rv"><div class="ey">Over ons · Marketingbureau, Nederland</div><h2 class="serif">Van idee tot impact.</h2><p class="lead">Casanomada Digital is ontstaan uit een gedeelde passie voor social media en sterke merken. Wat begon als een klein team groeide uit tot een bureau dat merken van A tot Z online zet. We werken doelgericht, persoonlijk en met oog voor detail — omdat we begrijpen dat jouw merk jouw leven is.</p></div>
+  <div class="foundergrid rv">
+    <div class="founder lg"><div class="in" style="position:absolute;inset:0"><img src="/img/founder.jpg" alt="Team Casanomada Digital" loading="lazy" /></div></div>
+    <div><div class="ey">Over ons · Marketingbureau, Nederland</div><h2 class="serif">Van idee tot impact.</h2><p class="lead">Casanomada Digital is ontstaan uit een gedeelde passie voor social media en sterke merken. Wat begon als een klein team groeide uit tot een bureau dat merken van A tot Z online zet. We werken doelgericht, persoonlijk en met oog voor detail — omdat we begrijpen dat jouw merk jouw leven is.</p></div>
+  </div>
   <div class="grid-val">
     <div class="val lg rv"><div class="in"><h4 class="serif">Hands-on</h4><p>Geen afstand tussen jou en ons team. We werken op locatie en zijn altijd bereikbaar voor wat je nodig hebt.</p></div></div>
     <div class="val lg rv"><div class="in"><h4 class="serif">Data-driven</h4><p>Elk besluit is gebaseerd op data. We meten, analyseren en optimaliseren continu voor betere resultaten.</p></div></div>
